@@ -2,10 +2,11 @@
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpass = "";
-$dbname = "user_information";
+$dbname = "user_informantion";
+$port = 3307;
 
 // Establishing connection
-$con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+$con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname,$port);
 
 // Check connection
 if (!$con) {
