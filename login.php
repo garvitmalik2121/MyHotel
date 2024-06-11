@@ -2,8 +2,37 @@
 session_start();
 $_SESSION;
 
+include("connection.php");
+include("functions.php");
 
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
+    // SOMETHING WAS POSTED
+    $user_name = $_POST['username'];
+    $password = $_POST['password'];
+
+    if (!empty($user_name) && !empty($password) && !is_numeric($user_name)) {
+
+        // read from database
+        $query = "SELECT * FROM users WHERE user_name = '$user_name' LIMIT 1";
+        $result = mysqli_query($con, $query);
+
+        if ($result) {
+            if ($result && mysqli_num_rows($result) > 0) {
+                $user_data = mysqli_fetch_assoc($result);
+                if ($user_data['password'] === $password) {
+                    $_SESSION['user_id'] = $user_data['user_id'];
+                    header("Location: index.php");
+                    die;
+                }
+            }
+        }
+
+        echo "Wrong username or password";
+    } else {
+        echo "Please enter some valid information!";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +50,7 @@ $_SESSION;
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
             <label for="password">New Password</label>
-            <input type="password" id="password" name="password" required> 
+            <input type="password" id="password" name="password" required>
             <button type="submit">Login</button>
             <a href="signup.php">Signup</a>
         </form>

@@ -4,7 +4,30 @@ $_SESSION;
 
 include("connection.php");
 include("functions.php");
-$user_data = check_login($con);
+
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+    // SOMETHING WAS POSTED
+    $user_name = $_POST['username'];
+    $password = $_POST['password'];
+
+    if(!empty($user_name) && !empty($password) && !is_numeric($user_name)){
+
+        // save to database
+        $user_id = random_num(20);
+        $query = "insert into users (user_id,user_name,password) values ('$user_id','$user_name','$password')";
+        mysqli_query($con, $query);
+        header("location: login.php");
+        die;
+
+    }else{
+        echo "Please enter some valid information!";
+    }
+
+
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -12,12 +35,12 @@ $user_data = check_login($con);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>signup Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>Signup</h2>
         <form method="post" id="loginForm">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
