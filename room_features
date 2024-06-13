@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Room Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        header, main, aside {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        header {
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .room {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .room h2 {
+            margin-top: 0;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #comparison {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        #comparison h2 {
+            text-align: center;
+        }
+        #comparisonContent {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Compare Hotel Rooms</h1>
+    </header>
+    <main>
+        <section class="room" id="room1">
+            <h2>Deluxe Room</h2>
+            <ul>
+                <li>Price: $200/night</li>
+                <li>Size: 30 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <button onclick="compareRoom('room1')">Compare</button>
+        </section>
+        <section class="room" id="room2">
+            <h2>Standard Room</h2>
+            <ul>
+                <li>Price: $100/night</li>
+                <li>Size: 20 sqm</li>
+                <li>Bed: Queen</li>
+                <li>View: City</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <button onclick="compareRoom('room2')">Compare</button>
+        </section>
+        <section class="room" id="room3">
+            <h2>Suite</h2>
+            <ul>
+                <li>Price: $300/night</li>
+                <li>Size: 50 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <button onclick="compareRoom('room3')">Compare</button>
+        </section>
+    </main>
+    <aside id="comparison">
+        <h2>Comparison</h2>
+        <div id="comparisonContent"></div>
+    </aside>
+    <script>
+        function compareRoom(roomId) {
+            const room = document.getElementById(roomId);
+            const comparisonContent = document.getElementById('comparisonContent');
+            
+            // Clone the room section to display in the comparison area
+            const roomClone = room.cloneNode(true);
+            roomClone.querySelector('button').remove(); // Remove the compare button
+            
+            // Check if the room is already in the comparison area
+            const existingRoom = comparisonContent.querySelector(`#${roomId}`);
+            if (existingRoom) {
+                alert('This room is already being compared.');
+            } else {
+                // Add the cloned room section to the comparison area
+                comparisonContent.appendChild(roomClone);
+            }
+        }
+    </script>
+</body>
+</html>
