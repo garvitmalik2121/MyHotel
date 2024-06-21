@@ -16,11 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($password === $confirm_password) {
             // Save to database
             $user_id = random_num(20);
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            
-            // Prepare the SQL statement
-            $query = $con->prepare("INSERT INTO users (user_id, name, user_name, phone, password) VALUES (?, ?, ?, ?, ?)");
-            $query->bind_param("sssss", $user_id, $name, $user_name, $phone, $hashed_password);
+            //$query = "insert into users (user_id, name, user_name, phone, password) values ('$user_id','$name','$user_name','$phone','$password')";
+            $query = "insert into users (user_id, name, username, phone, password) values ('$user_id','$name','$user_name','$phone','$password')";
+            mysqli_query($con, $query);
+            header("location: login.php");
+            die;    
 
             if ($query->execute()) {
                 header("Location: login.php");
