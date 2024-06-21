@@ -1,12 +1,9 @@
 <?php
 session_start();
-$_SESSION;
-
 include("connection.php");
 include("functions.php");
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // SOMETHING WAS POSTED
     $name = $_POST['name'];
     $user_name = $_POST['username'];
@@ -14,28 +11,30 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-   // Check if fields are not empty and valid
-   if(!empty($name) && !empty($user_name) && !empty($phone) && !empty($password) && !empty($confirm_password) && !is_numeric($user_name)){
-    if ($password === $confirm_password) {
-        // Save to database
-        $user_id = random_num(20);
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $query = "INSERT INTO users (user_id, name, user_name, phone, password) VALUES ('$user_id', '$name', '$user_name', '$phone', '$hashed_password')";
-        mysqli_query($con, $query);
-        header("location: login.php");
-        die;
+    // Check if fields are not empty and valid
+    if (!empty($name) && !empty($user_name) && !empty($phone) && !empty($password) && !empty($confirm_password) && !is_numeric($user_name)) {
+        if ($password === $confirm_password) {
+            // Save to database
+            $user_id = random_num(20);
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            
+            // Prepare the SQL statement
+            $query = $con->prepare("INSERT INTO users (user_id, name, user_name, phone, password) VALUES (?, ?, ?, ?, ?)");
+            $query->bind_param("sssss", $user_id, $name, $user_name, $phone, $hashed_password);
+
+            if ($query->execute()) {
+                header("Location: login.php");
+                die;
+            } else {
+                echo "Error: " . $query->error;
+            }
+        } else {
+            echo "Passwords do not match!";
+        }
     } else {
-        echo "Passwords do not match!";
+        echo "Please enter some valid information!";
     }
-} else {
-    echo "Please enter some valid information!";
-
 }
-
-
-
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -43,14 +42,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>signup Page</title>
+    <title>Signup Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="login-container">
         <h2>Signup</h2>
         <form method="post" id="SignupForm">
-        <label for="name">Name</label>
+            <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
 
             <label for="username">Username</label>
@@ -64,8 +63,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
 
             <label for="confirm_password">Confirm Password</label>
             <input type="password" id="confirm_password" name="confirm_password" required>
+            
             <button type="submit">Signup</button>
-            <a href="login.php">login</a>
+            <a href="login.php">Login</a>
         </form>
     </div>
     <script src="script.js"></script>
