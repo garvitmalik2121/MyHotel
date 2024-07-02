@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to MyHotel</title>
+    <style>
+        /* Add CSS styles here for layout and design */
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .logo {
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 1.5rem;
+            color: #fff;
+            text-decoration: none;
+        }
+        nav {
+            display: inline-block;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        /* Gallery Styles */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 200px);
+            gap: 10px;
+            padding: 20px;
+            justify-content: center;
+            position: relative;
+        }
+        .gallery img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .gallery-item {
+            box-sizing: border-box;
+        }
+        .image-grid-col-2 {
+            grid-column:span 2;
+        }
+        .image-grid-row-2 {
+            grid-row: span 2;
+        }
+
+        .view-more {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Pop-up Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            margin: 5% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 1200px;
+            position: relative;
+        }
+        .close {
+            color: #fff;
+            position: absolute;
+            top: 20px;
+            right: 5px;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 10px;
+            margin-top: 50px; 
+        }
+        .modal-gallery img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        .image-modal-content {
+            margin: 5% auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+        .image-modal img {
+            width: 100%;
+            height: auto;
+        }
+        .image-modal .close {
+            color: #fff;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .image-modal .close:hover,
+        .image-modal .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        section {
+            padding: 20px;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(4, 200px);
+            }
+        }
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(8, 200px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">MyHotel</a>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="gallery">
+        <div class="gallery">
+            <div class="image-grid-col-2 image-grid-row-2">
+                <img src="images/background_image.jpg" alt="Main Image">
+            </div>
+            <div class="gallery-item">
+                <img src="images/pool.jpg" alt="Image 1">
+            </div>
+            <div class="gallery-item">
+                <img src="images/enterance.jpg" alt="Image 2">                
+            </div>
+            <div class="gallery-item">
+                <img src="images/corridor.jpg" alt="Image 3">
+            </div>
+            <div class="gallery-item">
+                <img src="images/bathroom.jpg" alt="Image 4">
+            </div>
+            <div class="view-more" onclick="openModal()">View More</div>
+        </div>
+    </section>
+
+    <!-- Modal for Viewing More Images -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-gallery">
+                <img src="images/background_image.jpg" alt="Image 1">
+                <img src="images/pool.jpg" alt="Image 2">
+                <img src="images/enterance.jpg" alt="Image 3">
+                <img src="images/corridor.jpg" alt="Image 4">
+                <img src="images/bathroom.jpg" alt="Image 5">
+                <img src="images/backgrounds.jpg" alt="Image 6">
+                <img src="images/suites.jpg" alt="Image 7">
+                <img src="images/single.jpg" alt="Image 8">
+                <img src="images/delux.jpg" alt="Image 9">
+                <img src="images/standard.jpeg" alt="Image 10">
+                <img src="images/family.jpg" alt="Image 11">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Viewing Individual Images -->
+    <div id="imageModal" class="image-modal">
+        <div class="image-modal-content">
+            <span class="close" onclick="closeImageModal()">&times;</span>
+            <img id="imageModalImg" src="" alt="Large Image">
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('myModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function openImageModal(src) {
+            document.getElementById('imageModalImg').src = src;
+            document.getElementById('imageModal').style.display = "block";
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('imageModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        document.querySelectorAll('.modal-gallery img').forEach(img => {
+            img.addEventListener('click', (event) => {
+                openImageModal(event.target.src);
+            });
+        });
+    </script>
+
+</body>
+</html>
