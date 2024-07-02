@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="facilities.css">
     <link rel="stylesheet" href="format.css">
     <link rel="stylesheet" href="gallery.css">
+    <script src="gallery.js" defer></script>
 </head>
 <body>
     <header>
@@ -99,45 +100,5 @@
             <img id="imageModalImg" src="" alt="Large Image">
         </div>
     </div>
-
-    <script>
-        function openModal() {
-            document.getElementById('myModal').style.display = "block";
-        }
-
-        function closeModal() {
-            document.getElementById('myModal').style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            var modal = document.getElementById('myModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        function openImageModal(src) {
-            document.getElementById('imageModalImg').src = src;
-            document.getElementById('imageModal').style.display = "block";
-        }
-
-        function closeImageModal() {
-            document.getElementById('imageModal').style.display = "none";
-        }
-
-        window.onclick = function(event) {
-            var modal = document.getElementById('imageModal');
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        document.querySelectorAll('.modal-gallery img').forEach(img => {
-            img.addEventListener('click', (event) => {
-                openImageModal(event.target.src);
-            });
-        });
-    </script>
-
 </body>
 </html>
