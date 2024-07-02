@@ -16,7 +16,7 @@
         header {
             background: url(images/banner.jpg) no-repeat center center/cover;
             color: #fff;
-            padding: 80px 0;
+            padding: 60px 0;
             text-align: center;
             position: relative;
         }
@@ -35,45 +35,72 @@
         header h1 {
             position: relative;
             z-index: 2;
-            font-size: 48px;
+            font-size: 36px;
             margin: 0;
+        }
+
+        nav {
+            background-color: #007bff;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
         }
 
         .container {
             max-width: 800px;
             margin: 20px auto;
             padding: 30px;
-            background: url('images/images.jpg') no-repeat center center/cover;
-            color: #fff;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             margin-top: 0;
-            font-size: 28px;
-            color: #fff;
+            font-size: 24px;
+            color: #333;
         }
 
         .contact-info {
             display: flex;
             justify-content: space-between;
             margin-bottom: 30px;
+            text-align: center;
         }
 
         .contact-info div {
             flex: 1;
-            text-align: center;
         }
 
         .contact-info img {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
         }
 
         .contact-info p {
             margin-top: 10px;
             font-size: 16px;
+            color: #333;
         }
 
         input[type="text"],
@@ -85,7 +112,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: #fff;
             color: #333;
         }
 
@@ -119,13 +146,6 @@
             margin-bottom: 5px;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group textarea {
-            width: calc(100% - 24px);
-            margin-top: 5px;
-        }
-
         .confirmation-message {
             margin-bottom: 20px;
             padding: 15px;
@@ -152,13 +172,18 @@
     <header>
         <h1>Meriton Suites</h1>
     </header>
-    <!-- <div class="container">
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rooms.html">Rooms</a></li>
+            <li><a href="facilities.html">Facilities</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="login.php">Login</a></li>
+        </ul>
+    </nav>
+    <div class="container">
         <h2>Contact Us</h2>
-        <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-            <div class="confirmation-message">
-                Thank you for your message! We will get back to you soon.
-            </div>
-        <?php endif; ?> -->
+       
         <div class="contact-info">
             <div>
                 <img src="images/phone_icon.jpg" alt="Phone Icon">

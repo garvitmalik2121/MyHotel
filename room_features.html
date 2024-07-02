@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Room Comparison</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General reset and styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/background_image.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 1200px;
+            width: 100%;
+            overflow-y: auto;
+        }
+        .room-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .room {
+            flex: 1 1 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+            max-width: 300px;
+            cursor: pointer;
+        }
+        .room:hover {
+            transform: translateY(-5px);
+        }
+        .room h2 {
+            margin-top: 0;
+        }
+        .room img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .room ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .room ul li {
+            margin-bottom: 5px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        .modal-content img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Compare Hotel Rooms</h1>
+        </header>
+        <div class="room-container">
+            <section class="room" id="room1" onclick="openModal('room1')">
+                <h2>Deluxe Room</h2>
+                <img src="images/delux.jpg" alt="Deluxe Room">
+                <ul>
+                    <li>Price: $200/night</li>
+                    <li>Size: 30 sqm</li>
+                    <li>Bed: King</li>
+                    <li>View: Sea</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room2" onclick="openModal('room2')">
+                <h2>Standard Room</h2>
+                <img src="images/standard.jpeg" alt="Standard Room">
+                <ul>
+                    <li>Price: $100/night</li>
+                    <li>Size: 20 sqm</li>
+                    <li>Bed: Queen</li>
+                    <li>View: City</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room3" onclick="openModal('room3')">
+                <h2>Suite</h2>
+                <img src="images/suites.jpg" alt="Suite">
+                <ul>
+                    <li>Price: $300/night</li>
+                    <li>Size: 50 sqm</li>
+                    <li>Bed: King</li>
+                    <li>View: Sea</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <!-- Additional Rooms -->
+            <section class="room" id="room4" onclick="openModal('room4')">
+                <h2>Junior Suite</h2>
+                <img src="images/junior suites.jpg" alt="Junior Suite">
+                <ul>
+                    <li>Price: $250/night</li>
+                    <li>Size: 40 sqm</li>
+                    <li>Bed: Queen</li>
+                    <li>View: Park</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room5" onclick="openModal('room5')">
+                <h2>Family Room</h2>
+                <img src="images/family.jpg" alt="Family Room">
+                <ul>
+                    <li>Price: $220/night</li>
+                    <li>Size: 35 sqm</li>
+                    <li>Bed: Two Queens</li>
+                    <li>View: Garden</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room6" onclick="openModal('room6')">
+                <h2>Single Room</h2>
+                <img src="images/single.jpg" alt="Single Room">
+                <ul>
+                    <li>Price: $80/night</li>
+                    <li>Size: 15 sqm</li>
+                    <li>Bed: Single</li>
+                    <li>View: City</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room7" onclick="openModal('room7')">
+                <h2>Double Room</h2>
+                <img src="images/double.jpg" alt="Double Room">
+                <ul>
+                    <li>Price: $150/night</li>
+                    <li>Size: 25 sqm</li>
+                    <li>Bed: Double</li>
+                    <li>View: Courtyard</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room8" onclick="openModal('room8')">
+                <h2>Executive Suite</h2>
+                <img src="images/execurtive.jpg" alt="Executive Suite">
+                <ul>
+                    <li>Price: $350/night</li>
+                    <li>Size: 60 sqm</li>
+                    <li>Bed: King</li>
+                    <li>View: Sea</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room9" onclick="openModal('room9')">
+                <h2>Presidential Suite</h2>
+                <img src="images/presidential.jpg" alt="Presidential Suite">
+                <ul>
+                    <li>Price: $500/night</li>
+                    <li>Size: 100 sqm</li>
+                    <li>Bed: King</li>
+                    <li>View: Sea</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room10" onclick="openModal('room10')">
+                <h2>Economy Room</h2>
+                <img src="images/economy.jpg" alt="Economy Room">
+                <ul>
+                    <li>Price: $70/night</li>
+                    <li>Size: 15 sqm</li>
+                    <li>Bed: Single</li>
+                    <li>View: Street</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room11" onclick="openModal('room11')">
+                <h2>Business Suite</h2>
+                <img src="images/buisness.jpg" alt="Business Suite">
+                <ul>
+                    <li>Price: $280/night</li>
+                    <li>Size: 45 sqm</li>
+                    <li>Bed: Queen</li>
+                    <li>View: City</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room12" onclick="openModal('room12')">
+                <h2>Luxury Suite</h2>
+                <img src="images/luxury.jpg" alt="Luxury Suite">
+                <ul>
+                    <li>Price: $400/night</li>
+                    <li>Size: 70 sqm</li>
+                    <li>Bed: King</li>
+                    <li>View: Sea</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room13" onclick="openModal('room13')">
+                <h2>Superior Room</h2>
+                <img src="images/superior.jpg" alt="Superior Room">
+                <ul>
+                    <li>Price: $180/night</li>
+                    <li>Size: 30 sqm</li>
+                    <li>Bed: Queen</li>
+                    <li>View: City</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room14" onclick="openModal('room14')">
+                <h2>Garden View Room</h2>
+                <img src="images/Garden-View-Room.jpg" alt="Garden View Room">
+                <ul>
+                    <li>Price: $160/night</li>
+                    <li>Size: 25 sqm</li>
+                    <li>Bed: Double</li>
+                    <li>View: Garden</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <section class="room" id="room15" onclick="openModal('room15')">
+                <h2>Penthouse Suite</h2>
+                <img src="images/pentahouse.jpg" alt="Penthouse Suite">
+                <ul>
+                    <li>Price: $600/night</li>
+                    <li>Size: 120 sqm</li>
+                    <li>Bed: King</li>
+                    <li>View: Sea</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modals for Room Details -->
+    <div id="modal-room1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room1')">&times;</span>
+            <h2>Deluxe Room Details</h2>
+            <img src="images/delux.jpg" alt="Deluxe Room">
+            <ul>
+                <li>Price: $200/night</li>
+                <li>Size: 30 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This room offers a stunning sea view with modern amenities and luxurious comfort.</p>
+            <button onclick="compareRoom('room1')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room2')">&times;</span>
+            <h2>Standard Room Details</h2>
+            <img src="images/standard.jpeg" alt="Standard Room">
+            <ul>
+                <li>Price: $100/night</li>
+                <li>Size: 20 sqm</li>
+                <li>Bed: Queen</li>
+                <li>View: City</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Comfortable and cozy, this room is perfect for business travelers and short stays.</p>
+            <button onclick="compareRoom('room2')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room3')">&times;</span>
+            <h2>Suite Details</h2>
+            <img src="images/suites.jpg" alt="Suite">
+            <ul>
+                <li>Price: $300/night</li>
+                <li>Size: 50 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Experience luxury and space with our suite that offers unparalleled views and comfort.</p>
+            <button onclick="compareRoom('room3')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room4')">&times;</span>
+            <h2>Junior Suite Details</h2>
+            <img src="images/junior suites.jpg" alt="Junior Suite">
+            <ul>
+                <li>Price: $250/night</li>
+                <li>Size: 40 sqm</li>
+                <li>Bed: Queen</li>
+                <li>View: Park</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Spacious and elegant, the Junior Suite is ideal for those looking for a bit more luxury.</p>
+            <button onclick="compareRoom('room4')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room5')">&times;</span>
+            <h2>Family Room Details</h2>
+            <img src="images/family.jpg" alt="Family Room">
+            <ul>
+                <li>Price: $220/night</li>
+                <li>Size: 35 sqm</li>
+                <li>Bed: Two Queens</li>
+                <li>View: Garden</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Perfect for families, this room offers ample space and a beautiful garden view.</p>
+            <button onclick="compareRoom('room5')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room6" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room6')">&times;</span>
+            <h2>Single Room Details</h2>
+            <img src="images/single.jpg" alt="Single Room">
+            <ul>
+                <li>Price: $80/night</li>
+                <li>Size: 15 sqm</li>
+                <li>Bed: Single</li>
+                <li>View: City</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>A cozy and affordable option for solo travelers with all essential amenities.</p>
+            <button onclick="compareRoom('room6')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room7" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room7')">&times;</span>
+            <h2>Double Room Details</h2>
+            <img src="images/double.jpg" alt="Double Room">
+            <ul>
+                <li>Price: $150/night</li>
+                <li>Size: 25 sqm</li>
+                <li>Bed: Double</li>
+                <li>View: Courtyard</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Our double room offers comfort and convenience with a peaceful courtyard view.</p>
+            <button onclick="compareRoom('room7')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room8" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room8')">&times;</span>
+            <h2>Executive Suite Details</h2>
+            <img src="images/execurtive.jpg" alt="Executive Suite">
+            <ul>
+                <li>Price: $350/night</li>
+                <li>Size: 60 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>The Executive Suite is perfect for business travelers seeking luxury and space.</p>
+            <button onclick="compareRoom('room8')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room9" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room9')">&times;</span>
+            <h2>Presidential Suite Details</h2>
+            <img src="images/presidential.jpg" alt="Presidential Suite">
+            <ul>
+                <li>Price: $500/night</li>
+                <li>Size: 100 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Experience the ultimate in luxury with our Presidential Suite, offering the best views and amenities.</p>
+            <button onclick="compareRoom('room9')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room10" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room10')">&times;</span>
+            <h2>Economy Room Details</h2>
+            <img src="images/economy.jpg" alt="Economy Room">
+            <ul>
+                <li>Price: $70/night</li>
+                <li>Size: 15 sqm</li>
+                <li>Bed: Single</li>
+                <li>View: Street</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>An affordable and practical option for budget-conscious travelers.</p>
+            <button onclick="compareRoom('room10')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room11" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room11')">&times;</span>
+            <h2>Business Suite Details</h2>
+            <img src="images/buisness.jpg" alt="Business Suite">
+            <ul>
+                <li>Price: $280/night</li>
+                <li>Size: 45 sqm</li>
+                <li>Bed: Queen</li>
+                <li>View: City</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Designed for business travelers, this suite offers a perfect balance of comfort and functionality.</p>
+            <button onclick="compareRoom('room11')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room12" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room12')">&times;</span>
+            <h2>Luxury Suite Details</h2>
+            <img src="images/luxury.jpg" alt="Luxury Suite">
+            <ul>
+                <li>Price: $400/night</li>
+                <li>Size: 70 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>The Luxury Suite is ideal for those seeking the highest level of comfort and luxury.</p>
+            <button onclick="compareRoom('room12')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room13" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room13')">&times;</span>
+            <h2>Superior Room Details</h2>
+            <img src="images/superior.jpg" alt="Superior Room">
+            <ul>
+                <li>Price: $180/night</li>
+                <li>Size: 30 sqm</li>
+                <li>Bed: Queen</li>
+                <li>View: City</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Our Superior Room offers additional space and enhanced amenities for a more comfortable stay.</p>
+            <button onclick="compareRoom('room13')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room14" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room14')">&times;</span>
+            <h2>Garden View Room Details</h2>
+            <img src="images/Garden-View-Room.jpg" alt="Garden View Room">
+            <ul>
+                <li>Price: $160/night</li>
+                <li>Size: 25 sqm</li>
+                <li>Bed: Double</li>
+                <li>View: Garden</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Enjoy a serene garden view and tranquil atmosphere in our Garden View Room.</p>
+            <button onclick="compareRoom('room14')">Book Now</button>
+        </div>
+    </div>
+
+    <div id="modal-room15" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room15')">&times;</span>
+            <h2>Penthouse Suite Details</h2>
+            <img src="images/pentahouse.jpg" alt="Penthouse Suite">
+            <ul>
+                <li>Price: $600/night</li>
+                <li>Size: 120 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>Indulge in luxury and panoramic sea views in our expansive Penthouse Suite.</p>
+            <button onclick="compareRoom('room15')">Book Now</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal(roomId) {
+            document.getElementById('modal-' + roomId).style.display = 'block';
+        }
+
+        function closeModal(roomId) {
+            document.getElementById('modal-' + roomId).style.display = 'none';
+        }
+
+        function compareRoom(roomId) {
+            // Logic for comparing the selected room
+            alert('Comparing ' + roomId);
+        }
+    </script>
+</body>
+</html>
