@@ -27,17 +27,23 @@
 #facilities, #map {
     flex: 1;
     margin: 10px;
-
 }
 
 #facilities h2, #map h2 {
     text-align: left;
     color: #333;
+    grid-column: span 2;
 }
 
-#facilities ul {
+.facility-lists {
+    display: flex;
+    justify-content: space-between;
+}
+
+.facility-lists ul {
     list-style: none;
     padding: 0;
+    width: 48%;
 }
 
 #facilities li {
@@ -49,7 +55,7 @@
 #facilities img {
     width: 30px;
     height: 30px;
-    margin: 10px;
+    margin-right: 10px;
 }
 
 #facilities span {
@@ -60,10 +66,5 @@
 iframe {
     width: 100%;
     border: none;
-    height: 80%;
-}
-
-#facilities span {
-    font-size: 18px;
-    color: #555;
+    height: 100%;
 }
