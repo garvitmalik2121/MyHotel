@@ -1,0 +1,69 @@
+
+#description {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#description p {
+    font-size: 18px;
+    color: #555;
+    line-height: 1.6;
+}
+
+#content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#facilities, #map {
+    flex: 1;
+    margin: 10px;
+
+}
+
+#facilities h2, #map h2 {
+    text-align: left;
+    color: #333;
+}
+
+#facilities ul {
+    list-style: none;
+    padding: 0;
+}
+
+#facilities li {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+#facilities img {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+}
+
+#facilities span {
+    font-size: 18px;
+    color: #555;
+}
+
+iframe {
+    width: 100%;
+    border: none;
+    height: 80%;
+}
+
+#facilities span {
+    font-size: 18px;
+    color: #555;
+}
