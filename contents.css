@@ -17,6 +17,7 @@
 #content {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start; /* Ensure alignment at the top */
     padding: 20px;
     margin: 20px;
     background-color: #fff;
