@@ -126,7 +126,7 @@
         </header>
         <div class="room-container">
             <!-- Room 1 -->
-            <section class="room" id="room1" onclick="openModal('room1')">
+            <section class="room" onclick="openModal('room1')">
                 <h2>Deluxe Room</h2>
                 <img src="images/delux.jpg" alt="Deluxe Room">
                 <ul>
@@ -138,7 +138,7 @@
                 </ul>
             </section>
             <!-- Room 2 -->
-            <section class="room" id="room2" onclick="openModal('room2')">
+            <section class="room" onclick="openModal('room2')">
                 <h2>Standard Room</h2>
                 <img src="images/standard.jpeg" alt="Standard Room">
                 <ul>
@@ -150,7 +150,7 @@
                 </ul>
             </section>
             <!-- Room 3 -->
-            <section class="room" id="room3" onclick="openModal('room3')">
+            <section class="room" onclick="openModal('room3')">
                 <h2>Suite</h2>
                 <img src="images/suites.jpg" alt="Suite">
                 <ul>
@@ -162,7 +162,7 @@
                 </ul>
             </section>
             <!-- Room 4 -->
-            <section class="room" id="room4" onclick="openModal('room4')">
+            <section class="room" onclick="openModal('room4')">
                 <h2>Family Room</h2>
                 <img src="images/family_room.jpg" alt="Family Room">
                 <ul>
@@ -174,7 +174,7 @@
                 </ul>
             </section>
             <!-- Room 5 -->
-            <section class="room" id="room5" onclick="openModal('room5')">
+            <section class="room" onclick="openModal('room5')">
                 <h2>Single Room</h2>
                 <img src="images/single_room.jpg" alt="Single Room">
                 <ul>
@@ -186,7 +186,7 @@
                 </ul>
             </section>
             <!-- Room 6 -->
-            <section class="room" id="room6" onclick="openModal('room6')">
+            <section class="room" onclick="openModal('room6')">
                 <h2>Presidential Suite</h2>
                 <img src="images/presidential_suite.jpg" alt="Presidential Suite">
                 <ul>
@@ -198,7 +198,7 @@
                 </ul>
             </section>
             <!-- Room 7 -->
-            <section class="room" id="room7" onclick="openModal('room7')">
+            <section class="room" onclick="openModal('room7')">
                 <h2>Junior Suite</h2>
                 <img src="images/junior_suite.jpg" alt="Junior Suite">
                 <ul>
@@ -210,7 +210,7 @@
                 </ul>
             </section>
             <!-- Room 8 -->
-            <section class="room" id="room8" onclick="openModal('room8')">
+            <section class="room" onclick="openModal('room8')">
                 <h2>Economy Room</h2>
                 <img src="images/economy_room.jpg" alt="Economy Room">
                 <ul>
@@ -222,7 +222,7 @@
                 </ul>
             </section>
             <!-- Room 9 -->
-            <section class="room" id="room9" onclick="openModal('room9')">
+            <section class="room" onclick="openModal('room9')">
                 <h2>Luxury Suite</h2>
                 <img src="images/luxury_suite.jpg" alt="Luxury Suite">
                 <ul>
@@ -234,7 +234,7 @@
                 </ul>
             </section>
             <!-- Room 10 -->
-            <section class="room" id="room10" onclick="openModal('room10')">
+            <section class="room" onclick="openModal('room10')">
                 <h2>Business Room</h2>
                 <img src="images/business_room.jpg" alt="Business Room">
                 <ul>
@@ -246,7 +246,7 @@
                 </ul>
             </section>
             <!-- Room 11 -->
-            <section class="room" id="room11" onclick="openModal('room11')">
+            <section class="room" onclick="openModal('room11')">
                 <h2>Accessible Room</h2>
                 <img src="images/accessible_room.jpg" alt="Accessible Room">
                 <ul>
@@ -258,7 +258,7 @@
                 </ul>
             </section>
             <!-- Room 12 -->
-            <section class="room" id="room12" onclick="openModal('room12')">
+            <section class="room" onclick="openModal('room12')">
                 <h2>Executive Suite</h2>
                 <img src="images/executive_suite.jpg" alt="Executive Suite">
                 <ul>
@@ -273,6 +273,7 @@
     </div>
 
     <!-- Modals for each room -->
+    <!-- Example for Room 1 -->
     <div id="modal-room1" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room1')">&times;</span>
@@ -290,7 +291,7 @@
         </div>
     </div>
 
-    <!-- Add modals for the remaining rooms -->
+    <!-- Repeat similar blocks for all other rooms up to Room 12 -->
     <!-- Example for Room 2 -->
     <div id="modal-room2" class="modal">
         <div class="modal-content">
@@ -309,7 +310,7 @@
         </div>
     </div>
 
-    <!-- Repeat similar blocks for all other rooms up to Room 12 -->
+    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 3 -->
     <div id="modal-room3" class="modal">
         <div class="modal-content">
@@ -329,12 +330,164 @@
     </div>
 
     <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 4 -->
+    <div id="modal-room4" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room4')">&times;</span>
+            <h2>Family Room Details</h2>
+            <img src="images/family.jpg" alt="Family Room">
+            <ul>
+                <li>Price: $250/night</li>
+                <li>Size: 40 sqm</li>
+                <li>Bed: 2 Queens</li>
+                <li>View: Garden</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This family room offers a spacious stay with garden views, perfect for families.</p>
+            <button onclick="compareRoom('Family Room')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 5 -->
+    <div id="modal-room5" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room5')">&times;</span>
+            <h2>Single Room Details</h2>
+            <img src="images/single.jpg" alt="Single Room">
+            <ul>
+                <li>Price: $80/night</li>
+                <li>Size: 15 sqm</li>
+                <li>Bed: Single</li>
+                <li>View: Courtyard</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This single room offers a cozy stay with a courtyard view.</p>
+            <button onclick="compareRoom('Single Room')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 6 -->
+    <div id="modal-room6" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room6')">&times;</span>
+            <h2>Presidential Suite Details</h2>
+            <img src="images/presidential.jpg" alt="Presidential Suite">
+            <ul>
+                <li>Price: $500/night</li>
+                <li>Size: 80 sqm</li>
+                <li>Bed: King</li>
+                <li>View: City & Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This presidential suite offers luxurious accommodations with both city and sea views.</p>
+            <button onclick="compareRoom('Presidential Suite')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 7 -->
+    <div id="modal-room7" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room7')">&times;</span>
+            <h2>Junior Suite Details</h2>
+            <img src="images/junior suites.jpg" alt="Junior Suite">
+            <ul>
+                <li>Price: $350/night</li>
+                <li>Size: 60 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This junior suite offers a spacious stay with a beautiful sea view.</p>
+            <button onclick="compareRoom('Junior Suite')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 8 -->
+    <div id="modal-room8" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room8')">&times;</span>
+            <h2>Economy Room Details</h2>
+            <img src="images/economy.jpg" alt="Economy Room">
+            <ul>
+                <li>Price: $60/night</li>
+                <li>Size: 12 sqm</li>
+                <li>Bed: Single</li>
+                <li>View: City</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This economy room offers a budget-friendly stay with city views.</p>
+            <button onclick="compareRoom('Economy Room')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 9 -->
+    <div id="modal-room9" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room9')">&times;</span>
+            <h2>Luxury Suite Details</h2>
+            <img src="images/luxury.jpg" alt="Luxury Suite">
+            <ul>
+                <li>Price: $400/night</li>
+                <li>Size: 70 sqm</li>
+                <li>Bed: King</li>
+                <li>View: Sea</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This luxury suite offers a grand stay with breathtaking sea views.</p>
+            <button onclick="compareRoom('Luxury Suite')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 10 -->
+    <div id="modal-room10" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room10')">&times;</span>
+            <h2>Business Room Details</h2>
+            <img src="images/buisness.jpg" alt="Business Room">
+            <ul>
+                <li>Price: $150/night</li>
+                <li>Size: 25 sqm</li>
+                <li>Bed: Queen</li>
+                <li>View: City</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This business room offers a comfortable stay with city views, ideal for business travelers.</p>
+            <button onclick="compareRoom('Business Room')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 11 -->
+    <div id="modal-room11" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room11')">&times;</span>
+            <h2>Accessible Room Details</h2>
+            <img src="images/enterance.jpg" alt="Accessible Room">
+            <ul>
+                <li>Price: $130/night</li>
+                <li>Size: 22 sqm</li>
+                <li>Bed: Queen</li>
+                <li>View: Courtyard</li>
+                <li>WiFi: Yes</li>
+            </ul>
+            <p>This accessible room offers a comfortable stay with a courtyard view.</p>
+            <button onclick="compareRoom('Accessible Room')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 12 -->
     <div id="modal-room12" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room12')">&times;</span>
             <h2>Executive Suite Details</h2>
-            <img src="images/executive_suite.jpg" alt="Executive Suite">
+            <img src="images/execurtive.jpg" alt="Executive Suite">
             <ul>
                 <li>Price: $450/night</li>
                 <li>Size: 75 sqm</li>
@@ -342,22 +495,38 @@
                 <li>View: City</li>
                 <li>WiFi: Yes</li>
             </ul>
-            <p>This executive suite offers luxurious accommodations with a city view and ample space.</p>
+            <p>This executive suite offers a luxurious stay with city views.</p>
             <button onclick="compareRoom('Executive Suite')">Book Now</button>
         </div>
     </div>
 
     <script>
+        // Function to open modal for a specific room
         function openModal(roomId) {
-            document.getElementById('modal-' + roomId).style.display = 'block';
+            var modal = document.getElementById(`modal-${roomId}`);
+            modal.style.display = "block";
         }
 
+        // Function to close modal for a specific room
         function closeModal(roomId) {
-            document.getElementById('modal-' + roomId).style.display = 'none';
+            var modal = document.getElementById(`modal-${roomId}`);
+            modal.style.display = "none";
         }
 
-        function compareRoom(roomName) {
-            alert('You have selected to book ' + roomName);
+        // Example function for booking or comparison action
+        function compareRoom(roomType) {
+            alert(`You selected: ${roomType}`);
+            // Add your booking or comparison logic here
+        }
+
+        // Close the modal if user clicks outside of it
+        window.onclick = function(event) {
+            var modals = document.querySelectorAll('.modal');
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = "none";
+                }
+            }
         }
     </script>
 </body>
