@@ -1,46 +1,63 @@
 from flask import Flask, request, jsonify
+import mysql.connector
 
 app = Flask(__name__)
 
-# Sample hotel data
-hotels = [
-    {
-        'name': 'Hotel A',
-        'location': 'Beijing',
-        'price': 200,
-        'rating': 8,
-        'facilities': ['gym', 'pool']
-    },
-    {
-        'name': 'Hotel B',
-        'location': 'Shanghai',
-        'price': 150,
-        'rating': 7,
-        'facilities': ['parking', 'restaurant']
-    },
-    # Add more sample hotels
-]
+# 配置数据库连接
+db_config = {
+    'user': 'your_username',
+    'password': 'your_password',
+    'host': 'localhost',
+    'database': 'hotel_db'
+}
 
 @app.route('/search', methods=['POST'])
 def search():
     params = request.form
     location = params.get('location')
-    min_price = int(params.get('minPrice', 0))
-    max_price = int(params.get('maxPrice', 1000))
+    min_price = float(params.get('minPrice', 0))
+    max_price = float(params.get('maxPrice', 1000))
     rating = params.get('rating')
-    facilities = params.getlist('hotel_facilities')
+    star_rating = params.get('star_rating')
+    view_type = params.get('view')
+    hotel_facilities = params.getlist('hotel_facilities')
+    room_facilities = params.getlist('room_facilities')
 
-    results = []
-    for hotel in hotels:
-        if location and hotel['location'] != location:
-            continue
-        if not (min_price <= hotel['price'] <= max_price):
-            continue
-        if rating and hotel['rating'] != int(rating):
-            continue
-        if facilities and not all(facility in hotel['facilities'] for facility in facilities):
-            continue
-        results.append(hotel)
+    query = "SELECT * FROM hotels WHERE price BETWEEN %s AND %s"
+    filters = [min_price, max_price]
+
+    if location:
+        query += " AND location = %s"
+        filters.append(location)
+    
+    if rating:
+        query += " AND rating = %s"
+        filters.append(rating)
+    
+    if star_rating:
+        query += " AND star_rating = %s"
+        filters.append(star_rating)
+    
+    if view_type:
+        query += " AND view_type = %s"
+        filters.append(view_type)
+    
+    if hotel_facilities:
+        for facility in hotel_facilities:
+            query += " AND FIND_IN_SET(%s, facilities)"
+            filters.append(facility)
+    
+    if room_facilities:
+        for facility in room_facilities:
+            query += " AND FIND_IN_SET(%s, room_facilities)"
+            filters.append(facility)
+
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(query, filters)
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
 
     return jsonify(results)
 
