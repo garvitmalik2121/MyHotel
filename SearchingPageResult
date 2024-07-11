@@ -1,0 +1,48 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Sample hotel data
+hotels = [
+    {
+        'name': 'Hotel A',
+        'location': 'Beijing',
+        'price': 200,
+        'rating': 8,
+        'facilities': ['gym', 'pool']
+    },
+    {
+        'name': 'Hotel B',
+        'location': 'Shanghai',
+        'price': 150,
+        'rating': 7,
+        'facilities': ['parking', 'restaurant']
+    },
+    # Add more sample hotels
+]
+
+@app.route('/search', methods=['POST'])
+def search():
+    params = request.form
+    location = params.get('location')
+    min_price = int(params.get('minPrice', 0))
+    max_price = int(params.get('maxPrice', 1000))
+    rating = params.get('rating')
+    facilities = params.getlist('hotel_facilities')
+
+    results = []
+    for hotel in hotels:
+        if location and hotel['location'] != location:
+            continue
+        if not (min_price <= hotel['price'] <= max_price):
+            continue
+        if rating and hotel['rating'] != int(rating):
+            continue
+        if facilities and not all(facility in hotel['facilities'] for facility in facilities):
+            continue
+        results.append(hotel)
+
+    return jsonify(results)
+
+if __name__ == '__main__':
+    app.run(debug=True)
