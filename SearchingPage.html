@@ -71,27 +71,18 @@
         .search-button:hover {
             background-color: #0056b3;
         }
-        #date-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .price-range-container {
-            display: flex;
-            justify-content: space-between;
-        }
-        .price-range-container input {
-            width: 48%;
+        .result-item {
+            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
 </head>
 <body>
 
 <div class="search-container">
     <h1>Hotel Search</h1>
-    <form>
+    <form id="searchForm">
         <!-- Location Filter -->
         <div class="filter-group">
             <label for="location">Location</label>
@@ -104,14 +95,24 @@
             </select>
         </div>
         
+        <!-- Date Filters -->
+        <div class="filter-group">
+            <label for="checkInDate">Check-in Date</label>
+            <input type="text" id="checkInDate" name="checkInDate" placeholder="Select check-in date">
+        </div>
+        <div class="filter-group">
+            <label for="checkOutDate">Check-out Date</label>
+            <input type="text" id="checkOutDate" name="checkOutDate" placeholder="Select check-out date">
+        </div>
+        
         <!-- Price Filter -->
         <div class="filter-group">
             <label for="priceRange">Price Range (per night)</label>
-            <div class="price-range-container">
-                <input type="text" id="minPrice" name="minPrice" placeholder="Min Price">
-                <input type="text" id="maxPrice" name="maxPrice" placeholder="Max Price">
+            <input type="range" id="priceRange" name="priceRange" min="0" max="1000" step="10" oninput="updatePriceOutput()">
+            <div>
+                <span>Min Price: $<span id="minPrice">0</span></span>
+                <span style="float:right">Max Price: $<span id="maxPrice">1000</span></span>
             </div>
-            <input type="range" id="priceRange" name="priceRange" min="0" max="1000" step="10" multiple oninput="updatePriceOutput()">
         </div>
 
         <!-- Star Rating Filter -->
@@ -224,13 +225,35 @@
         </div>
 
         <!-- Room Facilities Filter -->
-        <div class="filter-group">
+       <div class="filter-group">
             <label>Room Facilities</label>
-            <div class="checkbox-container">
-                <div class="checkbox-label">
-                    <input type="checkbox" id="singlebed" name="room_facilities" value="singlebed">
-                    <label for="singlebed">Single Bed</label>
-                </div>
-                <div class="checkbox-label">
-                    <input type="checkbox" id="doublebed" name="room_facilities" value="doublebed">
-                    <label for="doublebed">Double
+            <div class="checkbox-label">
+                <input type="checkbox" id="beds" name="facilities" value="beds">
+                <label for="beds">Number of Beds</label>
+            </div>
+            <div class="checkbox-label">
+                <input type="checkbox" id="hairdryer" name="facilities" value="hairdryer">
+                <label for="hairdryer">Hair Dryer</label>
+            </div>
+            <div class="checkbox-label">
+                <input type="checkbox" id="wifi" name="facilities" value="wifi">
+                <label for="wifi">WiFi</label>
+            </div>
+            <div class="checkbox-label">
+                <input type="checkbox" id="airconditioning" name="facilities" value="airconditioning">
+                <label for="airconditioning">Air Conditioning</label>
+            </div>
+            <div class="checkbox-label">
+                <input type="checkbox" id="breakfast" name="facilities" value="breakfast">
+                <label for="breakfast">Breakfast Included</label>
+            </div>
+            <!-- Additional options can be added here -->
+        </div>
+        
+        <!-- Search Button -->
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+
+</body>
+</html>
