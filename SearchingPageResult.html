@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .search-container, .results-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .search-container h1, .results-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        .filter-group input[type="text"],
+        .filter-group select,
+        .filter-group input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        .checkbox-label input {
+            margin-right: 5px;
+        }
+        .search-button {
+            display: block;
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+        .result-item {
+            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="search-container">
+    <h1>Hotel Search</h1>
+    <form id="searchForm">
+        <!-- Existing filter fields here -->
+
+        <button type="button" class="search-button" onclick="searchHotels()">Search</button>
+    </form>
+</div>
+
+<div class="results-container">
+    <h1>Search Results</h1>
+    <div id="results"></div>
+</div>
+
+<script>
+function searchHotels() {
+    const form = document.getElementById('searchForm');
+    const formData = new FormData(form);
+    const searchParams = new URLSearchParams();
+
+    for (const pair of formData) {
+        searchParams.append(pair[0], pair[1]);
+    }
+
+    fetch('/search', {
+        method: 'POST',
+        body: searchParams
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayResults(data);
+    });
+}
+
+function displayResults(data) {
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = '';
+
+    if (data.length === 0) {
+        resultsContainer.innerHTML = '<p>No results found</p>';
+        return;
+    }
+
+    data.forEach(hotel => {
+        const hotelDiv = document.createElement('div');
+        hotelDiv.classList.add('result-item');
+        hotelDiv.innerHTML = `
+            <h2>${hotel.name}</h2>
+            <p>${hotel.location}</p>
+            <p>Price: $${hotel.price}</p>
+            <p>Rating: ${hotel.rating}</p>
+            <p>Facilities: ${hotel.facilities.join(', ')}</p>
+        `;
+        resultsContainer.appendChild(hotelDiv);
+    });
+}
+</script>
+
+</body>
+</html>

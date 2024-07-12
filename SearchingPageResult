@@ -1,0 +1,65 @@
+from flask import Flask, request, jsonify
+import mysql.connector
+
+app = Flask(__name__)
+
+# 配置数据库连接
+db_config = {
+    'user': 'your_username',
+    'password': 'your_password',
+    'host': 'localhost',
+    'database': 'hotel_db'
+}
+
+@app.route('/search', methods=['POST'])
+def search():
+    params = request.form
+    location = params.get('location')
+    min_price = float(params.get('minPrice', 0))
+    max_price = float(params.get('maxPrice', 1000))
+    rating = params.get('rating')
+    star_rating = params.get('star_rating')
+    view_type = params.get('view')
+    hotel_facilities = params.getlist('hotel_facilities')
+    room_facilities = params.getlist('room_facilities')
+
+    query = "SELECT * FROM hotels WHERE price BETWEEN %s AND %s"
+    filters = [min_price, max_price]
+
+    if location:
+        query += " AND location = %s"
+        filters.append(location)
+    
+    if rating:
+        query += " AND rating = %s"
+        filters.append(rating)
+    
+    if star_rating:
+        query += " AND star_rating = %s"
+        filters.append(star_rating)
+    
+    if view_type:
+        query += " AND view_type = %s"
+        filters.append(view_type)
+    
+    if hotel_facilities:
+        for facility in hotel_facilities:
+            query += " AND FIND_IN_SET(%s, facilities)"
+            filters.append(facility)
+    
+    if room_facilities:
+        for facility in room_facilities:
+            query += " AND FIND_IN_SET(%s, room_facilities)"
+            filters.append(facility)
+
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute(query, filters)
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return jsonify(results)
+
+if __name__ == '__main__':
+    app.run(debug=True)
