@@ -71,6 +71,20 @@
         .search-button:hover {
             background-color: #0056b3;
         }
+        #date-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .price-range-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .price-range-container input {
+            width: 48%;
+        }
     </style>
 </head>
 <body>
@@ -92,11 +106,14 @@
         
         <!-- Price Filter -->
         <div class="filter-group">
-            <label for="price">Price Range (per night)</label>
-            <input type="range" id="priceRange" name="priceRange" min="0" max="1000" step="10" oninput="document.getElementById('priceOutput').value = this.value">
-            <input type="text" id="priceOutput" name="priceOutput" placeholder="e.g., 100-500">
+            <label for="priceRange">Price Range (per night)</label>
+            <div class="price-range-container">
+                <input type="text" id="minPrice" name="minPrice" placeholder="Min Price">
+                <input type="text" id="maxPrice" name="maxPrice" placeholder="Max Price">
+            </div>
+            <input type="range" id="priceRange" name="priceRange" min="0" max="1000" step="10" multiple oninput="updatePriceOutput()">
         </div>
-        
+
         <!-- Star Rating Filter -->
         <div class="filter-group">
             <label>Star Rating</label>
@@ -216,13 +233,4 @@
                 </div>
                 <div class="checkbox-label">
                     <input type="checkbox" id="doublebed" name="room_facilities" value="doublebed">
-                    <label for="doublebed">Double Bed</label>
-                </div>
-                <div class="checkbox-label">
-                    <input type="checkbox" id="hairdryer" name="room_facilities" value="hairdryer">
-                    <label for="hairdryer">Hair Dryer</label>
-                </div>
-                <div class="checkbox-label">
-                    <input type="checkbox" id="wifi" name="room_facilities" value="wifi">
-                   
-
+                    <label for="doublebed">Double
