@@ -557,10 +557,17 @@
             document.getElementById('modal-' + roomId).style.display = 'none';
         }
 
+        // function compareRoom(roomId) {
+        //     // Logic for comparing the selected room
+        //     alert('Comparing ' + roomId);
+        // }
         function compareRoom(roomId) {
-            // Logic for comparing the selected room
-            alert('Comparing ' + roomId);
-        }
+    // Assuming the checkout page is named checkout.php in the same folder
+    let checkoutUrl = 'checkout.php'; // URL of the checkout page
+
+    // Redirect the user to the checkout page
+    window.location.href = checkoutUrl;
+}
     </script>
 </body>
 </html>
