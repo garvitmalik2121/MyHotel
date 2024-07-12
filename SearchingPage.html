@@ -20,51 +20,69 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .search-container h1 {
-            margin-top: 0;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
         }
         .filter-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .filter-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            color: #555;
         }
-        .filter-group input, .filter-group select {
+        .filter-group input[type="text"],
+        .filter-group select,
+        .filter-group input[type="range"] {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
             box-sizing: border-box;
         }
-        .filter-group select {
-            height: 40px;
+        .checkbox-container {
+            display: flex;
+            flex-wrap: wrap;
         }
-        .filter-group input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
-        }
-        .filter-group .checkbox-label {
-            display: inline-block;
+        .checkbox-label {
+            display: flex;
+            align-items: center;
             margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        .checkbox-label input {
+            margin-right: 5px;
         }
         .search-button {
+            display: block;
+            width: 100%;
             background-color: #007bff;
             color: #fff;
             border: none;
-            padding: 10px 20px;
+            padding: 15px;
             cursor: pointer;
             font-size: 16px;
             border-radius: 5px;
+            text-align: center;
         }
         .search-button:hover {
             background-color: #0056b3;
         }
+        .result-item {
+            border-bottom: 1px solid #ccc;
+            padding: 15px 0;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
 </head>
 <body>
 
 <div class="search-container">
     <h1>Hotel Search</h1>
-    <form>
+    <form id="searchForm">
         <!-- Location Filter -->
         <div class="filter-group">
             <label for="location">Location</label>
@@ -77,29 +95,98 @@
             </select>
         </div>
         
-        <!-- Price Filter -->
+        <!-- Date Filters -->
         <div class="filter-group">
-            <label for="price">Price Range (per night)</label>
-            <input type="text" id="price" name="price" placeholder="e.g., 100-500">
+            <label for="checkInDate">Check-in Date</label>
+            <input type="text" id="checkInDate" name="checkInDate" placeholder="Select check-in date">
+        </div>
+        <div class="filter-group">
+            <label for="checkOutDate">Check-out Date</label>
+            <input type="text" id="checkOutDate" name="checkOutDate" placeholder="Select check-out date">
         </div>
         
+        <!-- Price Filter -->
+        <div class="filter-group">
+            <label for="priceRange">Price Range (per night)</label>
+            <input type="range" id="priceRange" name="priceRange" min="0" max="1000" step="10" oninput="updatePriceOutput()">
+            <div>
+                <span>Min Price: $<span id="minPrice">0</span></span>
+                <span style="float:right">Max Price: $<span id="maxPrice">1000</span></span>
+            </div>
+        </div>
+
         <!-- Star Rating Filter -->
         <div class="filter-group">
-            <label for="stars">Star Rating</label>
-            <select id="stars" name="stars">
-                <option value="">Select Star Rating</option>
-                <option value="5">5 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="2">2 Stars</option>
-                <option value="1">1 Star</option>
-            </select>
+            <label>Star Rating</label>
+            <div class="checkbox-container">
+                <div class="checkbox-label">
+                    <input type="checkbox" id="5stars" name="star_rating" value="5">
+                    <label for="5stars">5 Stars</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="4stars" name="star_rating" value="4">
+                    <label for="4stars">4 Stars</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="3stars" name="star_rating" value="3">
+                    <label for="3stars">3 Stars</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="2stars" name="star_rating" value="2">
+                    <label for="2stars">2 Stars</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="1star" name="star_rating" value="1">
+                    <label for="1star">1 Star</label>
+                </div>
+            </div>
         </div>
 
         <!-- Customer Rating Filter -->
         <div class="filter-group">
-            <label for="rating">Customer Rating (1-10)</label>
-            <input type="text" id="rating" name="rating" placeholder="e.g., 7-10">
+            <label>Customer Rating (1-10)</label>
+            <div class="checkbox-container">
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating10" name="customer_rating" value="10">
+                    <label for="rating10">10</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating9" name="customer_rating" value="9">
+                    <label for="rating9">9</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating8" name="customer_rating" value="8">
+                    <label for="rating8">8</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating7" name="customer_rating" value="7">
+                    <label for="rating7">7</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating6" name="customer_rating" value="6">
+                    <label for="rating6">6</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating5" name="customer_rating" value="5">
+                    <label for="rating5">5</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating4" name="customer_rating" value="4">
+                    <label for="rating4">4</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating3" name="customer_rating" value="3">
+                    <label for="rating3">3</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating2" name="customer_rating" value="2">
+                    <label for="rating2">2</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="rating1" name="customer_rating" value="1">
+                    <label for="rating1">1</label>
+                </div>
+            </div>
         </div>
 
         <!-- View Type Filter -->
@@ -116,71 +203,49 @@
         <!-- Hotel Facilities Filter -->
         <div class="filter-group">
             <label>Hotel Facilities</label>
-            <div class="checkbox-label">
-                <input type="checkbox" id="gym" name="hotel_facilities" value="gym">
-                <label for="gym">Gym</label>
+            <div class="checkbox-container">
+                <div class="checkbox-label">
+                    <input type="checkbox" id="gym" name="hotel_facilities" value="gym">
+                    <label for="gym">Gym</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="pool" name="hotel_facilities" value="pool">
+                    <label for="pool">Swimming Pool</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="parking" name="hotel_facilities" value="parking">
+                    <label for="parking">Parking</label>
+                </div>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="restaurant" name="hotel_facilities" value="restaurant">
+                    <label for="restaurant">Restaurant</label>
+                </div>
+                <!-- Additional options can be added here -->
             </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="pool" name="hotel_facilities" value="pool">
-                <label for="pool">Swimming Pool</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="parking" name="hotel_facilities" value="parking">
-                <label for="parking">Parking</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="restaurant" name="hotel_facilities" value="restaurant">
-                <label for="restaurant">Restaurant</label>
-            </div>
-            <!-- Additional options can be added here -->
         </div>
 
         <!-- Room Facilities Filter -->
-        <div class="filter-group">
+       <div class="filter-group">
             <label>Room Facilities</label>
             <div class="checkbox-label">
-                <input type="checkbox" id="singlebed" name="room_facilities" value="singlebed">
-                <label for="singlebed">Single Bed</label>
+                <input type="checkbox" id="beds" name="facilities" value="beds">
+                <label for="beds">Number of Beds</label>
             </div>
             <div class="checkbox-label">
-                <input type="checkbox" id="doublebed" name="room_facilities" value="doublebed">
-                <label for="doublebed">Double Bed</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="hairdryer" name="room_facilities" value="hairdryer">
+                <input type="checkbox" id="hairdryer" name="facilities" value="hairdryer">
                 <label for="hairdryer">Hair Dryer</label>
             </div>
             <div class="checkbox-label">
-                <input type="checkbox" id="wifi" name="room_facilities" value="wifi">
+                <input type="checkbox" id="wifi" name="facilities" value="wifi">
                 <label for="wifi">WiFi</label>
             </div>
             <div class="checkbox-label">
-                <input type="checkbox" id="airconditioning" name="room_facilities" value="airconditioning">
+                <input type="checkbox" id="airconditioning" name="facilities" value="airconditioning">
                 <label for="airconditioning">Air Conditioning</label>
             </div>
             <div class="checkbox-label">
-                <input type="checkbox" id="breakfast" name="room_facilities" value="breakfast">
+                <input type="checkbox" id="breakfast" name="facilities" value="breakfast">
                 <label for="breakfast">Breakfast Included</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="bathroom" name="room_facilities" value="bathroom">
-                <label for="bathroom">Bathroom</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="balcony" name="room_facilities" value="balcony">
-                <label for="balcony">Balcony</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="kitchen" name="room_facilities" value="kitchen">
-                <label for="kitchen">Kitchen</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="tv" name="room_facilities" value="tv">
-                <label for="tv">TV</label>
-            </div>
-            <div class="checkbox-label">
-                <input type="checkbox" id="fridge" name="room_facilities" value="fridge">
-                <label for="fridge">Fridge</label>
             </div>
             <!-- Additional options can be added here -->
         </div>

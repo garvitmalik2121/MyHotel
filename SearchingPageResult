@@ -3,7 +3,7 @@ import mysql.connector
 
 app = Flask(__name__)
 
-# 配置数据库连接
+# database connect
 db_config = {
     'user': 'your_username',
     'password': 'your_password',
