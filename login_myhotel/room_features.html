@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Room Comparison</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
         /* General reset and styling */
         * {
@@ -20,8 +19,8 @@
             background-attachment: fixed;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: flex-start;
+            min-height: 100vh;
             margin: 0;
             padding: 20px;
         }
@@ -34,12 +33,15 @@
             width: 100%;
             overflow-y: auto;
         }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
         .room-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
-            margin-top: 20px;
         }
         .room {
             flex: 1 1 300px;
@@ -123,7 +125,8 @@
             <h1>Compare Hotel Rooms</h1>
         </header>
         <div class="room-container">
-            <section class="room" id="room1" onclick="openModal('room1')">
+            <!-- Room 1 -->
+            <section class="room" onclick="openModal('room1')">
                 <h2>Deluxe Room</h2>
                 <img src="images/delux.jpg" alt="Deluxe Room">
                 <ul>
@@ -134,7 +137,8 @@
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room2" onclick="openModal('room2')">
+            <!-- Room 2 -->
+            <section class="room" onclick="openModal('room2')">
                 <h2>Standard Room</h2>
                 <img src="images/standard.jpeg" alt="Standard Room">
                 <ul>
@@ -145,7 +149,8 @@
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room3" onclick="openModal('room3')">
+            <!-- Room 3 -->
+            <section class="room" onclick="openModal('room3')">
                 <h2>Suite</h2>
                 <img src="images/suites.jpg" alt="Suite">
                 <ul>
@@ -156,54 +161,46 @@
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <!-- Additional Rooms -->
-            <section class="room" id="room4" onclick="openModal('room4')">
-                <h2>Junior Suite</h2>
-                <img src="images/junior suites.jpg" alt="Junior Suite">
-                <ul>
-                    <li>Price: $250/night</li>
-                    <li>Size: 40 sqm</li>
-                    <li>Bed: Queen</li>
-                    <li>View: Park</li>
-                    <li>WiFi: Yes</li>
-                </ul>
-            </section>
-            <section class="room" id="room5" onclick="openModal('room5')">
+            <!-- Room 4 -->
+            <section class="room" onclick="openModal('room4')">
                 <h2>Family Room</h2>
                 <img src="images/family.jpg" alt="Family Room">
                 <ul>
-                    <li>Price: $220/night</li>
-                    <li>Size: 35 sqm</li>
-                    <li>Bed: Two Queens</li>
+                    <li>Price: $250/night</li>
+                    <li>Size: 40 sqm</li>
+                    <li>Bed: 2 Queens</li>
                     <li>View: Garden</li>
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room6" onclick="openModal('room6')">
+            <!-- Room 5 -->
+            <section class="room" onclick="openModal('room5')">
                 <h2>Single Room</h2>
                 <img src="images/single.jpg" alt="Single Room">
                 <ul>
                     <li>Price: $80/night</li>
                     <li>Size: 15 sqm</li>
                     <li>Bed: Single</li>
-                    <li>View: City</li>
-                    <li>WiFi: Yes</li>
-                </ul>
-            </section>
-            <section class="room" id="room7" onclick="openModal('room7')">
-                <h2>Double Room</h2>
-                <img src="images/double.jpg" alt="Double Room">
-                <ul>
-                    <li>Price: $150/night</li>
-                    <li>Size: 25 sqm</li>
-                    <li>Bed: Double</li>
                     <li>View: Courtyard</li>
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room8" onclick="openModal('room8')">
-                <h2>Executive Suite</h2>
-                <img src="images/execurtive.jpg" alt="Executive Suite">
+            <!-- Room 6 -->
+            <section class="room" onclick="openModal('room6')">
+                <h2>Presidential Suite</h2>
+                <img src="images/presidential.jpg" alt="Presidential Suite">
+                <ul>
+                    <li>Price: $500/night</li>
+                    <li>Size: 80 sqm</li>
+                    <li>Bed: King</li>
+                    <li>View: City & Sea</li>
+                    <li>WiFi: Yes</li>
+                </ul>
+            </section>
+            <!-- Room 7 -->
+            <section class="room" onclick="openModal('room7')">
+                <h2>Junior Suite</h2>
+                <img src="images/junior suites.jpg" alt="Junior Suite">
                 <ul>
                     <li>Price: $350/night</li>
                     <li>Size: 60 sqm</li>
@@ -212,40 +209,20 @@
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room9" onclick="openModal('room9')">
-                <h2>Presidential Suite</h2>
-                <img src="images/presidential.jpg" alt="Presidential Suite">
-                <ul>
-                    <li>Price: $500/night</li>
-                    <li>Size: 100 sqm</li>
-                    <li>Bed: King</li>
-                    <li>View: Sea</li>
-                    <li>WiFi: Yes</li>
-                </ul>
-            </section>
-            <section class="room" id="room10" onclick="openModal('room10')">
+            <!-- Room 8 -->
+            <section class="room" onclick="openModal('room8')">
                 <h2>Economy Room</h2>
                 <img src="images/economy.jpg" alt="Economy Room">
                 <ul>
-                    <li>Price: $70/night</li>
-                    <li>Size: 15 sqm</li>
+                    <li>Price: $60/night</li>
+                    <li>Size: 12 sqm</li>
                     <li>Bed: Single</li>
-                    <li>View: Street</li>
-                    <li>WiFi: Yes</li>
-                </ul>
-            </section>
-            <section class="room" id="room11" onclick="openModal('room11')">
-                <h2>Business Suite</h2>
-                <img src="images/buisness.jpg" alt="Business Suite">
-                <ul>
-                    <li>Price: $280/night</li>
-                    <li>Size: 45 sqm</li>
-                    <li>Bed: Queen</li>
                     <li>View: City</li>
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room12" onclick="openModal('room12')">
+            <!-- Room 9 -->
+            <section class="room" onclick="openModal('room9')">
                 <h2>Luxury Suite</h2>
                 <img src="images/luxury.jpg" alt="Luxury Suite">
                 <ul>
@@ -256,310 +233,425 @@
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room13" onclick="openModal('room13')">
-                <h2>Superior Room</h2>
-                <img src="images/superior.jpg" alt="Superior Room">
+            <!-- Room 10 -->
+            <section class="room" onclick="openModal('room10')">
+                <h2>Business Room</h2>
+                <img src="images/buisness.jpg" alt="Business Room">
                 <ul>
-                    <li>Price: $180/night</li>
-                    <li>Size: 30 sqm</li>
+                    <li>Price: $150/night</li>
+                    <li>Size: 25 sqm</li>
                     <li>Bed: Queen</li>
                     <li>View: City</li>
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room14" onclick="openModal('room14')">
-                <h2>Garden View Room</h2>
-                <img src="images/Garden-View-Room.jpg" alt="Garden View Room">
+            <!-- Room 11 -->
+            <section class="room" onclick="openModal('room11')">
+                <h2>Accessible Room</h2>
+                <img src="images/enterance.jpg" alt="Accessible Room">
                 <ul>
-                    <li>Price: $160/night</li>
-                    <li>Size: 25 sqm</li>
-                    <li>Bed: Double</li>
-                    <li>View: Garden</li>
+                    <li>Price: $130/night</li>
+                    <li>Size: 22 sqm</li>
+                    <li>Bed: Queen</li>
+                    <li>View: Courtyard</li>
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
-            <section class="room" id="room15" onclick="openModal('room15')">
-                <h2>Penthouse Suite</h2>
-                <img src="images/pentahouse.jpg" alt="Penthouse Suite">
+            <!-- Room 12 -->
+            <section class="room" onclick="openModal('room12')">
+                <h2>Executive Suite</h2>
+                <img src="images/execurtive.jpg" alt="Executive Suite">
                 <ul>
-                    <li>Price: $600/night</li>
-                    <li>Size: 120 sqm</li>
+                    <li>Price: $450/night</li>
+                    <li>Size: 75 sqm</li>
                     <li>Bed: King</li>
-                    <li>View: Sea</li>
+                    <li>View: City</li>
                     <li>WiFi: Yes</li>
                 </ul>
             </section>
         </div>
     </div>
 
-    <!-- Modals for Room Details -->
+    <!-- Modals for each room -->
+    <!-- Example for Room 1 -->
     <div id="modal-room1" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room1')">&times;</span>
             <h2>Deluxe Room Details</h2>
             <img src="images/delux.jpg" alt="Deluxe Room">
             <ul>
-                <li>Price: $200/night</li>
-                <li>Size: 30 sqm</li>
-                <li>Bed: King</li>
-                <li>View: Sea</li>
-                <li>WiFi: Yes</li>
+                <li>En-suite bathroom with bathtub and separate shower</li>
+                    <li>Work desk and ergonomic chair</li>
+                    <li>Flat-screen TV with cable channels</li>
+                    <li>Mini-bar stocked with refreshments</li>
+                    <li>In-room safe for valuables</li>
+                    <li>Coffee and tea making facilities</li>
+                    <li>Complimentary toiletries and bathrobe</li>
+                    <li>24-hour room service available</li>
             </ul>
-            <p>This room offers a stunning sea view with modern amenities and luxurious comfort.</p>
-            <button onclick="compareRoom('room1')">Book Now</button>
+            <p> A Deluxe Room is designed to offer guests a luxurious and comfortable experience during their stay. These rooms are often larger than standard accommodations, providing around 30 square meters of space, which allows for a spacious environment. They are typically furnished with a King-sized bed, ensuring a restful sleep, and often include additional amenities such as a work desk, a cozy seating area for relaxation, and a well-appointed bathroom with upscale toiletries.
+
+                One of the distinguishing features of a Deluxe Room is its view, which is usually a highlight of the guest experience. Whether overlooking the serene sea, lush gardens, or vibrant cityscape, the view adds an extra layer of charm to the room. In terms of technology, WiFi access is readily available to keep guests connected throughout their stay.
+                
+                The décor of a Deluxe Room is carefully curated to blend elegance with comfort, featuring tasteful furnishings and soothing color palettes. These rooms are ideal for travelers seeking a more indulgent and memorable hotel experience, combining modern conveniences with a touch of luxury that enhances the overall ambiance of their stay.</p>
+            <button onclick="compareRoom('Deluxe Room')">Book Now</button>
         </div>
     </div>
 
+    <!-- Repeat similar blocks for all other rooms up to Room 12 -->
+    <!-- Example for Room 2 -->
     <div id="modal-room2" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room2')">&times;</span>
             <h2>Standard Room Details</h2>
             <img src="images/standard.jpeg" alt="Standard Room">
             <ul>
-                <li>Price: $100/night</li>
-                <li>Size: 20 sqm</li>
-                <li>Bed: Queen</li>
-                <li>View: City</li>
-                <li>WiFi: Yes</li>
+                 <li>En-suite bathroom with bathtub and separate shower</li>
+                 <li>Work desk and ergonomic chair</li>
+                 <li>Flat-screen TV with cable channels</li>
+                 <li>Mini-bar stocked with refreshments</li>
+                 <li>In-room safe for valuables</li>
+                 <li>Coffee and tea making facilities</li>
+                 <li>Complimentary toiletries and bathrobe</li>
+                <li>24-hour room service available</li>
             </ul>
-            <p>Comfortable and cozy, this room is perfect for business travelers and short stays.</p>
-            <button onclick="compareRoom('room2')">Book Now</button>
+            <ul> 
+               
+            </ul>
+            <p>The Standard Room at our hotel is a haven of comfort and functionality, designed to cater to both leisure and business travelers alike. Spanning approximately 25 square meters, each Standard Room features a well-appointed en-suite bathroom equipped with both a bathtub and a separate shower, ensuring guests can indulge in a luxurious bathing experience of their choice. A spacious work desk paired with an ergonomic chair offers a dedicated space for guests needing to catch up on work or simply unwind with their laptop.
+
+                Entertainment options abound with a flat-screen TV offering a selection of cable channels, perfect for relaxing after a day of exploration or business meetings. Guests can also enjoy the convenience of a mini-bar stocked with a variety of refreshments, ensuring that favorite beverages and snacks are always within reach. For added peace of mind, an in-room safe is provided to store valuables securely.
+                
+                The room is equipped with coffee and tea making facilities, allowing guests to start their mornings or unwind with a hot beverage at any time of day. Complimentary toiletries and a plush bathrobe enhance the guest experience, providing a touch of luxury and comfort during their stay. Our commitment to service is exemplified by 24-hour room service, ensuring that guests can enjoy dining options or other amenities whenever they desire.
+                
+                In summary, our Standard Room offers a blend of essential amenities and thoughtful touches, providing a cozy retreat that meets the diverse needs and preferences of our guests, whether they are here for business or leisure.</p>
+            <button onclick="compareRoom('Standard Room')">Book Now</button>
         </div>
     </div>
 
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 3 -->
     <div id="modal-room3" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room3')">&times;</span>
             <h2>Suite Details</h2>
             <img src="images/suites.jpg" alt="Suite">
             <ul>
-                <li>Price: $300/night</li>
-                <li>Size: 50 sqm</li>
-                <li>Bed: King</li>
-                <li>View: Sea</li>
-                <li>WiFi: Yes</li>
+                <li>Spacious living area with tasteful decor</li>
+                <li>Separate bedroom for privacy</li>
+                <li>Luxurious bathroom with bathtub and separate shower</li>
+                <li>Large flat-screen TV with premium cable channels</li>
+                <li>Well-stocked mini-bar</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Luxury toiletries and plush bathrobes</li>
+                <li>Dedicated work desk with ergonomic chair</li>
+                <li>24-hour room service available</li>
             </ul>
-            <p>Experience luxury and space with our suite that offers unparalleled views and comfort.</p>
-            <button onclick="compareRoom('room3')">Book Now</button>
+            <p>The Suites at our establishment redefine luxury with spaciousness and a focus on unparalleled comfort. Each suite is meticulously crafted to provide a refined experience, combining tasteful decor with premium amenities.
+
+                Step into a world of tranquility with a generously sized living area that invites relaxation and socializing. The separate bedroom offers privacy and a serene retreat, complemented by a luxurious bathroom featuring high-end fixtures, a bathtub, and a separate shower for indulgent bathing experiences.
+                
+                Elegant furnishings throughout the suite create an ambiance of sophistication, while entertainment options include a large flat-screen TV with premium cable channels. A dedicated work desk with an ergonomic chair ensures productivity, making it ideal for both business and leisure travelers.
+                
+                For refreshments, a well-stocked mini-bar awaits, offering a selection of beverages and snacks. An in-room safe provides peace of mind for storing valuables, while coffee and tea facilities are available for enjoying your favorite hot beverages at any time.
+                
+                Luxury toiletries and plush bathrobes enhance your comfort, reflecting our commitment to providing a memorable stay. Personalized service is a hallmark, with attentive staff and 24-hour room service ensuring that every need is met promptly and professionally.
+                
+                Our suites promise an indulgent experience, perfect for travelers seeking refined accommodations that blend luxury with comfort seamlessly.
+                
+                
+                
+                </p>
+            <button onclick="compareRoom('Suite')">Book Now</button>
         </div>
     </div>
 
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 4 -->
     <div id="modal-room4" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room4')">&times;</span>
-            <h2>Junior Suite Details</h2>
-            <img src="images/junior suites.jpg" alt="Junior Suite">
-            <ul>
-                <li>Price: $250/night</li>
-                <li>Size: 40 sqm</li>
-                <li>Bed: Queen</li>
-                <li>View: Park</li>
-                <li>WiFi: Yes</li>
-            </ul>
-            <p>Spacious and elegant, the Junior Suite is ideal for those looking for a bit more luxury.</p>
-            <button onclick="compareRoom('room4')">Book Now</button>
-        </div>
-    </div>
-
-    <div id="modal-room5" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('room5')">&times;</span>
             <h2>Family Room Details</h2>
             <img src="images/family.jpg" alt="Family Room">
             <ul>
-                <li>Price: $220/night</li>
-                <li>Size: 35 sqm</li>
-                <li>Bed: Two Queens</li>
-                <li>View: Garden</li>
-                <li>WiFi: Yes</li>
+                <li>Spacious accommodation with multiple sleeping areas or separate bedrooms</li>
+                <li>Comfortable seating arrangements for relaxation</li>
+                <li>En-suite bathroom with bathtub and separate shower</li>
+                <li>Flat-screen TV with a selection of channels</li>
+                <li>Mini-refrigerator or mini-bar stocked with refreshments</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Complimentary toiletries</li>
+                <li>Children's amenities available upon request</li>
+                <li>Option for connecting rooms</li>
             </ul>
-            <p>Perfect for families, this room offers ample space and a beautiful garden view.</p>
-            <button onclick="compareRoom('room5')">Book Now</button>
+            <p>A Family Room is designed to cater specifically to families or larger groups traveling together, offering a spacious and comfortable accommodation option. It typically includes multiple sleeping areas or separate bedrooms to ensure privacy and convenience for all guests. The room is furnished with a variety of bed configurations, such as double beds, twin beds, or bunk beds, accommodating different family sizes and preferences.
+
+                In addition to the sleeping arrangements, the Family Room features a generous living space where families can gather and relax. This area often includes comfortable seating arrangements, a coffee table, and sometimes a dining table or breakfast bar, providing a dedicated space for meals or leisure activities.
+                
+                Family Rooms are equipped with modern amenities to enhance the comfort of guests. These amenities commonly include an en-suite bathroom with a bathtub and separate shower for convenience, a flat-screen TV with a selection of channels for entertainment, and facilities like a mini-refrigerator or mini-bar stocked with refreshments. Guests also benefit from in-room safes for storing valuables securely, coffee and tea making facilities for added convenience, and complimentary toiletries to ensure a comfortable stay.
+                
+                The decor of Family Rooms is typically designed to create a welcoming and homely atmosphere, often featuring modern furnishings and family-friendly touches. Some Family Rooms may offer additional amenities such as extra storage space, children's amenities, or connecting rooms to accommodate larger families or groups.
+                
+                Overall, a Family Room provides an ideal setting for families looking to enjoy a memorable stay together, combining ample space with essential amenities tailored to meet the needs of all family members.
+                
+                
+                
+                
+                
+                
+                </p>
+            <button onclick="compareRoom('Family Room')">Book Now</button>
         </div>
     </div>
 
-    <div id="modal-room6" class="modal">
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 5 -->
+    <div id="modal-room5" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('room6')">&times;</span>
+            <span class="close" onclick="closeModal('room5')">&times;</span>
             <h2>Single Room Details</h2>
             <img src="images/single.jpg" alt="Single Room">
             <ul>
-                <li>Price: $80/night</li>
-                <li>Size: 15 sqm</li>
-                <li>Bed: Single</li>
-                <li>View: City</li>
-                <li>WiFi: Yes</li>
+                <li>Single bed for one guest</li>
+                <li>Private en-suite bathroom with shower, toilet, and sink</li>
+                <li>Dedicated work desk with ergonomic chair</li>
+                <li>Flat-screen TV with various cable channels</li>
+                <li>Storage options such as wardrobe or closet</li>
+                <li>Mini-refrigerator for storing refreshments</li>
+                <li>Coffee and tea making facilities</li>
+                <li>In-room safe for valuables</li>
+                <li>High-speed internet access</li>
             </ul>
-            <p>A cozy and affordable option for solo travelers with all essential amenities.</p>
-            <button onclick="compareRoom('room6')">Book Now</button>
+            <p>A Single Room is tailored for solo travelers seeking comfort and functionality in a compact space. Typically outfitted with a single bed, these rooms offer a cozy environment for one guest. They feature a private en-suite bathroom equipped with a shower, toilet, and sink, ensuring privacy and convenience. A dedicated work desk with an ergonomic chair caters to business travelers or those needing a personal workspace. Entertainment needs are met with a flat-screen TV, providing access to various channels. Additional amenities may include storage options like a wardrobe or closet, and in-room conveniences such as a mini-refrigerator, coffee and tea making facilities, and a safe for valuables. Access to high-speed internet is often available, making it easy to stay connected during your stay. Single Rooms are designed 
+                to provide everything needed for a comfortable and enjoyable stay for solo travelers.</p>
+            <button onclick="compareRoom('Single Room')">Book Now</button>
         </div>
     </div>
 
-    <div id="modal-room7" class="modal">
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 6 -->
+    <div id="modal-room6" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('room7')">&times;</span>
-            <h2>Double Room Details</h2>
-            <img src="images/double.jpg" alt="Double Room">
-            <ul>
-                <li>Price: $150/night</li>
-                <li>Size: 25 sqm</li>
-                <li>Bed: Double</li>
-                <li>View: Courtyard</li>
-                <li>WiFi: Yes</li>
-            </ul>
-            <p>Our double room offers comfort and convenience with a peaceful courtyard view.</p>
-            <button onclick="compareRoom('room7')">Book Now</button>
-        </div>
-    </div>
-
-    <div id="modal-room8" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('room8')">&times;</span>
-            <h2>Executive Suite Details</h2>
-            <img src="images/execurtive.jpg" alt="Executive Suite">
-            <ul>
-                <li>Price: $350/night</li>
-                <li>Size: 60 sqm</li>
-                <li>Bed: King</li>
-                <li>View: Sea</li>
-                <li>WiFi: Yes</li>
-            </ul>
-            <p>The Executive Suite is perfect for business travelers seeking luxury and space.</p>
-            <button onclick="compareRoom('room8')">Book Now</button>
-        </div>
-    </div>
-
-    <div id="modal-room9" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('room9')">&times;</span>
+            <span class="close" onclick="closeModal('room6')">&times;</span>
             <h2>Presidential Suite Details</h2>
             <img src="images/presidential.jpg" alt="Presidential Suite">
             <ul>
-                <li>Price: $500/night</li>
-                <li>Size: 100 sqm</li>
-                <li>Bed: King</li>
-                <li>View: Sea</li>
-                <li>WiFi: Yes</li>
+                <li>Spacious living room with elegant furnishings</li>
+                <li>Dining area for private meals and gatherings</li>
+                <li>Master bedroom with a king-sized bed and premium linens</li>
+                <li>Luxurious bathroom with a deep soaking tub and separate rain shower</li>
+                <li>Exclusive bath amenities</li>
+                <li>Private terrace or balcony with panoramic views</li>
+                <li>24-hour butler service</li>
+                <li>Personalized concierge assistance</li>
             </ul>
-            <p>Experience the ultimate in luxury with our Presidential Suite, offering the best views and amenities.</p>
-            <button onclick="compareRoom('room9')">Book Now</button>
+            <p>The Presidential Suite stands as the pinnacle of luxury accommodations, 
+                offering discerning guests an unparalleled experience in comfort and sophistication. 
+                Spanning a generous floor area, the suite features meticulously curated interiors
+                 with bespoke furnishings and tasteful artwork, creating an ambiance of refined elegance. 
+                 A grand living room provides ample space for entertainment and relaxation, complemented by a 
+                 dining area ideal for hosting intimate gatherings or private meals. The suite's master bedroom exudes tranquility and indulgence, complete with a king-sized bed adorned with premium linens and a selection of pillows for personalized comfort. The expansive bathroom is a sanctuary of wellness, featuring a deep soaking tub, separate rain shower, and luxurious bath amenities. A private terrace or balcony offers sweeping views of the city skyline or serene landscapes, providing an exclusive retreat for contemplation or outdoor dining. The Presidential Suite ensures an unforgettable stay with dedicated personalized services, including 24-hour butler assistance, ensuring every need is met with meticulous attention to detail, creating a truly memorable experience of luxury and exclusivity.
+
+
+
+
+
+
+            </p>
+            <button onclick="compareRoom('Presidential Suite')">Book Now</button>
         </div>
     </div>
 
-    <div id="modal-room10" class="modal">
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 7 -->
+    <div id="modal-room7" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('room10')">&times;</span>
+            <span class="close" onclick="closeModal('room7')">&times;</span>
+            <h2>Junior Suite Details</h2>
+            <img src="images/junior suites.jpg" alt="Junior Suite">
+            <ul>
+                <li>Separate living area and bedroom</li>
+                <li>High-speed internet access</li>
+                <li>Flat-screen TV with premium channels</li>
+                <li>Well-equipped mini-bar</li>
+                <li>Spacious bathroom with deep soaking tub and separate shower</li>
+                <li>Luxurious toiletries</li>
+                <li>Panoramic views of the city skyline or garden vistas</li>
+            </ul>
+            <p>The Junior Suites at our hotel provide a blend of sophistication and comfort, ideal for both business travelers and leisure guests. These spacious suites feature a separate living area and bedroom, offering ample space to unwind or work in peace. The décor is tastefully appointed with modern furnishings and elegant accents, creating an inviting ambiance.
+
+                Guests can enjoy modern amenities such as high-speed internet access, a flat-screen TV with premium channels, and a well-equipped mini-bar. The spacious bathroom is designed for relaxation, featuring a deep soaking tub, separate shower, and luxurious toiletries.
+                
+                With panoramic views of the city skyline or tranquil garden vistas, our Junior Suites offer a peaceful retreat from the hustle and bustle of daily life. Whether you're visiting for business or pleasure, our Junior Suites provide a luxurious sanctuary where you can truly unwind and rejuvenate.</p>
+            <button onclick="compareRoom('Junior Suite')">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 8 -->
+    <div id="modal-room8" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('room8')">&times;</span>
             <h2>Economy Room Details</h2>
             <img src="images/economy.jpg" alt="Economy Room">
             <ul>
-                <li>Price: $70/night</li>
-                <li>Size: 15 sqm</li>
-                <li>Bed: Single</li>
-                <li>View: Street</li>
-                <li>WiFi: Yes</li>
+                <li>Cozy bed with fresh linens</li>
+                <li>Functional workspace</li>
+                <li>Compact bathroom with a shower</li>
+                <li>Essential amenities</li>
+                <li>Suitable for short stays or budget-conscious travelers</li>
             </ul>
-            <p>An affordable and practical option for budget-conscious travelers.</p>
-            <button onclick="compareRoom('room10')">Book Now</button>
+            <p>Economy rooms are specifically tailored to provide a comfortable and cost-effective accommodation option. They typically feature a cozy bed adorned with fresh linens, ensuring a restful night's sleep. Designed with practicality in mind, these rooms often include a functional workspace where guests can attend to business matters or simply unwind. The bathroom facilities are compact yet efficiently equipped, featuring a shower and essential amenities to meet the basic needs of travelers.
+
+                Despite their smaller size, economy rooms are thoughtfully designed to maximize comfort and convenience. They offer a welcoming atmosphere suitable for short stays or budget-conscious travelers who prioritize value without compromising on essential amenities. Whether traveling for business or leisure, guests can expect a well-appointed space that meets their basic requirements while ensuring a pleasant and affordable lodging experience.</p>
+            <button onclick="compareRoom('Economy Room')">Book Now</button>
         </div>
     </div>
 
-    <div id="modal-room11" class="modal">
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 9 -->
+    <div id="modal-room9" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('room11')">&times;</span>
-            <h2>Business Suite Details</h2>
-            <img src="images/buisness.jpg" alt="Business Suite">
-            <ul>
-                <li>Price: $280/night</li>
-                <li>Size: 45 sqm</li>
-                <li>Bed: Queen</li>
-                <li>View: City</li>
-                <li>WiFi: Yes</li>
-            </ul>
-            <p>Designed for business travelers, this suite offers a perfect balance of comfort and functionality.</p>
-            <button onclick="compareRoom('room11')">Book Now</button>
-        </div>
-    </div>
-
-    <div id="modal-room12" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('room12')">&times;</span>
+            <span class="close" onclick="closeModal('room9')">&times;</span>
             <h2>Luxury Suite Details</h2>
             <img src="images/luxury.jpg" alt="Luxury Suite">
             <ul>
-                <li>Price: $400/night</li>
-                <li>Size: 70 sqm</li>
-                <li>Bed: King</li>
-                <li>View: Sea</li>
-                <li>WiFi: Yes</li>
+                <li>King-size bed with premium linens and pillows</li>
+                <li>En-suite bathroom with marble countertops</li>
+                <li>Deep soaking tub and separate rain shower</li>
+                <li>Luxurious bath amenities</li>
+                <li>Elegant furnishings and decor</li>
+                <li>Dedicated work desk</li>
+                <li>Cozy seating area</li>
+                <li>Large flat-screen TV with cable channels</li>
+                <li>High-speed internet access</li>
+                <li>Well-stocked mini-bar</li>
+                <li>24-hour room service</li>
+                <li>Turndown service</li>
+                <li>Concierge desk</li>
             </ul>
-            <p>The Luxury Suite is ideal for those seeking the highest level of comfort and luxury.</p>
-            <button onclick="compareRoom('room12')">Book Now</button>
+            <p>A luxury room epitomizes the pinnacle of comfort and sophistication, offering discerning guests an unparalleled experience in opulence and refinement. Designed with meticulous attention to detail, these rooms feature expansive layouts that include a spacious bedroom area with a king-size bed adorned with premium linens and pillows for a restful night's sleep. The en-suite bathroom is a sanctuary of relaxation, boasting marble countertops, a deep soaking tub, a separate rain shower, and luxurious bath amenities that ensure a rejuvenating bathing experience.
+
+                The decor exudes elegance and charm, with tasteful furnishings, soft lighting, and artwork that reflects a blend of modern aesthetics and timeless elegance. A dedicated work desk provides a functional space for business travelers, while the cozy seating area invites guests to unwind with a book or enjoy a quiet moment. State-of-the-art technology, including a large flat-screen TV with cable channels, high-speed internet access, and a well-stocked mini-bar, enhances convenience and entertainment.
+                
+                Guests staying in a luxury room can also enjoy exclusive access to personalized services such as 24-hour room service, turndown service, and a concierge desk to cater to their every need. Whether visiting for business or leisure, the luxury room promises a luxurious retreat where every detail is carefully curated to exceed expectations and create an unforgettable stay.</p>
+            <button onclick="compareRoom('Luxury Suite')">Book Now</button>
         </div>
     </div>
 
-    <div id="modal-room13" class="modal">
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 10 -->
+    <div id="modal-room10" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('room13')">&times;</span>
-            <h2>Superior Room Details</h2>
-            <img src="images/superior.jpg" alt="Superior Room">
+            <span class="close" onclick="closeModal('room10')">&times;</span>
+            <h2>Business Room Details</h2>
+            <img src="images/buisness.jpg" alt="Business Room">
             <ul>
-                <li>Price: $180/night</li>
-                <li>Size: 30 sqm</li>
-                <li>Bed: Queen</li>
-                <li>View: City</li>
-                <li>WiFi: Yes</li>
+                <li>Spacious and well-lit work desk</li>
+                <li>Ergonomic chair for optimal comfort</li>
+                <li>High-speed internet access</li>
+                <li>Multiple conveniently located power outlets</li>
+                <li>Separate seating area for meetings or relaxation</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Flat-screen TV with a variety of channels</li>
+                <li>En-suite bathroom with a refreshing rain shower</li>
+                <li>Premium toiletries and plush towels</li>
+                <li>24-hour room service</li>
+                <li>Access to essential business services (printing, copying, faxing)</li>
             </ul>
-            <p>Our Superior Room offers additional space and enhanced amenities for a more comfortable stay.</p>
-            <button onclick="compareRoom('room13')">Book Now</button>
+            <p>The business room is meticulously designed to meet the exacting needs of corporate travelers seeking both productivity and comfort during their stay. It features a spacious and well-lit work desk, complete with an ergonomic chair that promotes optimal posture for extended work sessions. High-speed internet access ensures seamless connectivity for remote work, video conferences, or browsing. Multiple conveniently located power outlets cater to the charging needs of devices, enhancing efficiency. Guests can rejuvenate in the separate seating area, perfect for brief meetings or relaxation after a busy day.
+
+                For added convenience, the room is equipped with coffee and tea making facilities, allowing guests to enjoy a freshly brewed beverage at any time. Entertainment needs are met with a large flat-screen TV offering a variety of channels for leisurely viewing. The en-suite bathroom is elegantly appointed, featuring a refreshing rain shower, plush towels, and premium toiletries that cater to the comfort and well-being of guests.
+                
+                With dedicated room service available around the clock, guests can enjoy meals or snacks in the privacy of their room, accommodating varying schedules and preferences seamlessly. The business room also provides access to essential business services such as printing, copying, and faxing, ensuring that guests can manage work tasks efficiently without leaving the comfort of their accommodation.
+                
+                Whether traveling for business or pleasure, the business room offers a refined blend of functionality and relaxation, making it an ideal choice for discerning travelers seeking a productive and comfortable stay.</p>
+            <button onclick="compareRoom('Business Room')">Book Now</button>
         </div>
     </div>
 
-    <div id="modal-room14" class="modal">
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 11 -->
+    <div id="modal-room11" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('room14')">&times;</span>
-            <h2>Garden View Room Details</h2>
-            <img src="images/Garden-View-Room.jpg" alt="Garden View Room">
+            <span class="close" onclick="closeModal('room11')">&times;</span>
+            <h2>Accessible Room Details</h2>
+            <img src="images/enterance.jpg" alt="Accessible Room">
             <ul>
-                <li>Price: $160/night</li>
-                <li>Size: 25 sqm</li>
-                <li>Bed: Double</li>
-                <li>View: Garden</li>
-                <li>WiFi: Yes</li>
+                <li>Spacious layout for easy maneuverability</li>
+                <li>Accessible location near elevators or with ramp access</li>
+                <li>Roll-in shower with grab bars and adjustable shower head</li>
+                <li>Adjustable beds for easy transfer from wheelchairs</li>
+                <li>Visual alerts for doorbells and telephones</li>
+                <li>Accessible height amenities and fixtures</li>
+                <li>Wide doorways and clearance for mobility aids</li>
+                <li>In-room accessibility features for comfort and convenience</li>
+                <li>Personalized service and support for accessibility needs</li>
             </ul>
-            <p>Enjoy a serene garden view and tranquil atmosphere in our Garden View Room.</p>
-            <button onclick="compareRoom('room14')">Book Now</button>
+            <p>Our accessible rooms are meticulously designed to offer not only comfort but also a seamless experience for guests with mobility challenges or disabilities. These rooms are strategically located for easy access and convenience, often near elevators or with ramp access. Inside, you'll find spacious layouts that allow for easy maneuverability, with thoughtfully positioned furniture and fixtures. The bathrooms are equipped with roll-in showers, grab bars, and adjustable shower heads to cater to diverse needs. Accessibility features extend to the sleeping area, where beds are positioned for easy transfer from wheelchairs. Additionally, each room is equipped with visual alerts for doorbells and telephones, ensuring guests are always aware of any notifications. Our commitment to accessibility includes providing personalized service and support, ensuring all guests feel welcomed and valued throughout their stay."
+
+                This expanded description emphasizes the comprehensive accessibility features and the commitment to ensuring a comfortable and inclusive experience for guests with mobility challenges or disabilities.</p>
+            <button onclick="compareRoom('Accessible Room')">Book Now</button>
         </div>
     </div>
 
-    <div id="modal-room15" class="modal">
+    <!-- Continue for the rest of the rooms up to Room 12 -->
+    <!-- Example for Room 12 -->
+    <div id="modal-room12" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal('room15')">&times;</span>
-            <h2>Penthouse Suite Details</h2>
-            <img src="images/pentahouse.jpg" alt="Penthouse Suite">
+            <span class="close" onclick="closeModal('room12')">&times;</span>
+            <h2>Executive Suite Details</h2>
+            <img src="images/execurtive.jpg" alt="Executive Suite">
             <ul>
-                <li>Price: $600/night</li>
-                <li>Size: 120 sqm</li>
-                <li>Bed: King</li>
-                <li>View: Sea</li>
-                <li>WiFi: Yes</li>
+                <li>Spacious layout with contemporary furnishings</li>
+                <li>Large work desk with ergonomic chair</li>
+                <li>High-speed internet access</li>
+                <li>Dedicated sitting area</li>
+                <li>Plush bedding and luxurious linens</li>
+                <li>Flat-screen TV with cable channels</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>En-suite bathroom with premium toiletries</li>
+                <li>24-hour room service available</li>
             </ul>
-            <p>Indulge in luxury and panoramic sea views in our expansive Penthouse Suite.</p>
-            <button onclick="compareRoom('room15')">Book Now</button>
+            <p>
+                
+                
+                "The Executive rooms at our hotel are meticulously designed to cater to the needs of discerning business travelers seeking a refined blend of comfort and functionality. Each room boasts a spacious layout adorned with contemporary furnishings and sophisticated decor, creating an ambiance that exudes both elegance and practicality. Guests can indulge in amenities such as a large work desk equipped with an ergonomic chair, high-speed internet access for seamless connectivity, and a dedicated sitting area perfect for informal meetings or unwinding in style. 
+                The rooms also feature plush bedding and luxurious linens, ensuring a restful night's sleep amidst the bustling cityscape. Whether for business or leisure, our Executive rooms promise a harmonious balance of convenience and luxury, making them an ideal choice for the modern traveler."</p>
+            <button onclick="compareRoom('Executive Suite')">Book Now</button>
         </div>
     </div>
 
     <script>
+        // Function to open modal for a specific room
         function openModal(roomId) {
-            document.getElementById('modal-' + roomId).style.display = 'block';
+            var modal = document.getElementById(`modal-${roomId}`);
+            modal.style.display = "block";
         }
 
+        // Function to close modal for a specific room
         function closeModal(roomId) {
-            document.getElementById('modal-' + roomId).style.display = 'none';
+            var modal = document.getElementById(`modal-${roomId}`);
+            modal.style.display = "none";
         }
 
-        function compareRoom(roomId) {
-            // Logic for comparing the selected room
-            alert('Comparing ' + roomId);
+        // Example function for booking or comparison action
+        function compareRoom(roomType) {
+            alert(`You selected: ${roomType}`);
+            // Add your booking or comparison logic here
+        }
+
+        // Close the modal if user clicks outside of it
+        window.onclick = function(event) {
+            var modals = document.querySelectorAll('.modal');
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = "none";
+                }
+            }
         }
     </script>
 </body>
