@@ -4,6 +4,12 @@ header {
     padding: 10px 0;
     text-align: center;
 }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 .logo {
     display: inline-block;
     margin-right: 20px;
@@ -27,6 +33,7 @@ nav ul li a {
     color: #fff;
     text-decoration: none;
 }
-section {
-    padding: 20px;
+#gallery, #description, #content {
+    margin-left: 15%;
+    margin-right: 15%;
 }
