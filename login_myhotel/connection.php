@@ -1,9 +1,9 @@
 <?php
 $dbhost = "localhost";
-$dbuser = "root";
-$dbpass = "";
-$dbname = "user_informantion";
-$port = 4307;
+$dbuser = "un6ghotwvk5ug";
+$dbpass = "Ir34czxlb6wk";
+$dbname = "dbpvg4bwmj7qxl ()";
+$port = 3306;
 
 // Establishing connection
 $con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname,$port);
