@@ -91,6 +91,72 @@
             object-fit: cover;
         }
 
+        .review-section {
+            margin-top: 40px;
+        }
+
+        .review-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .review-section textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .review-section button {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .review-section button:hover {
+            background-color: #4a0072;
+        }
+
+        .star-rating {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .star-rating span {
+            font-size: 24px;
+            cursor: pointer;
+            color: #ccc;
+        }
+
+        .star-rating span:hover,
+        .star-rating span:hover ~ span,
+        .star-rating .selected {
+            color: #ff0;
+        }
+
+        .review-list {
+            margin-top: 20px;
+        }
+
+        .review-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .review-item h3 {
+            margin: 0;
+            color: #6a1b9a;
+        }
+
+        .review-item p {
+            margin: 5px 0;
+        }
+
         footer {
             background-color: #6a1b9a;
             color: white;
@@ -118,6 +184,10 @@
         <section class="history-info">
             <h2>Our History</h2>
             <p>My Hotel was founded in 1999 with the vision of creating a unique and luxurious accommodation experience. Over the years, we have grown and evolved, constantly updating our facilities and services to meet the changing needs of our guests. Our commitment to excellence has made us a favorite among travelers from around the world.</p>
+            <video width="100%" controls>
+                <source src="history-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </section>
         <section class="mission-info">
             <h2>Our Mission</h2>
@@ -126,6 +196,14 @@
         <section class="values-info">
             <h2>Our Values</h2>
             <p>At My Hotel, we believe in the importance of integrity, respect, and excellence. We are committed to operating with the highest ethical standards and treating every guest with the utmost respect. Our team works tirelessly to ensure that every aspect of our hotel meets the highest standards of quality and service.</p>
+        </section>
+        <section class="fame-info">
+            <h2>Why Our Hotel is So Famous</h2>
+            <p>Our hotel is renowned for its exceptional service, luxurious accommodations, and prime location. We are famous for our world-class amenities, including a state-of-the-art fitness center, a rooftop swimming pool with stunning city views, and a gourmet restaurant that offers a variety of international cuisines. Our commitment to providing an unforgettable experience has earned us a loyal following of guests who return year after year.</p>
+        </section>
+        <section class="demand-info">
+            <h2>What Makes Us in Demand</h2>
+            <p>Our hotel is in high demand due to our unique combination of luxury and comfort. Guests love our spacious and elegantly designed rooms, which are equipped with all the modern conveniences needed for a comfortable stay. Our attentive and friendly staff go above and beyond to ensure that every guest feels at home. Additionally, our prime location in the heart of the city makes us the perfect choice for both business and leisure travelers.</p>
         </section>
         <section class="team-info">
             <h2>Meet Our Team</h2>
@@ -137,30 +215,120 @@
                 </div>
             </div>
             <div class="team-member">
-                <img src="images/jane smith" alt="Jane Smith">
+                <img src="images/jane_smith.jpg" alt="Jane Smith">
                 <div>
                     <h3>Jane Smith - CEO</h3>
                     <p>Jane Smith brings her extensive leadership skills and industry knowledge to My Hotel. As CEO, Jane is dedicated to ensuring that every guest enjoys a seamless and enjoyable experience. She is responsible for the overall management and operations of the hotel, driving the team towards achieving our mission and values.</p>
                 </div>
             </div>
             <div class="team-member">
-                <img src="mark_johnson.jpg" alt="Mark Johnson">
+                <img src="images/mark_johnson.jpg" alt="Mark Johnson">
                 <div>
                     <h3>Mark Johnson - General Manager</h3>
                     <p>Mark Johnson oversees the daily operations of My Hotel. His attention to detail and dedication to customer satisfaction are key to maintaining our high standards of service. Mark works closely with all departments to ensure that every aspect of the hotel runs smoothly and efficiently.</p>
                 </div>
             </div>
             <div class="team-member">
-                <img src="sarah_williams.jpg" alt="Sarah Williams">
+                <img src="images/sarah_williams.jpg" alt="Sarah Williams">
                 <div>
                     <h3>Sarah Williams - Head of Marketing</h3>
                     <p>Sarah Williams is responsible for promoting My Hotel and ensuring that our brand reaches a wide audience. Her innovative marketing strategies help to keep our hotel at the forefront of the industry. Sarah works tirelessly to create and execute marketing campaigns that showcase the unique qualities of My Hotel.</p>
                 </div>
             </div>
         </section>
+        <section class="review-section">
+            <h2>Leave a Review</h2>
+            <div class="star-rating" id="star-rating">
+                <span data-value="1">&#9733;</span>
+                <span data-value="2">&#9733;</span>
+                <span data-value="3">&#9733;</span>
+                <span data-value="4">&#9733;</span>
+                <span data-value="5">&#9733;</span>
+            </div>
+            <textarea id="review-text" placeholder="Write your review here..."></textarea>
+            <button onclick="submitReview()">Submit Review</button>
+            <div id="review-list" class="review-list"></div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 My Hotel. All rights reserved.</p>
     </footer>
+
+    <script>
+        let selectedRating = 0;
+
+        document.getElementById('star-rating').addEventListener('click', function(e) {
+            if (e.target.dataset.value) {
+                selectedRating = e.target.dataset.value;
+                highlightStars(selectedRating);
+            }
+        });
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('.star-rating span');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+
+        function submitReview() {
+            const reviewText = document.getElementById('review-text').value;
+            if (selectedRating > 0 && reviewText.trim() !== "") {
+                const reviewList = document.getElementById('review-list');
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('review-item');
+                
+                const reviewRating = document.createElement('h3');
+                reviewRating.textContent = `${selectedRating} Stars`;
+                reviewItem.appendChild(reviewRating);
+                
+                const reviewContent = document.createElement('p');
+                reviewContent.textContent = reviewText;
+                reviewItem.appendChild(reviewContent);
+                
+                reviewList.appendChild(reviewItem);
+
+                // Reset the form
+                selectedRating = 0;
+                document.getElementById('review-text').value = "";
+                highlightStars(selectedRating);
+            } else {
+                alert("Please select a rating and write a review.");
+            }
+        }
+
+        // Sample reviews data
+        const reviews = [
+            {rating: 5, text: "Fantastic stay! The service was excellent."},
+            {rating: 4, text: "Great experience overall. Will visit again."},
+            {rating: 3, text: "Good, but there is room for improvement."}
+        ];
+
+        // Load sample reviews
+        function loadReviews() {
+            const reviewList = document.getElementById('review-list');
+            reviews.forEach(review => {
+                const reviewItem = document.createElement('div');
+                reviewItem.classList.add('review-item');
+                
+                const reviewRating = document.createElement('h3');
+                reviewRating.textContent = `${review.rating} Stars`;
+                reviewItem.appendChild(reviewRating);
+                
+                const reviewContent = document.createElement('p');
+                reviewContent.textContent = review.text;
+                reviewItem.appendChild(reviewContent);
+                
+                reviewList.appendChild(reviewItem);
+            });
+        }
+
+        // Call loadReviews on page load
+        window.onload = loadReviews;
+    </script>
 </body>
 </html>
