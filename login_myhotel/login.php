@@ -4,10 +4,9 @@ session_start();
 include("connection.php");
 include("functions.php");
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
+$error = "";
 
-    // Debug: Check if form data is received
-    var_dump($_POST);
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     // SOMETHING WAS POSTED
     $user_name = $_POST['username'];
@@ -24,19 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $user_data = mysqli_fetch_assoc($result);
                 if ($user_data['password'] === $password) {
                     $_SESSION['user_id'] = $user_data['user_id'];
-                    header("Location: index.php");
-                    die;
+                    header("Location: index.html");
+                    exit();
                 } else {
-                    echo "Wrong password";
+                    $error = "Wrong password";
                 }
             } else {
-                echo "No user found";
+                $error = "No user found";
             }
         } else {
-            echo "Query failed: " . mysqli_error($con);
+            $error = "Query failed: " . mysqli_error($con);
         }
     } else {
-        echo "Please enter some valid information!";
+        $error = "Please enter some valid information!";
     }
 }
 ?>
@@ -60,6 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <button type="submit">Login</button>
             <a href="signup.php">Signup</a>
         </form>
+        <?php
+        if (!empty($error)) {
+            echo "<div class='error-message'>$error</div>";
+        }
+        ?>
     </div>
     <!-- <script src="script.js"></script> -->
 </body>
