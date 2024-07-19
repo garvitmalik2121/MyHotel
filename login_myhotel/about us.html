@@ -68,19 +68,18 @@
             margin-bottom: 20px;
         }
 
-        .team-member {
+        .box {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+        }
+
+        .team-member {
             display: flex;
             align-items: center;
-        }
-
-        .team-member h3 {
-            margin: 0 0 10px 0;
-            color: #6a1b9a;
-        }
-
-        .team-member p {
-            margin: 0;
+            margin-bottom: 20px;
         }
 
         .team-member img {
@@ -89,6 +88,15 @@
             width: 80px;
             height: 80px;
             object-fit: cover;
+        }
+
+        .team-member h3 {
+            margin: 0;
+            color: #6a1b9a;
+        }
+
+        .team-member p {
+            margin: 5px 0 0 0;
         }
 
         .review-section {
@@ -105,6 +113,7 @@
             margin-bottom: 10px;
             border-radius: 5px;
             padding: 10px;
+            border: 1px solid #ccc;
         }
 
         .review-section button {
@@ -144,7 +153,8 @@
         .review-item {
             margin-bottom: 20px;
             padding: 10px;
-            background-color: #f9f9f9;
+            background-color: #fff;
+            border: 1px solid #ddd;
             border-radius: 5px;
         }
 
@@ -164,6 +174,17 @@
             padding: 20px;
             width: 100%;
         }
+
+        .video-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .video-container video {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -177,35 +198,37 @@
         <h1>About Us</h1>
     </header>
     <main>
-        <section class="hotel-info">
+        <section class="hotel-info box">
             <h2>About Our Hotel</h2>
             <p>Welcome to My Hotel, where luxury meets comfort. Located in the heart of the city, our hotel offers the finest amenities and services to ensure a memorable stay. Whether you are here for business or leisure, we strive to provide an exceptional experience for all our guests.</p>
         </section>
-        <section class="history-info">
+        <section class="history-info box">
             <h2>Our History</h2>
             <p>My Hotel was founded in 1999 with the vision of creating a unique and luxurious accommodation experience. Over the years, we have grown and evolved, constantly updating our facilities and services to meet the changing needs of our guests. Our commitment to excellence has made us a favorite among travelers from around the world.</p>
-            <video width="100%" controls>
-                <source src="history-video.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+            <div class="video-container">
+                <video controls>
+                    <source src="history-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
         </section>
-        <section class="mission-info">
+        <section class="mission-info box">
             <h2>Our Mission</h2>
             <p>Our mission is to provide unparalleled hospitality and exceptional service to all our guests. We aim to create a welcoming and comfortable environment where guests can relax and enjoy their stay to the fullest. We are dedicated to making every visit to My Hotel a memorable one.</p>
         </section>
-        <section class="values-info">
+        <section class="values-info box">
             <h2>Our Values</h2>
             <p>At My Hotel, we believe in the importance of integrity, respect, and excellence. We are committed to operating with the highest ethical standards and treating every guest with the utmost respect. Our team works tirelessly to ensure that every aspect of our hotel meets the highest standards of quality and service.</p>
         </section>
-        <section class="fame-info">
+        <section class="fame-info box">
             <h2>Why Our Hotel is So Famous</h2>
             <p>Our hotel is renowned for its exceptional service, luxurious accommodations, and prime location. We are famous for our world-class amenities, including a state-of-the-art fitness center, a rooftop swimming pool with stunning city views, and a gourmet restaurant that offers a variety of international cuisines. Our commitment to providing an unforgettable experience has earned us a loyal following of guests who return year after year.</p>
         </section>
-        <section class="demand-info">
+        <section class="demand-info box">
             <h2>What Makes Us in Demand</h2>
             <p>Our hotel is in high demand due to our unique combination of luxury and comfort. Guests love our spacious and elegantly designed rooms, which are equipped with all the modern conveniences needed for a comfortable stay. Our attentive and friendly staff go above and beyond to ensure that every guest feels at home. Additionally, our prime location in the heart of the city makes us the perfect choice for both business and leisure travelers.</p>
         </section>
-        <section class="team-info">
+        <section class="team-info box">
             <h2>Meet Our Team</h2>
             <div class="team-member">
                 <img src="images/john_dee.jpg" alt="John Doe">
@@ -236,7 +259,7 @@
                 </div>
             </div>
         </section>
-        <section class="review-section">
+        <section class="review-section box">
             <h2>Leave a Review</h2>
             <div class="star-rating" id="star-rating">
                 <span data-value="1">&#9733;</span>

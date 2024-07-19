@@ -1,15 +1,27 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
-    $name = htmlspecialchars($_POST['name']);
-    $email = htmlspecialchars($_POST['email']);
-    $subject = htmlspecialchars($_POST['subject']);
-    $message = htmlspecialchars($_POST['message']);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-    // You can add code here to send an email, save to a database, etc.
+include 'connection.php'; // Include the connection script
 
-    // Redirect back to the contact page with a success message
-    header("Location: contact.php?status=success");
-    exit();
+// Get form data
+$name = $_POST['name'];
+$email = $_POST['email'];
+$subject = $_POST['subject'];
+$message = $_POST['message'];
+
+// Prepare and bind
+$stmt = $con->prepare("INSERT INTO contact_form (name, email, subject, message) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("ssss", $name, $email, $subject, $message);
+
+// Execute the statement
+if ($stmt->execute()) {
+    echo "<div class='confirmation-message'>Thank you for contacting us. We will get back to you soon.</div>";
+} else {
+    echo "<div class='confirmation-message'>Error: " . $stmt->error . "</div>";
 }
+
+// Close statement and connection
+$stmt->close();
+$con->close();
 ?>
