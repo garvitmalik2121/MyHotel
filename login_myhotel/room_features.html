@@ -117,6 +117,71 @@
             text-decoration: none;
             cursor: pointer;
         }
+        h2 {
+            text-align: center;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin: 20px;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 5px 0;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            margin: 10px 0 5px;
+        }
+
+        form input, form textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        form button {
+            background-color: #008CBA;
+        }
+
+        form button:hover {
+            background-color: #007BB5;
+        }
+        
     </style>
 </head>
 <body>
@@ -294,7 +359,7 @@
                 One of the distinguishing features of a Deluxe Room is its view, which is usually a highlight of the guest experience. Whether overlooking the serene sea, lush gardens, or vibrant cityscape, the view adds an extra layer of charm to the room. In terms of technology, WiFi access is readily available to keep guests connected throughout their stay.
                 
                 The décor of a Deluxe Room is carefully curated to blend elegance with comfort, featuring tasteful furnishings and soothing color palettes. These rooms are ideal for travelers seeking a more indulgent and memorable hotel experience, combining modern conveniences with a touch of luxury that enhances the overall ambiance of their stay.</p>
-            <button onclick="compareRoom('Deluxe Room')">Book Now</button>
+            <button onclick="openBookingForm('Deluxe Room', 'En-suite bathroom with bathtub and separate shower, Work desk and ergonomic chair, Flat-screen TV with cable channels, Mini-bar stocked with refreshments, In-room safe for valuables, Coffee and tea making facilities, Complimentary toiletries and bathrobe, 24-hour room service available')">Book Now</button>
         </div>
     </div>
 
@@ -624,35 +689,110 @@
             <button onclick="compareRoom('Executive Suite')">Book Now</button>
         </div>
     </div>
+    <!-- Booking Form Modal -->
+    <div id="booking-form" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('booking-form')">&times;</span>
+            <h2>Booking Form</h2>
+            <form id="bookingForm">
+            <div class="form-group">
+                <label for="roomType">Room Type:</label>
+                <input type="text" id="roomType" name="roomType" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomDetails">Room Details:</label>
+                <textarea id="roomDetails" name="roomDetails" readonly></textarea>
+            </div>
 
-    <script>
-        // Function to open modal for a specific room
-        function openModal(roomId) {
-            var modal = document.getElementById(`modal-${roomId}`);
+            <div class="form-group">
+                <label for="booking_details">Booking Details:</label>
+                <textarea id="booking_details" name="booking_details" rows="4" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="payment_method">Payment Method:</label>
+                <select id="payment_method" name="payment_method" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="card">Card</option>
+                    <option value="cash">Cash</option>
+                </select>
+            </div>
+
+            <div id="card_details" class="form-group" style="display: none;">
+                <label for="card_number">Card Number:</label>
+                <input type="text" id="card_number" name="card_number" placeholder="Enter Card Number">
+                
+                <label for="expiry_date">Expiry Date:</label>
+                <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YYYY">
+                
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" placeholder="CVV">
+            </div>
+
+            <input type="hidden" name="room_price" value="<?php echo htmlspecialchars($room_price); ?>">
+            <input type="hidden" name="room_name" value="<?php echo htmlspecialchars($room_name); ?>">
+
+            <div class="form-group">
+                <button type="submit">Make Payment</button>
+            </div>
+        </form>
+        </div>
+    </div>
+
+   <script>
+    // Function to open modal for a specific room
+    function openModal(roomId) {
+        var modal = document.getElementById('modal-' + roomId);
+        if (modal) {
             modal.style.display = "block";
         }
+    }
 
-        // Function to close modal for a specific room
-        function closeModal(roomId) {
-            var modal = document.getElementById(`modal-${roomId}`);
+    // Function to close modal for a specific room
+    function closeModal(roomId) {
+        var modal = document.getElementById('modal-' + roomId);
+        if (modal) {
             modal.style.display = "none";
         }
+    }
 
-        // Example function for booking or comparison action
-        function compareRoom(roomType) {
-            alert(`You selected: ${roomType}`);
-            // Add your booking or comparison logic here
+    // Function to open the booking form with pre-filled details
+    function openBookingForm(roomType, roomDetails) {
+        var bookingForm = document.getElementById('booking-form');
+        if (bookingForm) {
+            document.getElementById('roomType').value = roomType;
+            document.getElementById('roomDetails').value = roomDetails;
+            bookingForm.style.display = "block";
         }
+    }
 
-        // Close the modal if user clicks outside of it
-        window.onclick = function(event) {
-            var modals = document.querySelectorAll('.modal');
-            for (var i = 0; i < modals.length; i++) {
-                if (event.target == modals[i]) {
-                    modals[i].style.display = "none";
-                }
+    // Handle form submission
+    document.getElementById('bookingForm').onsubmit = function(event) {
+        event.preventDefault();
+        var roomType = document.getElementById('roomType').value;
+        var fullName = document.getElementById('fullName').value;
+        var email = document.getElementById('email').value;
+        var paymentInfo = document.getElementById('paymentInfo').value;
+
+        // Here you can handle form submission, e.g., send data to a server
+        console.log(`Booking confirmed for ${roomType}.\nName: ${fullName}\nEmail: ${email}`);
+
+        alert(`Booking confirmed for ${roomType}.\nName: ${fullName}\nEmail: ${email}`);
+        closeModal('booking-form');
+    };
+
+    // Close the modal if user clicks outside of it
+    window.onclick = function(event) {
+        var modals = document.querySelectorAll('.modal');
+        for (var i = 0; i < modals.length; i++) {
+            if (event.target === modals[i]) {
+                modals[i].style.display = "none";
             }
         }
-    </script>
+    };
+</script>
+
 </body>
 </html>
