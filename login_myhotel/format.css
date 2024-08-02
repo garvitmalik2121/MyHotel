@@ -8,30 +8,52 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 0;
+    padding-top: 100px;
 }
-.logo {
-    display: inline-block;
-    margin-right: 20px;
-    font-size: 1.5rem;
-    color: #fff;
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000000;
+    padding-left: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+.nav-container {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+.navbar a {
+    color: white;
     text-decoration: none;
+    padding-left: 40px;
+    padding-right: 40px;
 }
-nav {
-    display: inline-block;
+.navbar a:hover {
+    color: #575757;
 }
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.logo img {
+    width: 100px;
+    height: auto;
 }
-nav ul li {
-    display: inline-block;
-    margin-left: 20px;
+.nav-links {
+    display: flex;
+    gap: 15px;
 }
-nav ul li a {
-    color: #fff;
+.login-btn {
+    background-color: #1c79bc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
     text-decoration: none;
+    font-weight: bold;
+    margin-right: 30px;
+}
+.login-btn:hover {
+    background-color: #2786ca;
 }
 #gallery, #description, #content {
     margin-left: 15%;
