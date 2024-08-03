@@ -7,8 +7,11 @@
     <title>Welcome to MyHotel</title>
     <link rel="stylesheet" href="contents.css">
     <link rel="stylesheet" href="format.css">
+    <link rel="stylesheet" href="slidshow.css">
     <link rel="stylesheet" href="gallery.css">
+    <script src="format.js" defer></script>
     <script src="gallery.js" defer></script>
+    <script src="slidshow.js" defer></script>
     <script src="facilities.js" defer></script>
 </head>
 
@@ -17,6 +20,11 @@
         <a href="index.php" class="logo">
             <img src="images/Logo.png" alt="Company Logo">
         </a>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
         <div class="nav-container">
             <nav class="nav-links">
                 <a href="about us.html">ABOUT US</a>
@@ -27,6 +35,23 @@
         </div>
         <a href="login.php" class="login-btn">Login</a>
     </header>
+    <div class="slideshow-container">
+        <div class="slide">
+            <img src="images/background_image.jpg" alt="Slide 1">
+        </div>
+        <div class="slide">
+            <img src="images/pool.jpg" alt="Slide 2">
+        </div>
+        <div class="slide">
+            <img src="images/enterance.jpg" alt="Slide 3">
+        </div>
+
+        <div class="dot-container">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
 
     <section id="gallery">
         <div class="gallery">
