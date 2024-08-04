@@ -6,20 +6,21 @@ header {
 }
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #eef1e6;
     margin: 0;
-    padding-top: 100px;
+    padding-top: 103px;
 }
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #000000;
+    opacity:0.87;
     padding-left: 10px;
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 2;
 }
 .logo img {
     width: 100px;
@@ -68,9 +69,34 @@ body {
     margin: 3px 0;
     transition: 0.3s;
 }
-#gallery, #description, #content {
+#gallery, #description {
     margin-left: 15%;
     margin-right: 15%;
+}
+
+footer {
+    background-color: #1e1e1e; /* Background color for the footer */
+    color: #fff; /* Text color */
+    text-align: center; /* Center align text */
+    padding: 20px; /* Padding around the text */
+    position: relative; /* Ensure it's positioned relatively */
+    bottom: 0; /* Align footer to the bottom */
+    width: 100%; /* Full width of the container */
+    font-size: smaller;
+}
+
+footer p {
+    margin: 5px 0; /* Margin between paragraphs */
+    color: #fff; /* Link color */
+}
+
+footer a {
+    color: #fff; /* Link color */
+    text-decoration: none; /* Remove underline from links */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Underline on hover */
 }
 
 /* ipad styles */
