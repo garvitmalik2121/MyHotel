@@ -26,11 +26,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
+      margin-top: 0; /* Ensure no margin on top */
     }
 
     header a.logo {
@@ -58,7 +54,7 @@
     }
 
     #search {
-      margin: 100px 20px 20px 20px; /* Adjust margin to create space for fixed header */
+      margin: 20px;
       text-align: center;
       background: white;
       padding: 40px;
@@ -66,6 +62,23 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 100%;
       max-width: 900px;
+    }
+
+    .sticky-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 900px;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     form {
@@ -161,6 +174,11 @@
       #facility-options, #view-options, #roomtype-options {
         grid-template-columns: 1fr;
       }
+
+      .sticky-row {
+        flex-direction: column;
+        padding: 20px;
+      }
     }
   </style>
   <script>
@@ -227,26 +245,22 @@
 </header>
 
 <section id="search">
-  <h2>Find Your Perfect Room</h2>
+  <div class="sticky-row">
+    <label for="checkin">Check-in Date:</label>
+    <input type="date" id="checkin" name="checkin" required>
+    <label for="checkout">Check-out Date:</label>
+    <input type="date" id="checkout" name="checkout" required>
+    <label for="guests">Number of Guests:</label>
+    <select id="guests" name="guests">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+
   <form onsubmit="searchRooms(event)">
-    <div class="form-row">
-      <label for="checkin">Check-in Date:</label>
-      <input type="date" id="checkin" name="checkin" required>
-      <label for="checkout">Check-out Date:</label>
-      <input type="date" id="checkout" name="checkout" required>
-    </div>
-
-    <div class="form-row">
-      <label for="guests">Number of Guests:</label>
-      <select id="guests" name="guests">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-    </div>
-
     <div class="form-row">
       <label for="roomtype">Room Type:</label>
       <div id="roomtype-options" class="option-grid">
@@ -398,5 +412,4 @@
 
 <section id="results"></section>
 </body>
-
 </html>
