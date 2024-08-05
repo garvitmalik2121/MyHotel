@@ -1,39 +1,136 @@
 header {
-    background-color: #333;
+    background-color: #000000;
     color: #fff;
     padding: 10px 0;
     text-align: center;
 }
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #eef1e6;
     margin: 0;
-    padding: 0;
+    padding-top: 103px;
 }
-.logo {
-    display: inline-block;
-    margin-right: 20px;
-    font-size: 1.5rem;
-    color: #fff;
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000000;
+    opacity:0.87;
+    padding-left: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+}
+.logo img {
+    width: 100px;
+    height: auto;
+}
+.nav-container {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+.navbar a {
+    color: white;
     text-decoration: none;
+    padding-left: 40px;
+    padding-right: 40px;
 }
-nav {
-    display: inline-block;
+.navbar a:hover {
+    color: #575757;
 }
-nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.nav-links {
+    display: flex;
+    gap: 15px;
 }
-nav ul li {
-    display: inline-block;
-    margin-left: 20px;
-}
-nav ul li a {
-    color: #fff;
+.login-btn {
+    background-color: #1c79bc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
     text-decoration: none;
+    font-weight: bold;
+    margin-right: 60px;
 }
-#gallery, #description, #content {
+.login-btn:hover {
+    background-color: #2786ca;
+}
+.menu-icon {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it is above other elements */
+}
+.menu-icon div {
+    background-color: white;
+    height: 3px;
+    width: 25px;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+#gallery, #description {
     margin-left: 15%;
     margin-right: 15%;
+}
+
+footer {
+    background-color: #1e1e1e; /* Background color for the footer */
+    color: #fff; /* Text color */
+    text-align: center; /* Center align text */
+    padding: 20px; /* Padding around the text */
+    position: relative; /* Ensure it's positioned relatively */
+    bottom: 0; /* Align footer to the bottom */
+    width: 100%; /* Full width of the container */
+    font-size: smaller;
+}
+
+footer p {
+    margin: 5px 0; /* Margin between paragraphs */
+    color: #fff; /* Link color */
+}
+
+footer a {
+    color: #fff; /* Link color */
+    text-decoration: none; /* Remove underline from links */
+}
+
+footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* ipad styles */
+@media (max-width: 1000px) {
+    .navbar a {
+        font-size:small;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .nav-container {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background-color: #2c2c2c;
+        position: absolute;
+        top: 90px;
+        left: 0;
+        padding: 50px 0px;
+        margin-right: 0px;
+    }
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .nav-container.show {
+        display: flex;
+    }
+    .menu-icon {
+        display: flex;
+    }
 }

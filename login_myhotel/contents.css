@@ -23,11 +23,10 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start; /* Ensure alignment at the top */
-    padding: 20px;
-    margin: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-left: 150px;
+    padding-right: 150px;
+    margin-top: 200px;
+    background-color: #ffffff;
 }
 
 #facilities, #map{
@@ -100,7 +99,7 @@ iframe {
 .popup {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     top: 0;
     width: 100%;
@@ -124,4 +123,11 @@ iframe {
 
 .popup-content li, .popup-content li span{
     font-size: small;
+}
+
+@media (max-width: 1000px) {
+    #content {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
 }

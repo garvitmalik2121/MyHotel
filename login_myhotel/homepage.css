@@ -1,0 +1,66 @@
+#hotel_summary {
+    max-width: 100%;
+    padding: 150px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2em;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+hr {
+    border: 0; /* Remove default border */
+    height: 2px; /* Set the height of the line */
+    background: #333; /* Set the color of the line */
+    margin-top: 100px /* Add space above and below the line */
+}
+
+.box {
+    width: 80%; /* Set the width of the box */
+    height: 300px; /* Set the height of the box */
+    border: 2px solid #333; /* Set the border width, style, and color */
+    position: absolute; /* Position the box absolutely within the container */
+    top: 1500px; /* Adjust the vertical position */
+    left: 10%; /* Adjust the horizontal position */
+    z-index: 1; /* Place the box behind other elements */
+}
+
+#contact_us_container button {
+    width: 300px;
+    margin-left: 40%;
+}
+
+
+@media (max-width: 1200px) {
+    .dot {
+        height: 8px;
+        width: 8px;
+    }
+    #hotel_summary {
+        padding: 10%;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    p {
+        font-size: 1em;
+    }
+    hr {
+        height: 1px; /* Set the height of the line */
+        margin: 50px 0;
+    }
+    .box {
+        height: 50%; /* Set the height of the box */
+        border: 1px solid #333; /* Set the border width, style, and color */
+        top: 200%; /* Adjust the vertical position */
+    }
+}
