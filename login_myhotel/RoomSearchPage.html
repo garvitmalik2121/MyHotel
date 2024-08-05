@@ -61,8 +61,14 @@
       align-items: center;
     }
 
+    .form-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     label, input, select, button {
-      margin: 10px 0;
+      margin: 10px 5px;
       font-size: 16px;
     }
 
@@ -115,9 +121,32 @@
       button {
         width: 100%;
       }
+
+      .form-row {
+        flex-direction: column;
+      }
     }
   </style>
   <script>
+    function updateRoomTypeCheckbox() {
+      const roomTypeCheckboxes = document.querySelectorAll('input[name="roomtype[]"]');
+      const anyCheckbox = document.getElementById('roomtype-any');
+      const selectedRoomTypes = Array.from(roomTypeCheckboxes).filter(cb => cb.checked && cb !== anyCheckbox);
+
+      if (selectedRoomTypes.length > 0) {
+        anyCheckbox.checked = false;
+      } else {
+        anyCheckbox.checked = true;
+      }
+
+      if (selectedRoomTypes.length === roomTypeCheckboxes.length - 1) {
+        anyCheckbox.checked = true;
+        roomTypeCheckboxes.forEach(cb => {
+          if (cb !== anyCheckbox) cb.checked = false;
+        });
+      }
+    }
+
     async function searchRooms(event) {
       event.preventDefault();
       const formData = new FormData(event.target);
@@ -164,23 +193,33 @@
 <section id="search">
   <h2>Find Your Perfect Room</h2>
   <form onsubmit="searchRooms(event)">
-    <label for="checkin">Check-in Date:</label>
-    <input type="date" id="checkin" name="checkin" required>
-
-    <label for="checkout">Check-out Date:</label>
-    <input type="date" id="checkout" name="checkout" required>
+    <div class="form-row">
+      <label for="checkin">Check-in Date:</label>
+      <input type="date" id="checkin" name="checkin" required>
+      <label for="checkout">Check-out Date:</label>
+      <input type="date" id="checkout" name="checkout" required>
+    </div>
 
     <label for="guests">Number of Guests:</label>
-    <input type="number" id="guests" name="guests" min="1" required>
+    <select id="guests" name="guests">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
 
     <label for="roomtype">Room Type:</label>
-    <select id="roomtype" name="roomtype">
-      <option value="any">Any</option>
-      <option value="single">Single Room</option>
-      <option value="double">Double Room</option>
-      <option value="suite">Suite</option>
-      <option value="family">Family Room</option>
-    </select>
+    <div id="roomtype-options">
+      <input type="checkbox" id="roomtype-any" name="roomtype[]" value="any" checked onchange="updateRoomTypeCheckbox()">
+      <label for="roomtype-any">Any</label>
+      <input type="checkbox" id="roomtype-single" name="roomtype[]" value="Single Room" onchange="updateRoomTypeCheckbox()">
+      <label for="roomtype-single">Single Room</label>
+      <input type="checkbox" id="roomtype-double" name="roomtype[]" value="Double Room" onchange="updateRoomTypeCheckbox()">
+      <label for="roomtype-double">Double Room</label>
+      <input type="checkbox" id="roomtype-suite" name="roomtype[]" value="Suite" onchange="updateRoomTypeCheckbox()">
+      <label for="roomtype-suite">Suite</label>
+    </div>
 
     <label for="price_min">Min Price:</label>
     <input type="number" id="price_min" name="price_min" min="0" step="0.01">
@@ -189,38 +228,64 @@
     <input type="number" id="price_max" name="price_max" min="0" step="0.01">
 
     <label for="facility">Facility:</label>
-    <select id="facility" name="facility[]" multiple>
-      <option value="1">WiFi</option>
-      <option value="2">Air Conditioning</option>
-      <option value="3">Electronic Door Lock</option>
-      <option value="4">Electronic Smoke Detector</option>
-      <option value="5">Refrigerator</option>
-      <option value="6">Slippers, Towels, Bathrobes</option>
-      <option value="7">Electric Kettle</option>
-      <option value="8">LED LCD TV</option>
-      <option value="9">Coffee Maker & Tea</option>
-      <option value="10">Hair Dryer</option>
-      <option value="11">Private Bathroom and Toilet</option>
-      <option value="12">Shower</option>
-      <option value="13">Fitness Equipment</option>
-      <option value="14">Standard Room Service</option>
-      <option value="15">VIP Room Service</option>
-      <option value="16">Hot Tub</option>
-      <option value="17">Kitchen, Cookware</option>
-      <option value="18">Speakers</option>
-      <option value="19">Pay TV Channels</option>
-      <option value="20">Massage Chair</option>
-      <option value="21">Non-Smoking Room</option>
-      <option value="22">Mini Bar</option>
-      <option value="23">Game Console (Switch/PS4)</option>
-    </select>
+    <div id="facility-options">
+      <input type="checkbox" id="facility-1" name="facility[]" value="1">
+      <label for="facility-1">WiFi</label>
+      <input type="checkbox" id="facility-2" name="facility[]" value="2">
+      <label for="facility-2">Air Conditioning</label>
+      <input type="checkbox" id="facility-3" name="facility[]" value="3">
+      <label for="facility-3">Electronic Door Lock</label>
+      <input type="checkbox" id="facility-4" name="facility[]" value="4">
+      <label for="facility-4">Electronic Smoke Detector</label>
+      <input type="checkbox" id="facility-5" name="facility[]" value="5">
+      <label for="facility-5">Refrigerator</label>
+      <input type="checkbox" id="facility-6" name="facility[]" value="6">
+      <label for="facility-6">Slippers, Towels, Bathrobes</label>
+      <input type="checkbox" id="facility-7" name="facility[]" value="7">
+      <label for="facility-7">Electric Kettle</label>
+      <input type="checkbox" id="facility-8" name="facility[]" value="8">
+      <label for="facility-8">LED LCD TV</label>
+      <input type="checkbox" id="facility-9" name="facility[]" value="9">
+      <label for="facility-9">Coffee Maker & Tea</label>
+      <input type="checkbox" id="facility-10" name="facility[]" value="10">
+      <label for="facility-10">Hair Dryer</label>
+      <input type="checkbox" id="facility-11" name="facility[]" value="11">
+      <label for="facility-11">Private Bathroom and Toilet</label>
+      <input type="checkbox" id="facility-12" name="facility[]" value="12">
+      <label for="facility-12">Shower</label>
+      <input type="checkbox" id="facility-13" name="facility[]" value="13">
+      <label for="facility-13">Fitness Equipment</label>
+      <input type="checkbox" id="facility-14" name="facility[]" value="14">
+      <label for="facility-14">Standard Room Service</label>
+      <input type="checkbox" id="facility-15" name="facility[]" value="15">
+      <label for="facility-15">VIP Room Service</label>
+      <input type="checkbox" id="facility-16" name="facility[]" value="16">
+      <label for="facility-16">Hot Tub</label>
+      <input type="checkbox" id="facility-17" name="facility[]" value="17">
+      <label for="facility-17">Kitchen, Cookware</label>
+      <input type="checkbox" id="facility-18" name="facility[]" value="18">
+      <label for="facility-18">Speakers</label>
+      <input type="checkbox" id="facility-19" name="facility[]" value="19">
+      <label for="facility-19">Pay TV Channels</label>
+      <input type="checkbox" id="facility-20" name="facility[]" value="20">
+      <label for="facility-20">Massage Chair</label>
+      <input type="checkbox" id="facility-21" name="facility[]" value="21">
+      <label for="facility-21">Non-Smoking Room</label>
+      <input type="checkbox" id="facility-22" name="facility[]" value="22">
+      <label for="facility-22">Mini Bar</label>
+      <input type="checkbox" id="facility-23" name="facility[]" value="23">
+      <label for="facility-23">Game Console (Switch/PS4)</label>
+    </div>
 
     <label for="view">Room View:</label>
-    <select id="view" name="view[]" multiple>
-      <option value="1">Sea View</option>
-      <option value="2">Mountain View</option>
-      <option value="3">City View</option>
-    </select>
+    <div id="view-options">
+      <input type="checkbox" id="view-1" name="view[]" value="1">
+      <label for="view-1">Sea View</label>
+      <input type="checkbox" id="view-2" name="view[]" value="2">
+      <label for="view-2">Mountain View</label>
+      <input type="checkbox" id="view-3" name="view[]" value="3">
+      <label for="view-3">City View</label>
+    </div>
 
     <button type="submit">Search</button>
   </form>
