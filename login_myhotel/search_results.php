@@ -16,31 +16,29 @@ $checkin = $_GET['checkin'];
 $checkout = $_GET['checkout'];
 $guests = $_GET['guests'];
 $roomtype = $_GET['roomtype'];
+$price_min = $_GET['price_min'];
+$price_max = $_GET['price_max'];
+$facilities = isset($_GET['facility']) ? $_GET['facility'] : [];
+$views = isset($_GET['view']) ? $_GET['view'] : [];
 
-$sql = "SELECT * FROM rooms WHERE availability = TRUE AND capacity >= ?";
+$sql = "SELECT rooms.* FROM rooms
+        LEFT JOIN room_facility ON rooms.room_id = room_facility.room_id
+        LEFT JOIN facilities ON room_facility.facility_id = facilities.facility_id
+        LEFT JOIN room_view ON rooms.room_view_id = room_view.room_view_id
+        WHERE availability = TRUE AND capacity >= ?";
+
+$bindParams = [$guests];
+$types = 'i';
 
 if ($roomtype != 'any') {
     $sql .= " AND room_type = ?";
+    $bindParams[] = $roomtype;
+    $types .= 's';
 }
-
-$stmt = $conn->prepare($sql);
-if ($roomtype == 'any') {
-    $stmt->bind_param("i", $guests);
-} else {
-    $stmt->bind_param("is", $guests, $roomtype);
+if (!empty($price_min)) {
+    $sql .= " AND price >= ?";
+    $bindParams[] = $price_min;
+    $types .= 'd';
 }
-
-$stmt->execute();
-$result = $stmt->get_result();
-$rooms = [];
-
-while ($row = $result->fetch_assoc()) {
-    $rooms[] = $row;
-}
-
-$stmt->close();
-$conn->close();
-
-header('Content-Type: application/json');
-echo json_encode($rooms);
+if (!empty($price
 ?>

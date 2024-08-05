@@ -79,6 +79,20 @@
       cursor: pointer;
     }
 
+    #results {
+      margin-top: 20px;
+      width: 80%;
+      max-width: 600px;
+    }
+
+    .room {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      text-align: left;
+    }
+
     @media (max-width: 600px) {
       header a.logo {
         font-size: 20px;
@@ -103,8 +117,34 @@
       }
     }
   </style>
-  <script src="gallery.js" defer></script>
-  <script src="facilities.js" defer></script>
+  <script>
+    async function searchRooms(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const searchParams = new URLSearchParams(formData);
+      const response = await fetch(`search_results.php?${searchParams.toString()}`);
+      const rooms = await response.json();
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+
+      if (rooms.length === 0) {
+        resultsDiv.innerHTML = '<p>No rooms found.</p>';
+        return;
+      }
+
+      rooms.forEach(room => {
+        const roomDiv = document.createElement('div');
+        roomDiv.className = 'room';
+        roomDiv.innerHTML = `
+                    <h3>${room.room_type}</h3>
+                    <p>${room.description}</p>
+                    <p>Price: $${room.price} per night</p>
+                    <p>Capacity: ${room.capacity} people</p>
+                `;
+        resultsDiv.appendChild(roomDiv);
+      });
+    }
+  </script>
 </head>
 
 <body>
@@ -123,7 +163,7 @@
 
 <section id="search">
   <h2>Find Your Perfect Room</h2>
-  <form action="search_results.html" method="get">
+  <form onsubmit="searchRooms(event)">
     <label for="checkin">Check-in Date:</label>
     <input type="date" id="checkin" name="checkin" required>
 
@@ -135,15 +175,58 @@
 
     <label for="roomtype">Room Type:</label>
     <select id="roomtype" name="roomtype">
+      <option value="any">Any</option>
       <option value="single">Single Room</option>
       <option value="double">Double Room</option>
       <option value="suite">Suite</option>
       <option value="family">Family Room</option>
     </select>
 
+    <label for="price_min">Min Price:</label>
+    <input type="number" id="price_min" name="price_min" min="0" step="0.01">
+
+    <label for="price_max">Max Price:</label>
+    <input type="number" id="price_max" name="price_max" min="0" step="0.01">
+
+    <label for="facility">Facility:</label>
+    <select id="facility" name="facility[]" multiple>
+      <option value="1">WiFi</option>
+      <option value="2">Air Conditioning</option>
+      <option value="3">Electronic Door Lock</option>
+      <option value="4">Electronic Smoke Detector</option>
+      <option value="5">Refrigerator</option>
+      <option value="6">Slippers, Towels, Bathrobes</option>
+      <option value="7">Electric Kettle</option>
+      <option value="8">LED LCD TV</option>
+      <option value="9">Coffee Maker & Tea</option>
+      <option value="10">Hair Dryer</option>
+      <option value="11">Private Bathroom and Toilet</option>
+      <option value="12">Shower</option>
+      <option value="13">Fitness Equipment</option>
+      <option value="14">Standard Room Service</option>
+      <option value="15">VIP Room Service</option>
+      <option value="16">Hot Tub</option>
+      <option value="17">Kitchen, Cookware</option>
+      <option value="18">Speakers</option>
+      <option value="19">Pay TV Channels</option>
+      <option value="20">Massage Chair</option>
+      <option value="21">Non-Smoking Room</option>
+      <option value="22">Mini Bar</option>
+      <option value="23">Game Console (Switch/PS4)</option>
+    </select>
+
+    <label for="view">Room View:</label>
+    <select id="view" name="view[]" multiple>
+      <option value="1">Sea View</option>
+      <option value="2">Mountain View</option>
+      <option value="3">City View</option>
+    </select>
+
     <button type="submit">Search</button>
   </form>
 </section>
+
+<section id="results"></section>
 </body>
 
 </html>
