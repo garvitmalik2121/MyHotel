@@ -11,32 +11,152 @@ h1 {
     text-align: center;
 }
 
+#contact_us_container h2 {
+    font-size: x-large;
+    color: rgb(237, 237, 231);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 p {
     font-size: 1.2em;
     color: #666;
     line-height: 1.6;
     margin-bottom: 20px;
 }
+
 hr {
-    border: 0; /* Remove default border */
-    height: 2px; /* Set the height of the line */
-    background: #333; /* Set the color of the line */
-    margin-top: 100px /* Add space above and below the line */
+    border: 0;
+    /* Remove default border */
+    height: 1.5px;
+    /* Set the height of the line */
+    background: #333;
+    /* Set the color of the line */
+    margin-top: 100px;
+        /* Add space above and below the line */
+    width: 50%;
 }
 
 .box {
-    width: 80%; /* Set the width of the box */
-    height: 300px; /* Set the height of the box */
-    border: 2px solid #333; /* Set the border width, style, and color */
-    position: absolute; /* Position the box absolutely within the container */
-    top: 1500px; /* Adjust the vertical position */
-    left: 10%; /* Adjust the horizontal position */
-    z-index: 1; /* Place the box behind other elements */
+    width: 80%;
+    /* Set the width of the box */
+    height: 300px;
+    /* Set the height of the box */
+    border: 2px solid #333;
+    /* Set the border width, style, and color */
+    position: absolute;
+    /* Position the box absolutely within the container */
+    top: 1500px;
+    /* Adjust the vertical position */
+    left: 10%;
+    /* Adjust the horizontal position */
+    z-index: 1;
+    /* Place the box behind other elements */
 }
 
-#contact_us_container button {
-    width: 300px;
-    margin-left: 40%;
+.box2 {
+    width: 85%;
+    /* Set the width of the box */
+    height: 500px;
+    /* Set the height of the box */
+    border: 2px solid #333;
+    /* Set the border width, style, and color */
+    position: absolute;
+    /* Position the box absolutely within the container */
+    left: 10%;
+    /* Adjust the horizontal position */
+}
+
+
+.facility-container {
+    margin-top: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 20px;
+    flex-direction: row;
+    /* Default layout for larger screens */
+    gap: 80px;
+    z-index: 1;
+}
+
+.facility-image {
+    top: 0;
+    flex: 1;
+    max-width: 55%;
+    /* Adjust the width as needed */
+    /* Ensure the container maintains a fixed size */
+    height: 400px;
+    /* Fixed height for the image container */
+    overflow: hidden;
+    /* Hide any overflow to ensure images fit */
+    position: relative;
+    /* Necessary for absolute positioning of the image */
+}
+
+.facility-image img {
+    position: absolute;
+    /* Position image absolutely within the container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Cover the full width of the container */
+    height: 100%;
+    /* Cover the full height of the container */
+    object-fit: cover;
+    /* Crop or scale the image to fit the dimensions */
+}
+
+.facility-details {
+    flex: 1;
+    max-width: 40%;
+    padding-right: 80px;
+    /* Adjust the width as needed */
+    text-align: center;
+    font-size: smaller;
+    z-index: 1;
+}
+
+.facility-title {
+    font-size: 24px;
+    margin-bottom: 0px;
+}
+
+.facility-description {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#contact_us_container {
+    max-width: 100%;
+    height: 150px;
+    padding: 50px;
+    background: linear-gradient(45deg, #126379 25%, #28ad9b 75%);
+
+}
+
+.contact-btn {
+    display: block;
+    background-color: rgb(194, 170, 33);
+    color: white;
+    padding: 18px 10px;
+    width: 210px;
+    font-size: small;
+    text-align: center;
+    text-decoration: none;
+    margin: 30px auto;
+    /* Horizontally centers the button */
+
+}
+
+.contact-btn:hover {
+    background-color: rgb(206, 184, 37);
+    color: #7f7f7f;
 }
 
 
@@ -45,22 +165,88 @@ hr {
         height: 8px;
         width: 8px;
     }
+
     #hotel_summary {
         padding: 10%;
     }
+
     h1 {
         font-size: 1.8em;
     }
+
     p {
         font-size: 1em;
     }
+
     hr {
-        height: 1px; /* Set the height of the line */
-        margin: 50px 0;
+        height: 1px;
+        /* Set the height of the line */
+       margin-top: 50px;
     }
+
     .box {
-        height: 50%; /* Set the height of the box */
-        border: 1px solid #333; /* Set the border width, style, and color */
-        top: 200%; /* Adjust the vertical position */
+        height: 50%;
+        /* Set the height of the box */
+        border: 1px solid #333;
+        /* Set the border width, style, and color */
+        top: 200%;
+        /* Adjust the vertical position */
+    }
+
+    .box2 {
+        width: 85%;
+        /* Set the width of the box */
+        height: 500px;
+        /* Set the border width, style, and color */
+        position: absolute;
+        /* Position the box absolutely within the container */
+        left: 10%;
+        /* Adjust the horizontal position */
+        border: 1px solid #333;
+    }
+
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+    .facility-container {
+        justify-content: center;
+        margin-top: 130px;
+        flex-direction: column;
+        /* Stack image and details vertically */
+        padding: 0px;
+        margin-top: 200px;
+        gap: 10px;
+    }
+    .facility-image, .facility-details {
+        width: 100%;
+        align-items: center;
+        padding: 0px;
+    }
+
+    .facility-image img {
+        position: static;
+        /* Remove absolute positioning */
+        width: 100%;
+        /* Cover the full width of the container */
+        height: 200px;
+        /* Maintain aspect ratio */
+        object-fit: cover;
+        /* Crop or scale the image to fit the dimensions */
+    }
+
+    .box2 {
+        margin-top: 155px;
+        display: flex;
+        justify-content: center;
+        /* Center horizontally */
+        height: 90vh;
+        /* Full viewport height, adjust as needed */
+        align-self: center;
+        width: 80%;
+        /* Set the width of the box */
+        left: 10%;
+        /* Adjust the horizontal position */
+        border: 1px solid #333;
     }
 }
