@@ -265,11 +265,29 @@
         resultsDiv.innerHTML = '';
 
         if (data.error) {
+          console.error(`Error: ${data.error}`);
+          console.error(`SQL: ${data.sql}`);
           alert(`Error: ${data.error}`);
-        } else if (data.length === 0) {
-          alert("No rooms found. Please modify your search criteria.");
+        } else if (data.rooms.length === 0) {
+          alert("非常可惜我們沒有符合您要求的房間，你可以試下更改要求");
+          if (data.recommended_rooms.length > 0) {
+            resultsDiv.innerHTML = '<h3>推荐房间:</h3>';
+            data.recommended_rooms.forEach(room => {
+              const roomDiv = document.createElement('div');
+              roomDiv.className = 'room';
+              roomDiv.innerHTML = `
+                                <h3>${room.room_type}</h3>
+                                <p>${room.description}</p>
+                                <p>Price: $${room.PricePerNight} per night</p>
+                                <p>Capacity: ${room.MaxOccupancy} people</p>
+                            `;
+              resultsDiv.appendChild(roomDiv);
+            });
+          } else {
+            resultsDiv.innerHTML = '<p>抱歉沒有您的房間</p>';
+          }
         } else {
-          data.forEach(room => {
+          data.rooms.forEach(room => {
             const roomDiv = document.createElement('div');
             roomDiv.className = 'room';
             roomDiv.innerHTML = `

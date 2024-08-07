@@ -51,7 +51,7 @@ $result = $conn->query($sql);
 
 if ($result === false) {
     error_log("SQL error: " . $conn->error);
-    die(json_encode(["error" => "SQL error: " . $conn->error]));
+    die(json_encode(["error" => "SQL error: " . $conn->error, "sql" => $sql]));
 }
 
 $rooms = [];
@@ -59,6 +59,25 @@ if ($result->num_rows > 0) {
     // 输出数据
     while ($row = $result->fetch_assoc()) {
         $rooms[] = $row;
+} else {
+    // 查询推荐房间
+    $recommend_sql = "SELECT rooms.*, roomtypes.TypeName AS room_type
+                      FROM rooms
+                      JOIN roomtypes ON rooms.RoomTypeID = roomtypes.RoomTypeID
+                      LIMIT 5"; // 获取推荐房间
+
+    $recommend_result = $conn->query($recommend_sql);
+
+    if ($recommend_result === false) {
+        error_log("SQL error: " . $conn->error);
+        die(json_encode(["error" => "SQL error: " . $conn->error, "sql" => $recommend_sql]));
+    }
+
+    $recommended_rooms = [];
+    if ($recommend_result->num_rows > 0) {
+        while ($row = $recommend_result->fetch_assoc()) {
+            $recommended_rooms[] = $row;
+        }
     }
 }
 
@@ -67,5 +86,8 @@ $conn->close();
 
 // 返回JSON格式的数据
 header('Content-Type: application/json');
-echo json_encode($rooms);
+echo json_encode([
+    "rooms" => $rooms,
+    "recommended_rooms" => isset($recommended_rooms) ? $recommended_rooms : []
+]);
 ?>
