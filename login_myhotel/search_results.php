@@ -1,8 +1,9 @@
 <?php
-$servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "myhotel";
+// 数据库连接信息
+$servername = "Mysql@127.0.0.1:3306";
+$username = "root";
+$password = "Pyc13038";
+$dbname = "MyHotelDatabase";
 
 // 创建连接
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,33 +13,53 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// 获取表单数据
 $checkin = $_GET['checkin'];
 $checkout = $_GET['checkout'];
 $guests = $_GET['guests'];
-$roomtype = $_GET['roomtype'];
-$price_min = $_GET['price_min'];
-$price_max = $_GET['price_max'];
+$min_price = $_GET['price_min'];
+$max_price = $_GET['price_max'];
+$roomtypes = isset($_GET['roomtype']) ? $_GET['roomtype'] : [];
 $facilities = isset($_GET['facility']) ? $_GET['facility'] : [];
 $views = isset($_GET['view']) ? $_GET['view'] : [];
 
-$sql = "SELECT rooms.* FROM rooms
-        LEFT JOIN room_facility ON rooms.room_id = room_facility.room_id
-        LEFT JOIN facilities ON room_facility.facility_id = facilities.facility_id
-        LEFT JOIN room_view ON rooms.room_view_id = room_view.room_view_id
-        WHERE availability = TRUE AND capacity >= ?";
+// 构建SQL查询
+$sql = "SELECT rooms.*, roomtypes.TypeName AS room_type
+        FROM rooms
+        JOIN roomtypes ON rooms.RoomTypeID = roomtypes.RoomTypeID
+        WHERE rooms.PricePerNight BETWEEN $min_price AND $max_price
+        AND rooms.MaxOccupancy >= $guests";
 
-$bindParams = [$guests];
-$types = 'i';
+if (!in_array('any', $roomtypes)) {
+    $roomtypes_str = implode("','", $roomtypes);
+    $sql .= " AND roomtypes.TypeName IN ('$roomtypes_str')";
+}
 
-if ($roomtype != 'any') {
-    $sql .= " AND room_type = ?";
-    $bindParams[] = $roomtype;
-    $types .= 's';
+if (!empty($facilities)) {
+    $facilities_str = implode(",", $facilities);
+    $sql .= " AND rooms.RoomID IN (SELECT RoomID FROM roomfacilities WHERE FacilityID IN ($facilities_str))";
 }
-if (!empty($price_min)) {
-    $sql .= " AND price >= ?";
-    $bindParams[] = $price_min;
-    $types .= 'd';
+
+if (!empty($views)) {
+    $views_str = implode(",", $views);
+    $sql .= " AND rooms.RoomViewID IN ($views_str)";
 }
-if (!empty($price
+
+// 执行查询
+$result = $conn->query($sql);
+
+$rooms = [];
+if ($result->num_rows > 0) {
+    // 输出数据
+    while ($row = $result->fetch_assoc()) {
+        $rooms[] = $row;
+    }
+}
+
+// 关闭连接
+$conn->close();
+
+// 返回JSON格式的数据
+header('Content-Type: application/json');
+echo json_encode($rooms);
 ?>

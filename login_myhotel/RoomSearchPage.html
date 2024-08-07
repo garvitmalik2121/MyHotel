@@ -26,7 +26,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-top: 0; /* Ensure no margin on top */
+      margin: 0; /* Ensure no margin on top */
     }
 
     header a.logo {
@@ -116,9 +116,36 @@
       margin: 20px 0;
     }
 
-    .price-range input {
+    .price-range input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
       width: 200px;
-      margin: 0 10px;
+      height: 5px;
+      background: #ddd;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .price-range input[type="range"]:hover {
+      opacity: 1;
+    }
+
+    .price-range input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #333;
+      cursor: pointer;
+    }
+
+    .price-range input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #333;
+      cursor: pointer;
     }
 
     .price-range label {
