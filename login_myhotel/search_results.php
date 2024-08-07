@@ -1,6 +1,6 @@
 <?php
 // 数据库连接信息
-$servername = "Mysql@127.0.0.1:3306";
+$servername = "localhost";
 $username = "root";
 $password = "Pyc13038";
 $dbname = "MyHotelDatabase";
@@ -10,7 +10,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // 检查连接
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    error_log("Connection failed: " . $conn->connect_error);
+    die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
 }
 
 // 获取表单数据
@@ -47,6 +48,11 @@ if (!empty($views)) {
 
 // 执行查询
 $result = $conn->query($sql);
+
+if ($result === false) {
+    error_log("SQL error: " . $conn->error);
+    die(json_encode(["error" => "SQL error: " . $conn->error]));
+}
 
 $rooms = [];
 if ($result->num_rows > 0) {
