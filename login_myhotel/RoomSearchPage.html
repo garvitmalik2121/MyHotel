@@ -18,39 +18,59 @@
       background-color: #f4f4f4;
     }
 
-    header {
+    .navbar {
       width: 100%;
       background: #333;
       color: white;
       padding: 10px 0;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      margin: 0; /* Ensure no margin on top */
     }
 
-    header a.logo {
-      color: white;
-      font-size: 24px;
-      text-decoration: none;
-      margin: 0 20px;
+    .navbar .logo img {
+      height: 50px;
     }
 
-    nav ul {
-      list-style: none;
+    .menu-icon {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    .menu-icon div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+
+    .nav-container {
       display: flex;
-      padding: 0;
-      margin: 0;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    nav ul li {
-      margin: 0 15px;
+    .nav-links {
+      display: flex;
+      list-style: none;
     }
 
-    nav ul li a {
+    .nav-links a {
       color: white;
       text-decoration: none;
+      padding: 0 15px;
       font-size: 18px;
+    }
+
+    .login-btn {
+      background-color: #555;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-right: 20px;
     }
 
     #search {
@@ -308,17 +328,24 @@
 </head>
 
 <body>
-<header>
-  <a href="index.html" class="logo">MyHotel</a>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="room inventory.html">Rooms</a></li>
-      <li><a href="#facilities">Facilities</a></li>
-      <li><a href="contact us.html">Contact Us</a></li>
-      <li><a href="login.html">Login</a></li>
-    </ul>
-  </nav>
+<header class="navbar">
+  <a href="index.php" class="logo">
+    <img src="images/Logo.png" alt="Company Logo">
+  </a>
+  <div class="menu-icon" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="nav-container">
+    <nav class="nav-links">
+      <a href="about us.html">ABOUT US</a>
+      <a href="room_features.php">ROOMS</a>
+      <a href="SearchingPage.html">SEARCH</a>
+      <a href="contact us.html">CONTACT US</a>
+    </nav>
+  </div>
+  <a href="login.php" class="login-btn">Login</a>
 </header>
 
 <section id="search">
