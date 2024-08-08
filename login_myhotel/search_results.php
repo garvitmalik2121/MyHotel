@@ -1,9 +1,9 @@
 <?php
 // 数据库连接信息
 $servername = "localhost";
-$username = "root";
-$password = "Pyc13038";
-$dbname = "MyHotelDatabase";
+$username = "ujf0ddljmleep";
+$password = "CP3407assm";
+$dbname = "db0ofmuvipfjbp";
 
 // 创建连接
 $conn = new mysqli($servername, $username, $password, $dbname);
