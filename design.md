@@ -4,7 +4,7 @@
 The "myHotel" website is designed to offer a comprehensive and user-friendly experience for clients seeking to book rooms and learn more about our hotel. Our design approach emphasizes intuitive navigation, seamless booking processes, and engaging content. This document outlines the architectural and user interface design of the website, covering both the web and mobile versions.
 
 ## Architectural Design
-# Major Components
+### Major Components
 1. **Login Feature**
     - **Purpose**: Allows clients to access the rooms page, manage bookings, and view detailed information.
     - **Technology**: PHP for server-side processing, JavaScript for client-side interactions.
@@ -89,22 +89,22 @@ We developed SQL scripts to create and populate the database. Key tables include
 
 
 ## User Interface Design
-# Web Version
+### Web Version
 - **Layout**: Responsive design to ensure usability across various screen sizes.
 - **Typography**: Clear, legible fonts for readability and aesthetic appeal.
 - **Color Scheme**: A palette that reflects the hotel's branding and creates a welcoming atmosphere.
 - **Interactive Elements**: Smooth transitions and hover effects to enhance user engagement.
 
-# Mobile Version
+### Mobile Version
 - **Layout**: Mobile-first approach with a focus on touch-friendly interactions.
 - **Navigation**: Collapsible menu for easy access to all pages.
 - **Content**: Condensed and optimized for smaller screens to maintain functionality.
 
-# Technology Stack
+### Technology Stack
 - **Languages**: HTML, CSS, JavaScript
 - **Backend**: PHP
 - **Database**: SQL
 - **Prototyping**: Figma for designing and testing layouts and interactions.
 
-# Design Process
+### Design Process
 Our design process involved extensive research into existing hotel websites to identify best practices and user preferences. Using Figma, we created prototypes to visualize the layout and interactions before development. The final design aims to provide a seamless and engaging user experience, motivating clients to explore and book with ease.
