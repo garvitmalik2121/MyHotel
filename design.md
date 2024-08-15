@@ -1,23 +1,27 @@
 More About MyHotelDatabase
 1. Database Design
-Our database is designed to efficiently manage all aspects of a hotel's room operations. It includes:
+Our database is designed to efficiently manage all aspects of a hotel's room operations.
+It includes:
 
-Room Information: Captures details like room type, view, price, and availability.
+Room Information: 
+Captures details like room type, view, price, and availability.
 Facilities: Manages a comprehensive list of amenities for each room.
 Reservations: Tracks booking information, customer details, and reservation policies.
 Photos: Stores URLs for room images to enhance user engagement.
+
 2. SQL Code Overview
 We developed SQL scripts to create and populate the database. Key tables include:
 
-Room: Stores details about each room.
+Room: 
+Stores details about each room.
 RoomType: Defines categories such as Single, Double, Suite.
 RoomView: Specifies views like Sea, Mountain, City.
 Facility: Lists all available amenities.
 RoomFacility: Associates rooms with their respective facilities.
 Reservation: Tracks bookings and customer details.
 RoomPhoto: Stores links to room images.
-SQL Example:
 
+SQL Example:
 sql
 CREATE TABLE Room (
     RoomID INT PRIMARY KEY,
