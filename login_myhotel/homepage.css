@@ -40,18 +40,16 @@ hr {
 .box {
     width: 80%;
     /* Set the width of the box */
-    height: 300px;
+    height: 250px;
     /* Set the height of the box */
     border: 2px solid #333;
     /* Set the border width, style, and color */
     position: absolute;
     /* Position the box absolutely within the container */
-    top: 1500px;
+    top: 212%;
     /* Adjust the vertical position */
     left: 10%;
     /* Adjust the horizontal position */
-    z-index: 1;
-    /* Place the box behind other elements */
 }
 
 .box2 {
@@ -185,11 +183,11 @@ button {
     }
 
     .box {
-        height: 50%;
+        height: 40%;
         /* Set the height of the box */
         border: 1px solid #333;
         /* Set the border width, style, and color */
-        top: 200%;
+        top: 180%;
         /* Adjust the vertical position */
     }
 
@@ -211,11 +209,10 @@ button {
 @media (max-width: 900px) {
     .facility-container {
         justify-content: center;
-        margin-top: 130px;
+        margin-top: 100px;
         flex-direction: column;
         /* Stack image and details vertically */
         padding: 0px;
-        margin-top: 200px;
         gap: 10px;
     }
     .facility-image, .facility-details {
@@ -233,6 +230,14 @@ button {
         /* Maintain aspect ratio */
         object-fit: cover;
         /* Crop or scale the image to fit the dimensions */
+    }
+    .box {
+        height: 40%;
+        /* Set the height of the box */
+        border: 1px solid #000000;
+        /* Set the border width, style, and color */
+        top: 190%;
+        /* Adjust the vertical position */
     }
 
     .box2 {

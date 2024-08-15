@@ -1,9 +1,21 @@
+<?php
+session_start();
+include("connection.php");
+include("functions.php");
+
+// Check if user is logged in
+$user_data = check_login($con);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel Room Comparison</title>
+    <link rel="stylesheet" href="format.css">
+    <script src="format.js" defer></script>
     <style>
         /* General reset and styling */
         * {
@@ -11,97 +23,94 @@
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: Arial, sans-serif;
-            background-image: url('images/background_image.jpg');
+            background: url('images/background_image.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            padding-top: 103px;
         }
+
         .container {
-            background-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 1200px;
+            margin: auto;
             width: 100%;
             overflow-y: auto;
         }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+
         .room-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
             gap: 20px;
+            justify-content: center;
         }
+
         .room {
             flex: 1 1 300px;
             border: 1px solid #ccc;
             padding: 10px;
-            background-color: #fff;
+            background: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: transform 0.3s ease;
-            max-width: 300px;
+            transition: transform 0.3s;
             cursor: pointer;
+            max-width: 300px;
         }
+
         .room:hover {
             transform: translateY(-5px);
         }
-        .room h2 {
-            margin-top: 0;
-        }
+
         .room img {
             width: 100%;
-            height: auto;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         .room ul {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
         }
+
         .room ul li {
             margin-bottom: 5px;
         }
+
         .modal {
             display: none;
             position: fixed;
             z-index: 1;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.8);
         }
+
         .modal-content {
-            background-color: #fefefe;
+            background: #fefefe;
             margin: 10% auto;
             padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
             position: relative;
         }
+
         .modal-content img {
             width: 100%;
             max-width: 400px;
-            height: auto;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         .close {
             color: #aaa;
             position: absolute;
@@ -109,28 +118,27 @@
             right: 25px;
             font-size: 30px;
             font-weight: bold;
-            transition: 0.3s;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
             cursor: pointer;
+            transition: color 0.3s;
         }
+
+        .close:hover {
+            color: black;
+        }
+
         h2 {
             text-align: center;
         }
 
         img {
             display: block;
-            margin-left: auto;
-            margin-right: auto;
             max-width: 100%;
             height: auto;
+            margin: 0 auto;
         }
 
         ul {
-            list-style-type: disc;
+            list-style: disc;
             margin: 20px;
             padding: 0;
         }
@@ -144,15 +152,16 @@
             margin: 20px auto;
             padding: 10px 20px;
             font-size: 16px;
-            background-color: #4CAF50;
+            background: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s;
         }
 
         button:hover {
-            background-color: #45a049;
+            background: #45a049;
         }
 
         form {
@@ -164,27 +173,52 @@
             margin: 10px 0 5px;
         }
 
-        form input, form textarea {
+        form input,
+        form textarea {
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
             width: 100%;
-            box-sizing: border-box;
         }
 
         form button {
-            background-color: #008CBA;
+            background: #008CBA;
+            color: white;
         }
 
         form button:hover {
-            background-color: #007BB5;
+            background: #007BB5;
         }
-        
     </style>
 </head>
+
 <body>
+    <header class="navbar">
+        <a href="index.php" class="logo">
+            <img src="images/Logo.png" alt="Company Logo">
+        </a>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-container">
+            <nav class="nav-links">
+                <a href="about us.html">ABOUT US</a>
+                <a href="room_features.php">ROOMS</a>
+                <a href="SearchingPage.html">SEARCH</a>
+                <a href="contact us.html">CONTACT US</a>
+            </nav>
+        </div>
+        <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="logout.php" class="logout-btn">LOGOUT</a>
+        <?php else: ?>
+        <a href="login.php" class="login-btn">LOGIN</a>
+        <?php endif; ?>
+    </header>
+
     <div class="container">
         <header>
             <h1>Compare Hotel Rooms</h1>
@@ -346,24 +380,25 @@
             <img src="images/delux.jpg" alt="Deluxe Room">
             <ul>
                 <li>En-suite bathroom with bathtub and separate shower</li>
-                    <li>Work desk and ergonomic chair</li>
-                    <li>Flat-screen TV with cable channels</li>
-                    <li>Mini-bar stocked with refreshments</li>
-                    <li>In-room safe for valuables</li>
-                    <li>Coffee and tea making facilities</li>
-                    <li>Complimentary toiletries and bathrobe</li>
-                    <li>24-hour room service available</li>
+                <li>Work desk and ergonomic chair</li>
+                <li>Flat-screen TV with cable channels</li>
+                <li>Mini-bar stocked with refreshments</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Complimentary toiletries and bathrobe</li>
+                <li>24-hour room service available</li>
             </ul>
-            <p> A Deluxe Room is designed to offer guests a luxurious and comfortable experience during their stay. These rooms are often larger than standard accommodations, providing around 30 square meters of space, which allows for a spacious environment. They are typically furnished with a King-sized bed, ensuring a restful sleep, and often include additional amenities such as a work desk, a cozy seating area for relaxation, and a well-appointed bathroom with upscale toiletries.
-
-                One of the distinguishing features of a Deluxe Room is its view, which is usually a highlight of the guest experience. Whether overlooking the serene sea, lush gardens, or vibrant cityscape, the view adds an extra layer of charm to the room. In terms of technology, WiFi access is readily available to keep guests connected throughout their stay.
-                
-                The décor of a Deluxe Room is carefully curated to blend elegance with comfort, featuring tasteful furnishings and soothing color palettes. These rooms are ideal for travelers seeking a more indulgent and memorable hotel experience, combining modern conveniences with a touch of luxury that enhances the overall ambiance of their stay.</p>
-            <button onclick="openBookingForm('Deluxe Room', 'En-suite bathroom with bathtub and separate shower, Work desk and ergonomic chair, Flat-screen TV with cable channels, Mini-bar stocked with refreshments, In-room safe for valuables, Coffee and tea making facilities, Complimentary toiletries and bathrobe, 24-hour room service available')">Book Now</button>
+            <p>A Deluxe Room is designed to offer guests a luxurious and comfortable experience during their stay. These
+                rooms are often larger than standard accommodations, providing around 30 square meters of space, which
+                allows for a spacious environment. They are typically furnished with a King-sized bed, ensuring a
+                restful sleep, and often include additional amenities such as a work desk, a cozy seating area for
+                relaxation, and a well-appointed bathroom with upscale toiletries.</p>
+            <button
+                onclick="openBookingForm('Deluxe Room', 'En-suite bathroom with bathtub and separate shower, Work desk and ergonomic chair, Flat-screen TV with cable channels, Mini-bar stocked with refreshments, In-room safe for valuables, Coffee and tea making facilities, Complimentary toiletries and bathrobe, 24-hour room service available')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Repeat similar blocks for all other rooms up to Room 12 -->
     <!-- Example for Room 2 -->
     <div id="modal-room2" class="modal">
         <div class="modal-content">
@@ -371,30 +406,27 @@
             <h2>Standard Room Details</h2>
             <img src="images/standard.jpeg" alt="Standard Room">
             <ul>
-                 <li>En-suite bathroom with bathtub and separate shower</li>
-                 <li>Work desk and ergonomic chair</li>
-                 <li>Flat-screen TV with cable channels</li>
-                 <li>Mini-bar stocked with refreshments</li>
-                 <li>In-room safe for valuables</li>
-                 <li>Coffee and tea making facilities</li>
-                 <li>Complimentary toiletries and bathrobe</li>
+                <li>En-suite bathroom with bathtub and separate shower</li>
+                <li>Work desk and ergonomic chair</li>
+                <li>Flat-screen TV with cable channels</li>
+                <li>Mini-bar stocked with refreshments</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Complimentary toiletries and bathrobe</li>
                 <li>24-hour room service available</li>
             </ul>
-            <ul> 
-               
-            </ul>
-            <p>The Standard Room at our hotel is a haven of comfort and functionality, designed to cater to both leisure and business travelers alike. Spanning approximately 25 square meters, each Standard Room features a well-appointed en-suite bathroom equipped with both a bathtub and a separate shower, ensuring guests can indulge in a luxurious bathing experience of their choice. A spacious work desk paired with an ergonomic chair offers a dedicated space for guests needing to catch up on work or simply unwind with their laptop.
-
-                Entertainment options abound with a flat-screen TV offering a selection of cable channels, perfect for relaxing after a day of exploration or business meetings. Guests can also enjoy the convenience of a mini-bar stocked with a variety of refreshments, ensuring that favorite beverages and snacks are always within reach. For added peace of mind, an in-room safe is provided to store valuables securely.
-                
-                The room is equipped with coffee and tea making facilities, allowing guests to start their mornings or unwind with a hot beverage at any time of day. Complimentary toiletries and a plush bathrobe enhance the guest experience, providing a touch of luxury and comfort during their stay. Our commitment to service is exemplified by 24-hour room service, ensuring that guests can enjoy dining options or other amenities whenever they desire.
-                
-                In summary, our Standard Room offers a blend of essential amenities and thoughtful touches, providing a cozy retreat that meets the diverse needs and preferences of our guests, whether they are here for business or leisure.</p>
-            <button onclick="compareRoom('Standard Room')">Book Now</button>
+            <p>The Standard Room at our hotel is a haven of comfort and functionality, designed to cater to both leisure
+                and business travelers alike. Spanning approximately 25 square meters, each Standard Room features a
+                well-appointed en-suite bathroom equipped with both a bathtub and a separate shower, ensuring guests can
+                indulge in a luxurious bathing experience of their choice. A spacious work desk paired with an ergonomic
+                chair offers a dedicated space for guests needing to catch up on work or simply unwind with their
+                laptop.</p>
+            <button
+                onclick="openBookingForm('Standard Room', 'En-suite bathroom with bathtub and separate shower, Work desk and ergonomic chair, Flat-screen TV with cable channels, Mini-bar stocked with refreshments, In-room safe for valuables, Coffee and tea making facilities, Complimentary toiletries and bathrobe, 24-hour room service available')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 3 -->
     <div id="modal-room3" class="modal">
         <div class="modal-content">
@@ -413,26 +445,18 @@
                 <li>Dedicated work desk with ergonomic chair</li>
                 <li>24-hour room service available</li>
             </ul>
-            <p>The Suites at our establishment redefine luxury with spaciousness and a focus on unparalleled comfort. Each suite is meticulously crafted to provide a refined experience, combining tasteful decor with premium amenities.
-
-                Step into a world of tranquility with a generously sized living area that invites relaxation and socializing. The separate bedroom offers privacy and a serene retreat, complemented by a luxurious bathroom featuring high-end fixtures, a bathtub, and a separate shower for indulgent bathing experiences.
-                
-                Elegant furnishings throughout the suite create an ambiance of sophistication, while entertainment options include a large flat-screen TV with premium cable channels. A dedicated work desk with an ergonomic chair ensures productivity, making it ideal for both business and leisure travelers.
-                
-                For refreshments, a well-stocked mini-bar awaits, offering a selection of beverages and snacks. An in-room safe provides peace of mind for storing valuables, while coffee and tea facilities are available for enjoying your favorite hot beverages at any time.
-                
-                Luxury toiletries and plush bathrobes enhance your comfort, reflecting our commitment to providing a memorable stay. Personalized service is a hallmark, with attentive staff and 24-hour room service ensuring that every need is met promptly and professionally.
-                
-                Our suites promise an indulgent experience, perfect for travelers seeking refined accommodations that blend luxury with comfort seamlessly.
-                
-                
-                
-                </p>
-            <button onclick="compareRoom('Suite')">Book Now</button>
+            <p>The Suites at our establishment redefine luxury with spaciousness and a focus on unparalleled comfort.
+                Each suite is meticulously crafted to provide a refined experience, combining tasteful decor with
+                premium amenities. Step into a world of tranquility with a generously sized living area that invites
+                relaxation and socializing. The separate bedroom offers privacy and a serene retreat, complemented by a
+                luxurious bathroom featuring high-end fixtures, a bathtub, and a separate shower for indulgent bathing
+                experiences.</p>
+            <button
+                onclick="openBookingForm('Suite', 'Spacious living area with tasteful decor, Separate bedroom for privacy, Luxurious bathroom with bathtub and separate shower, Large flat-screen TV with premium cable channels, Well-stocked mini-bar, In-room safe for valuables, Coffee and tea making facilities, Luxury toiletries and plush bathrobes, Dedicated work desk with ergonomic chair, 24-hour room service available')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 4 -->
     <div id="modal-room4" class="modal">
         <div class="modal-content">
@@ -451,27 +475,17 @@
                 <li>Children's amenities available upon request</li>
                 <li>Option for connecting rooms</li>
             </ul>
-            <p>A Family Room is designed to cater specifically to families or larger groups traveling together, offering a spacious and comfortable accommodation option. It typically includes multiple sleeping areas or separate bedrooms to ensure privacy and convenience for all guests. The room is furnished with a variety of bed configurations, such as double beds, twin beds, or bunk beds, accommodating different family sizes and preferences.
-
-                In addition to the sleeping arrangements, the Family Room features a generous living space where families can gather and relax. This area often includes comfortable seating arrangements, a coffee table, and sometimes a dining table or breakfast bar, providing a dedicated space for meals or leisure activities.
-                
-                Family Rooms are equipped with modern amenities to enhance the comfort of guests. These amenities commonly include an en-suite bathroom with a bathtub and separate shower for convenience, a flat-screen TV with a selection of channels for entertainment, and facilities like a mini-refrigerator or mini-bar stocked with refreshments. Guests also benefit from in-room safes for storing valuables securely, coffee and tea making facilities for added convenience, and complimentary toiletries to ensure a comfortable stay.
-                
-                The decor of Family Rooms is typically designed to create a welcoming and homely atmosphere, often featuring modern furnishings and family-friendly touches. Some Family Rooms may offer additional amenities such as extra storage space, children's amenities, or connecting rooms to accommodate larger families or groups.
-                
-                Overall, a Family Room provides an ideal setting for families looking to enjoy a memorable stay together, combining ample space with essential amenities tailored to meet the needs of all family members.
-                
-                
-                
-                
-                
-                
-                </p>
-            <button onclick="compareRoom('Family Room')">Book Now</button>
+            <p>A Family Room is designed to cater specifically to families or larger groups traveling together, offering
+                a spacious and comfortable accommodation option. It typically includes multiple sleeping areas or
+                separate bedrooms to ensure privacy and convenience for all guests. The room is furnished with a variety
+                of bed configurations, such as double beds, twin beds, or bunk beds, accommodating different family
+                sizes and preferences.</p>
+            <button
+                onclick="openBookingForm('Family Room', 'Spacious accommodation with multiple sleeping areas or separate bedrooms, Comfortable seating arrangements for relaxation, En-suite bathroom with bathtub and separate shower, Flat-screen TV with a selection of channels, Mini-refrigerator or mini-bar stocked with refreshments, In-room safe for valuables, Coffee and tea making facilities, Complimentary toiletries, Children\'s amenities available upon request, Option for connecting rooms')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 5 -->
     <div id="modal-room5" class="modal">
         <div class="modal-content">
@@ -489,13 +503,17 @@
                 <li>In-room safe for valuables</li>
                 <li>High-speed internet access</li>
             </ul>
-            <p>A Single Room is tailored for solo travelers seeking comfort and functionality in a compact space. Typically outfitted with a single bed, these rooms offer a cozy environment for one guest. They feature a private en-suite bathroom equipped with a shower, toilet, and sink, ensuring privacy and convenience. A dedicated work desk with an ergonomic chair caters to business travelers or those needing a personal workspace. Entertainment needs are met with a flat-screen TV, providing access to various channels. Additional amenities may include storage options like a wardrobe or closet, and in-room conveniences such as a mini-refrigerator, coffee and tea making facilities, and a safe for valuables. Access to high-speed internet is often available, making it easy to stay connected during your stay. Single Rooms are designed 
-                to provide everything needed for a comfortable and enjoyable stay for solo travelers.</p>
-            <button onclick="compareRoom('Single Room')">Book Now</button>
+            <p>A Single Room is tailored for solo travelers seeking comfort and functionality in a compact space.
+                Typically outfitted with a single bed, these rooms offer a cozy environment for one guest. They feature
+                a private en-suite bathroom equipped with a shower, toilet, and sink, ensuring privacy and convenience.
+                A dedicated work desk with an ergonomic chair caters to business travelers or those needing a personal
+                workspace. Entertainment needs are met with a flat-screen TV, providing access to various channels.</p>
+            <button
+                onclick="openBookingForm('Single Room', 'Single bed for one guest, Private en-suite bathroom with shower, toilet, and sink, Dedicated work desk with ergonomic chair, Flat-screen TV with various cable channels, Storage options such as wardrobe or closet, Mini-refrigerator for storing refreshments, Coffee and tea making facilities, In-room safe for valuables, High-speed internet access')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 6 -->
     <div id="modal-room6" class="modal">
         <div class="modal-content">
@@ -506,293 +524,323 @@
                 <li>Spacious living room with elegant furnishings</li>
                 <li>Dining area for private meals and gatherings</li>
                 <li>Master bedroom with a king-sized bed and premium linens</li>
-                <li>Luxurious bathroom with a deep soaking tub and separate rain shower</li>
-                <li>Exclusive bath amenities</li>
-                <li>Private terrace or balcony with panoramic views</li>
-                <li>24-hour butler service</li>
-                <li>Personalized concierge assistance</li>
+                <li>Luxurious bathroom with a Jacuzzi and separate shower</li>
+                <li>Personalized service and dedicated concierge</li>
+                <li>State-of-the-art entertainment system</li>
+                <li>Fully stocked mini-bar with premium beverages</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Access to exclusive lounge or amenities</li>
             </ul>
-            <p>The Presidential Suite stands as the pinnacle of luxury accommodations, 
-                offering discerning guests an unparalleled experience in comfort and sophistication. 
-                Spanning a generous floor area, the suite features meticulously curated interiors
-                 with bespoke furnishings and tasteful artwork, creating an ambiance of refined elegance. 
-                 A grand living room provides ample space for entertainment and relaxation, complemented by a 
-                 dining area ideal for hosting intimate gatherings or private meals. The suite's master bedroom exudes tranquility and indulgence, complete with a king-sized bed adorned with premium linens and a selection of pillows for personalized comfort. The expansive bathroom is a sanctuary of wellness, featuring a deep soaking tub, separate rain shower, and luxurious bath amenities. A private terrace or balcony offers sweeping views of the city skyline or serene landscapes, providing an exclusive retreat for contemplation or outdoor dining. The Presidential Suite ensures an unforgettable stay with dedicated personalized services, including 24-hour butler assistance, ensuring every need is met with meticulous attention to detail, creating a truly memorable experience of luxury and exclusivity.
-
-
-
-
-
-
-            </p>
-            <button onclick="compareRoom('Presidential Suite')">Book Now</button>
+            <p>The Presidential Suite represents the pinnacle of luxury and exclusivity, designed to offer an
+                unparalleled experience for high-profile guests or those seeking the ultimate indulgence. This suite
+                features a spacious living room adorned with elegant furnishings and a separate dining area for private
+                meals or gatherings. The master bedroom is fitted with a king-sized bed, premium linens, and additional
+                features to ensure maximum comfort and relaxation.</p>
+            <button
+                onclick="openBookingForm('Presidential Suite', 'Spacious living room with elegant furnishings, Dining area for private meals and gatherings, Master bedroom with a king-sized bed and premium linens, Luxurious bathroom with a Jacuzzi and separate shower, Personalized service and dedicated concierge, State-of-the-art entertainment system, Fully stocked mini-bar with premium beverages, In-room safe for valuables, Coffee and tea making facilities, Access to exclusive lounge or amenities')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 7 -->
     <div id="modal-room7" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room7')">&times;</span>
-            <h2>Junior Suite Details</h2>
-            <img src="images/junior suites.jpg" alt="Junior Suite">
+            <h2>Executive Room Details</h2>
+            <img src="images/executive.jpg" alt="Executive Room">
             <ul>
-                <li>Separate living area and bedroom</li>
-                <li>High-speed internet access</li>
-                <li>Flat-screen TV with premium channels</li>
-                <li>Well-equipped mini-bar</li>
-                <li>Spacious bathroom with deep soaking tub and separate shower</li>
-                <li>Luxurious toiletries</li>
-                <li>Panoramic views of the city skyline or garden vistas</li>
+                <li>Spacious and well-appointed room with work desk</li>
+                <li>King-sized bed with premium bedding</li>
+                <li>En-suite bathroom with high-end fixtures</li>
+                <li>Large flat-screen TV with cable channels</li>
+                <li>Mini-bar stocked with snacks and beverages</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Complimentary Wi-Fi access</li>
+                <li>Exclusive access to executive lounge</li>
             </ul>
-            <p>The Junior Suites at our hotel provide a blend of sophistication and comfort, ideal for both business travelers and leisure guests. These spacious suites feature a separate living area and bedroom, offering ample space to unwind or work in peace. The décor is tastefully appointed with modern furnishings and elegant accents, creating an inviting ambiance.
-
-                Guests can enjoy modern amenities such as high-speed internet access, a flat-screen TV with premium channels, and a well-equipped mini-bar. The spacious bathroom is designed for relaxation, featuring a deep soaking tub, separate shower, and luxurious toiletries.
-                
-                With panoramic views of the city skyline or tranquil garden vistas, our Junior Suites offer a peaceful retreat from the hustle and bustle of daily life. Whether you're visiting for business or pleasure, our Junior Suites provide a luxurious sanctuary where you can truly unwind and rejuvenate.</p>
-            <button onclick="compareRoom('Junior Suite')">Book Now</button>
+            <p>The Executive Room is designed for business travelers and discerning guests who require a blend of
+                comfort and functionality. This spacious room features a king-sized bed with premium bedding, ensuring a
+                restful sleep. The en-suite bathroom is fitted with high-end fixtures and amenities. The room includes a
+                well-appointed work desk, large flat-screen TV, mini-bar, and coffee/tea making facilities. Guests also
+                benefit from complimentary Wi-Fi access and exclusive access to the executive lounge.</p>
+            <button
+                onclick="openBookingForm('Executive Room', 'Spacious and well-appointed room with work desk, King-sized bed with premium bedding, En-suite bathroom with high-end fixtures, Large flat-screen TV with cable channels, Mini-bar stocked with snacks and beverages, In-room safe for valuables, Coffee and tea making facilities, Complimentary Wi-Fi access, Exclusive access to executive lounge')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 8 -->
     <div id="modal-room8" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room8')">&times;</span>
-            <h2>Economy Room Details</h2>
-            <img src="images/economy.jpg" alt="Economy Room">
+            <h2>Junior Suite Details</h2>
+            <img src="images/junior_suite.jpg" alt="Junior Suite">
             <ul>
-                <li>Cozy bed with fresh linens</li>
-                <li>Functional workspace</li>
-                <li>Compact bathroom with a shower</li>
-                <li>Essential amenities</li>
-                <li>Suitable for short stays or budget-conscious travelers</li>
+                <li>Open-plan living area with stylish decor</li>
+                <li>Separate sleeping area with a queen-sized bed</li>
+                <li>En-suite bathroom with luxury fixtures</li>
+                <li>Flat-screen TV with a selection of channels</li>
+                <li>Mini-bar with a variety of beverages and snacks</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Complimentary toiletries and bathrobes</li>
+                <li>Comfortable seating area for relaxation</li>
             </ul>
-            <p>Economy rooms are specifically tailored to provide a comfortable and cost-effective accommodation option. They typically feature a cozy bed adorned with fresh linens, ensuring a restful night's sleep. Designed with practicality in mind, these rooms often include a functional workspace where guests can attend to business matters or simply unwind. The bathroom facilities are compact yet efficiently equipped, featuring a shower and essential amenities to meet the basic needs of travelers.
-
-                Despite their smaller size, economy rooms are thoughtfully designed to maximize comfort and convenience. They offer a welcoming atmosphere suitable for short stays or budget-conscious travelers who prioritize value without compromising on essential amenities. Whether traveling for business or leisure, guests can expect a well-appointed space that meets their basic requirements while ensuring a pleasant and affordable lodging experience.</p>
-            <button onclick="compareRoom('Economy Room')">Book Now</button>
+            <p>The Junior Suite offers a sophisticated and spacious retreat for guests who appreciate a blend of comfort
+                and style. The open-plan design includes a living area and a separate sleeping area with a queen-sized
+                bed, providing ample space to relax. The en-suite bathroom features luxury fixtures, and the suite is
+                equipped with a flat-screen TV, mini-bar, coffee/tea making facilities, and complimentary toiletries. A
+                comfortable seating area allows guests to unwind after a day of activities.</p>
+            <button
+                onclick="openBookingForm('Junior Suite', 'Open-plan living area with stylish decor, Separate sleeping area with a queen-sized bed, En-suite bathroom with luxury fixtures, Flat-screen TV with a selection of channels, Mini-bar with a variety of beverages and snacks, In-room safe for valuables, Coffee and tea making facilities, Complimentary toiletries and bathrobes, Comfortable seating area for relaxation')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 9 -->
     <div id="modal-room9" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room9')">&times;</span>
-            <h2>Luxury Suite Details</h2>
-            <img src="images/luxury.jpg" alt="Luxury Suite">
+            <h2>Superior Room Details</h2>
+            <img src="images/superior.jpg" alt="Superior Room">
             <ul>
-                <li>King-size bed with premium linens and pillows</li>
-                <li>En-suite bathroom with marble countertops</li>
-                <li>Deep soaking tub and separate rain shower</li>
-                <li>Luxurious bath amenities</li>
-                <li>Elegant furnishings and decor</li>
-                <li>Dedicated work desk</li>
-                <li>Cozy seating area</li>
-                <li>Large flat-screen TV with cable channels</li>
-                <li>High-speed internet access</li>
-                <li>Well-stocked mini-bar</li>
-                <li>24-hour room service</li>
-                <li>Turndown service</li>
-                <li>Concierge desk</li>
+                <li>Comfortable king-sized bed or twin beds</li>
+                <li>En-suite bathroom with modern fixtures</li>
+                <li>Flat-screen TV with a variety of channels</li>
+                <li>Mini-bar with refreshments</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Complimentary Wi-Fi access</li>
+                <li>Work desk with ergonomic chair</li>
+                <li>Complimentary toiletries</li>
             </ul>
-            <p>A luxury room epitomizes the pinnacle of comfort and sophistication, offering discerning guests an unparalleled experience in opulence and refinement. Designed with meticulous attention to detail, these rooms feature expansive layouts that include a spacious bedroom area with a king-size bed adorned with premium linens and pillows for a restful night's sleep. The en-suite bathroom is a sanctuary of relaxation, boasting marble countertops, a deep soaking tub, a separate rain shower, and luxurious bath amenities that ensure a rejuvenating bathing experience.
-
-                The decor exudes elegance and charm, with tasteful furnishings, soft lighting, and artwork that reflects a blend of modern aesthetics and timeless elegance. A dedicated work desk provides a functional space for business travelers, while the cozy seating area invites guests to unwind with a book or enjoy a quiet moment. State-of-the-art technology, including a large flat-screen TV with cable channels, high-speed internet access, and a well-stocked mini-bar, enhances convenience and entertainment.
-                
-                Guests staying in a luxury room can also enjoy exclusive access to personalized services such as 24-hour room service, turndown service, and a concierge desk to cater to their every need. Whether visiting for business or leisure, the luxury room promises a luxurious retreat where every detail is carefully curated to exceed expectations and create an unforgettable stay.</p>
-            <button onclick="compareRoom('Luxury Suite')">Book Now</button>
+            <p>The Superior Room offers a step up in comfort and elegance from the standard accommodations. Featuring
+                either a king-sized bed or twin beds, this room is designed to provide a restful and enjoyable stay. The
+                en-suite bathroom is equipped with modern fixtures and high-quality toiletries. Guests can enjoy a
+                flat-screen TV with a variety of channels, a well-stocked mini-bar, and coffee/tea making facilities.
+                Additional amenities include complimentary Wi-Fi access and a work desk with an ergonomic chair.</p>
+            <button
+                onclick="openBookingForm('Superior Room', 'Comfortable king-sized bed or twin beds, En-suite bathroom with modern fixtures, Flat-screen TV with a variety of channels, Mini-bar with refreshments, In-room safe for valuables, Coffee and tea making facilities, Complimentary Wi-Fi access, Work desk with ergonomic chair, Complimentary toiletries')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 10 -->
     <div id="modal-room10" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room10')">&times;</span>
-            <h2>Business Room Details</h2>
-            <img src="images/buisness.jpg" alt="Business Room">
+            <h2>Luxury Room Details</h2>
+            <img src="images/luxury.jpg" alt="Luxury Room">
             <ul>
-                <li>Spacious and well-lit work desk</li>
-                <li>Ergonomic chair for optimal comfort</li>
-                <li>High-speed internet access</li>
-                <li>Multiple conveniently located power outlets</li>
-                <li>Separate seating area for meetings or relaxation</li>
+                <li>Spacious room with high-end furnishings</li>
+                <li>King-sized bed with premium linens</li>
+                <li>Modern en-suite bathroom with shower and bathtub</li>
+                <li>Large flat-screen TV with premium channels</li>
+                <li>Mini-bar stocked with high-quality beverages</li>
+                <li>In-room safe for valuables</li>
                 <li>Coffee and tea making facilities</li>
-                <li>Flat-screen TV with a variety of channels</li>
-                <li>En-suite bathroom with a refreshing rain shower</li>
-                <li>Premium toiletries and plush towels</li>
-                <li>24-hour room service</li>
-                <li>Access to essential business services (printing, copying, faxing)</li>
+                <li>Complimentary high-speed Wi-Fi</li>
+                <li>Access to exclusive hotel amenities</li>
             </ul>
-            <p>The business room is meticulously designed to meet the exacting needs of corporate travelers seeking both productivity and comfort during their stay. It features a spacious and well-lit work desk, complete with an ergonomic chair that promotes optimal posture for extended work sessions. High-speed internet access ensures seamless connectivity for remote work, video conferences, or browsing. Multiple conveniently located power outlets cater to the charging needs of devices, enhancing efficiency. Guests can rejuvenate in the separate seating area, perfect for brief meetings or relaxation after a busy day.
-
-                For added convenience, the room is equipped with coffee and tea making facilities, allowing guests to enjoy a freshly brewed beverage at any time. Entertainment needs are met with a large flat-screen TV offering a variety of channels for leisurely viewing. The en-suite bathroom is elegantly appointed, featuring a refreshing rain shower, plush towels, and premium toiletries that cater to the comfort and well-being of guests.
-                
-                With dedicated room service available around the clock, guests can enjoy meals or snacks in the privacy of their room, accommodating varying schedules and preferences seamlessly. The business room also provides access to essential business services such as printing, copying, and faxing, ensuring that guests can manage work tasks efficiently without leaving the comfort of their accommodation.
-                
-                Whether traveling for business or pleasure, the business room offers a refined blend of functionality and relaxation, making it an ideal choice for discerning travelers seeking a productive and comfortable stay.</p>
-            <button onclick="compareRoom('Business Room')">Book Now</button>
+            <p>The Luxury Room offers an exceptional level of comfort and sophistication. Featuring a spacious layout
+                and high-end furnishings, this room is designed to cater to guests seeking an upscale experience. It
+                includes a king-sized bed with premium linens, a modern en-suite bathroom with both a shower and
+                bathtub, and a large flat-screen TV with premium channels. Additional amenities include a well-stocked
+                mini-bar, in-room safe, coffee/tea making facilities, and complimentary high-speed Wi-Fi. Guests also
+                benefit from access to exclusive hotel amenities.</p>
+            <button
+                onclick="openBookingForm('Luxury Room', 'Spacious room with high-end furnishings, King-sized bed with premium linens, Modern en-suite bathroom with shower and bathtub, Large flat-screen TV with premium channels, Mini-bar stocked with high-quality beverages, In-room safe for valuables, Coffee and tea making facilities, Complimentary high-speed Wi-Fi, Access to exclusive hotel amenities')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 11 -->
     <div id="modal-room11" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room11')">&times;</span>
-            <h2>Accessible Room Details</h2>
-            <img src="images/enterance.jpg" alt="Accessible Room">
+            <h2>Garden View Room Details</h2>
+            <img src="images/garden_view.jpg" alt="Garden View Room">
             <ul>
-                <li>Spacious layout for easy maneuverability</li>
-                <li>Accessible location near elevators or with ramp access</li>
-                <li>Roll-in shower with grab bars and adjustable shower head</li>
-                <li>Adjustable beds for easy transfer from wheelchairs</li>
-                <li>Visual alerts for doorbells and telephones</li>
-                <li>Accessible height amenities and fixtures</li>
-                <li>Wide doorways and clearance for mobility aids</li>
-                <li>In-room accessibility features for comfort and convenience</li>
-                <li>Personalized service and support for accessibility needs</li>
+                <li>Private balcony with garden view</li>
+                <li>Comfortable queen-sized bed</li>
+                <li>En-suite bathroom with modern fixtures</li>
+                <li>Flat-screen TV with cable channels</li>
+                <li>Mini-bar stocked with refreshments</li>
+                <li>In-room safe for valuables</li>
+                <li>Coffee and tea making facilities</li>
+                <li>Complimentary Wi-Fi access</li>
+                <li>Complimentary toiletries</li>
             </ul>
-            <p>Our accessible rooms are meticulously designed to offer not only comfort but also a seamless experience for guests with mobility challenges or disabilities. These rooms are strategically located for easy access and convenience, often near elevators or with ramp access. Inside, you'll find spacious layouts that allow for easy maneuverability, with thoughtfully positioned furniture and fixtures. The bathrooms are equipped with roll-in showers, grab bars, and adjustable shower heads to cater to diverse needs. Accessibility features extend to the sleeping area, where beds are positioned for easy transfer from wheelchairs. Additionally, each room is equipped with visual alerts for doorbells and telephones, ensuring guests are always aware of any notifications. Our commitment to accessibility includes providing personalized service and support, ensuring all guests feel welcomed and valued throughout their stay."
-
-                This expanded description emphasizes the comprehensive accessibility features and the commitment to ensuring a comfortable and inclusive experience for guests with mobility challenges or disabilities.</p>
-            <button onclick="compareRoom('Accessible Room')">Book Now</button>
+            <p>The Garden View Room offers a serene and picturesque environment, featuring a private balcony with views
+                of the beautifully landscaped gardens. The room is furnished with a comfortable queen-sized bed and
+                includes an en-suite bathroom with modern fixtures. Guests can enjoy a flat-screen TV with cable
+                channels, a mini-bar stocked with refreshments, and coffee/tea making facilities. Additional amenities
+                include complimentary Wi-Fi access and high-quality toiletries.</p>
+            <button
+                onclick="openBookingForm('Garden View Room', 'Private balcony with garden view, Comfortable queen-sized bed, En-suite bathroom with modern fixtures, Flat-screen TV with cable channels, Mini-bar stocked with refreshments, In-room safe for valuables, Coffee and tea making facilities, Complimentary Wi-Fi access, Complimentary toiletries')">Book
+                Now</button>
         </div>
     </div>
 
-    <!-- Continue for the rest of the rooms up to Room 12 -->
     <!-- Example for Room 12 -->
     <div id="modal-room12" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('room12')">&times;</span>
-            <h2>Executive Suite Details</h2>
-            <img src="images/execurtive.jpg" alt="Executive Suite">
+            <h2>Accessible Room Details</h2>
+            <img src="images/accessible.jpg" alt="Accessible Room">
             <ul>
-                <li>Spacious layout with contemporary furnishings</li>
-                <li>Large work desk with ergonomic chair</li>
-                <li>High-speed internet access</li>
-                <li>Dedicated sitting area</li>
-                <li>Plush bedding and luxurious linens</li>
-                <li>Flat-screen TV with cable channels</li>
+                <li>Wheelchair-accessible room with ample space</li>
+                <li>King-sized bed with accessible features</li>
+                <li>En-suite bathroom with roll-in shower</li>
+                <li>Flat-screen TV with a variety of channels</li>
+                <li>Mini-bar with refreshments</li>
                 <li>In-room safe for valuables</li>
                 <li>Coffee and tea making facilities</li>
-                <li>En-suite bathroom with premium toiletries</li>
-                <li>24-hour room service available</li>
+                <li>Grab bars and accessible amenities</li>
+                <li>Complimentary Wi-Fi access</li>
             </ul>
-            <p>
-                
-                
-                "The Executive rooms at our hotel are meticulously designed to cater to the needs of discerning business travelers seeking a refined blend of comfort and functionality. Each room boasts a spacious layout adorned with contemporary furnishings and sophisticated decor, creating an ambiance that exudes both elegance and practicality. Guests can indulge in amenities such as a large work desk equipped with an ergonomic chair, high-speed internet access for seamless connectivity, and a dedicated sitting area perfect for informal meetings or unwinding in style. 
-                The rooms also feature plush bedding and luxurious linens, ensuring a restful night's sleep amidst the bustling cityscape. Whether for business or leisure, our Executive rooms promise a harmonious balance of convenience and luxury, making them an ideal choice for the modern traveler."</p>
-            <button onclick="compareRoom('Executive Suite')">Book Now</button>
+            <p>The Accessible Room is designed to ensure comfort and ease for guests with mobility challenges. It
+                features a spacious layout with wheelchair access and includes a king-sized bed with accessible
+                features. The en-suite bathroom is equipped with a roll-in shower and grab bars for safety. Additional
+                amenities include a flat-screen TV with a variety of channels, a mini-bar, coffee/tea making facilities,
+                and complimentary Wi-Fi access. The room is thoughtfully designed to accommodate guests' specific needs
+                and preferences.</p>
+            <button
+                onclick="openBookingForm('Accessible Room', 'Wheelchair-accessible room with ample space, King-sized bed with accessible features, En-suite bathroom with roll-in shower, Flat-screen TV with a variety of channels, Mini-bar with refreshments, In-room safe for valuables, Coffee and tea making facilities, Grab bars and accessible amenities, Complimentary Wi-Fi access')">Book
+                Now</button>
         </div>
     </div>
+
     <!-- Booking Form Modal -->
     <div id="booking-form" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('booking-form')">&times;</span>
             <h2>Booking Form</h2>
-            <form id="bookingForm">
-            <div class="form-group">
-                <label for="roomType">Room Type:</label>
-                <input type="text" id="roomType" name="roomType" readonly>
-            </div>
-            
-            <div class="form-group">
-                <label for="roomDetails">Room Details:</label>
-                <textarea id="roomDetails" name="roomDetails" readonly></textarea>
-            </div>
+            <form id="bookingForm" method="post" action="process_booking.php">
+                <div class="form-group">
+                    <label for="roomType">Room Type:</label>
+                    <input type="text" id="roomType" name="roomType" readonly>
+                </div>
 
-            <div class="form-group">
-                <label for="booking_details">Booking Details:</label>
-                <textarea id="booking_details" name="booking_details" rows="4" required></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="roomDetails">Room Details:</label>
+                    <textarea id="roomDetails" name="roomDetails" readonly></textarea>
+                </div>
 
-            <div class="form-group">
-                <label for="payment_method">Payment Method:</label>
-                <select id="payment_method" name="payment_method" required>
-                    <option value="">Select Payment Method</option>
-                    <option value="paypal">PayPal</option>
-                    <option value="card">Card</option>
-                    <option value="cash">Cash</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
 
-            <div id="card_details" class="form-group" style="display: none;">
-                <label for="card_number">Card Number:</label>
-                <input type="text" id="card_number" name="card_number" placeholder="Enter Card Number">
-                
-                <label for="expiry_date">Expiry Date:</label>
-                <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YYYY">
-                
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" name="cvv" placeholder="CVV">
-            </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
 
-            <input type="hidden" name="room_price" value="<?php echo htmlspecialchars($room_price); ?>">
-            <input type="hidden" name="room_name" value="<?php echo htmlspecialchars($room_name); ?>">
+                <div class="form-group">
+                    <label for="booking_details">Booking Details:</label>
+                    <textarea id="booking_details" name="booking_details" rows="4" required></textarea>
+                </div>
 
-            <div class="form-group">
-                <button type="submit">Make Payment</button>
-            </div>
-        </form>
+                <div class="form-group">
+                    <label for="payment_method">Payment Method:</label>
+                    <select id="payment_method" name="payment_method" required onchange="toggleCardDetails(this.value)">
+                        <option value="">Select Payment Method</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="card">Card</option>
+                        <option value="cash">Cash</option>
+                    </select>
+                </div>
+
+                <div id="card_details" class="form-group" style="display: none;">
+                    <label for="card_number">Card Number:</label>
+                    <input type="text" id="card_number" name="card_number" placeholder="Enter Card Number">
+
+                    <label for="expiry_date">Expiry Date:</label>
+                    <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YYYY">
+
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="CVV">
+                </div>
+
+                <input type="hidden" name="room_price" value="">
+                <input type="hidden" name="room_name" value="">
+
+                <div class="form-group">
+                    <button type="submit">Make Payment</button>
+                </div>
+            </form>
         </div>
     </div>
 
-   <script>
-    // Function to open modal for a specific room
-    function openModal(roomId) {
-        var modal = document.getElementById('modal-' + roomId);
-        if (modal) {
-            modal.style.display = "block";
-        }
-    }
+    <footer>
+        <p>&copy; 2024 Your Hotel Name. All rights reserved.</p>
+    </footer>
 
-    // Function to close modal for a specific room
-    function closeModal(roomId) {
-        var modal = document.getElementById('modal-' + roomId);
-        if (modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    // Function to open the booking form with pre-filled details
-    function openBookingForm(roomType, roomDetails) {
-        var bookingForm = document.getElementById('booking-form');
-        if (bookingForm) {
-            document.getElementById('roomType').value = roomType;
-            document.getElementById('roomDetails').value = roomDetails;
-            bookingForm.style.display = "block";
-        }
-    }
-
-    // Handle form submission
-    document.getElementById('bookingForm').onsubmit = function(event) {
-        event.preventDefault();
-        var roomType = document.getElementById('roomType').value;
-        var fullName = document.getElementById('fullName').value;
-        var email = document.getElementById('email').value;
-        var paymentInfo = document.getElementById('paymentInfo').value;
-
-        // Here you can handle form submission, e.g., send data to a server
-        console.log(`Booking confirmed for ${roomType}.\nName: ${fullName}\nEmail: ${email}`);
-
-        alert(`Booking confirmed for ${roomType}.\nName: ${fullName}\nEmail: ${email}`);
-        closeModal('booking-form');
-    };
-
-    // Close the modal if user clicks outside of it
-    window.onclick = function(event) {
-        var modals = document.querySelectorAll('.modal');
-        for (var i = 0; i < modals.length; i++) {
-            if (event.target === modals[i]) {
-                modals[i].style.display = "none";
+    <script>
+        // Function to open modal for a specific room
+        function openModal(roomId) {
+            var modal = document.getElementById('modal-' + roomId);
+            if (modal) {
+                modal.style.display = "block";
             }
         }
-    };
-</script>
+
+        // Function to close modal for a specific room
+        function closeModal(roomId) {
+            var modal = document.getElementById('modal-' + roomId);
+            if (modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Function to open the booking form with pre-filled details
+        function openBookingForm(roomType, roomDetails) {
+            var bookingForm = document.getElementById('booking-form');
+            if (bookingForm) {
+                document.getElementById('roomType').value = roomType;
+                document.getElementById('roomDetails').value = roomDetails;
+                bookingForm.style.display = "block";
+            }
+        }
+        // Function to toggle card details based on selected payment method
+        function toggleCardDetails(paymentMethod) {
+            var cardDetails = document.getElementById('card_details');
+            if (paymentMethod === 'card') {
+                cardDetails.style.display = 'block';
+            } else {
+                cardDetails.style.display = 'none';
+            }
+        }
+
+        // // Handle form submission
+        // document.getElementById('bookingForm').onsubmit = function(event) {
+        //     event.preventDefault();
+        //     var roomType = document.getElementById('roomType').value;
+        //     var fullName = document.getElementById('fullName').value;
+        //     var email = document.getElementById('email').value;
+        //     var paymentInfo = document.getElementById('paymentInfo').value;
+
+        //     // Here you can handle form submission, e.g., send data to a server
+        //     console.log(`Booking confirmed for ${roomType}.\nName: ${fullName}\nEmail: ${email}`);
+
+        //     alert(`Booking confirmed for ${roomType}.\nName: ${fullName}\nEmail: ${email}`);
+        //     closeModal('booking-form');
+        // };
+
+        // Close the modal if user clicks outside of it
+        window.onclick = function (event) {
+            var modals = document.querySelectorAll('.modal');
+            for (var i = 0; i < modals.length; i++) {
+                if (event.target === modals[i]) {
+                    modals[i].style.display = "none";
+                }
+            }
+        };
+    </script>
 
 </body>
+
 </html>
