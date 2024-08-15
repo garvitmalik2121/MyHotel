@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,27 +9,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to MyHotel</title>
     <link rel="stylesheet" href="contents.css">
-    <link rel="stylesheet" href="format.css">
+    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="slidshow.css">
     <link rel="stylesheet" href="gallery.css">
+    <link rel="stylesheet" href="format.css">
+    <script src="format.js" defer></script>
     <script src="gallery.js" defer></script>
+    <script src="slidshow.js" defer></script>
     <script src="facilities.js" defer></script>
 </head>
 
 <body>
-    <header>
-        <a href="index.html" class="logo">MyHotel</a>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="room inventory.html">Rooms</a></li>
-                <li><a href="#facilities">Facilities</a></li>
-                <li><a href="contact us.html">Contact Us</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
-        </nav>
+    <header class="navbar">
+        <a href="index.php" class="logo">
+            <img src="images/Logo.png" alt="Company Logo">
+        </a>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-container">
+            <nav class="nav-links">
+                <a href="about us.html">ABOUT US</a>
+                <a href="room_features.php">ROOMS</a>
+                <a href="SearchingPage.html">SEARCH</a>              
+                <a href="contact us.html">CONTACT US</a>
+            </nav>
+        </div>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="logout.php" class="logout-btn">LOGOUT</a>
+        <?php else: ?>
+            <a href="login.php" class="login-btn">LOGIN</a>
+        <?php endif; ?>
     </header>
+    <div class="slideshow-container">
+        <div class="slide">
+            <img src="images/background_image.jpg" alt="Slide 1">
+        </div>
+        <div class="slide">
+            <img src="images/pool.jpg" alt="Slide 2">
+        </div>
+        <div class="slide">
+            <img src="images/enterance.jpg" alt="Slide 3">
+        </div>
+
+        <div class="dot-container">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    <section id="hotel_summary">
+        <div>
+            <h1>LUXURY, COMFORT, CONVENIENCE</h1>
+            <p>
+                Nestled in the heart of Brisbane, MyHotel offers a perfect blend of luxury, comfort, and convenience. Our hotel is an ideal destination whether you're visiting for business or pleasure. Each of our elegantly designed rooms is crafted to provide a serene retreat, featuring sophisticated decor and modern furnishings.
+                Enjoy breathtaking city views, tranquil sea views, or serene courtyard views from the comfort of your room. Our state-of-the-art amenities include a well-equipped fitness center, a refreshing swimming pool, and a gourmet restaurant serving a range of delectable dishes. Our attentive and professional staff are dedicated to providing exceptional service, ensuring that your stay with us is not just enjoyable, but truly unforgettable.
+                Whether you're here for a business conference, a romantic getaway, or a leisurely exploration of the city, MyHotel promises an experience that combines the highest standards of luxury with the utmost convenience.
+            </p>
+        </div>
+        <hr>
+    </section>
 
     <section id="gallery">
+        <div class="box"></div>
+        <h1>VIEW HOTEL ENVIRONMENT</h1>
         <div class="gallery">
             <div class="image-grid-col-2 image-grid-row-2">
                 <img src="images/background_image.jpg" alt="Main Image">
@@ -47,16 +96,19 @@
         </div>
     </section>
 
-    <section id="description">
-        <div>
-            <h1>Our Hotel</h1>
-            <p>
-                Nestled in the heart of Brisbane, MyHotel offers a perfect blend of luxury,
-                comfort, and convenience. Whether you're visiting for business or pleasure, our elegantly
-                designed rooms, state-of-the-art amenities, and exceptional service ensure an unforgettable stay.
-            </p>
+    <div class="facility-container">
+        <div class="box2"></div>
+        <div class="facility-image">
+          <img id="facility-img" src="images/pool.jpg" alt="Facility Image">
         </div>
-    </section>
+        <div class="facility-details">
+          <h2 id="facility-title">AZURE OASIS POOL</h2>
+          <div class="facility-description">
+            <p id="facility-desc">Dive into relaxation at our exquisite pool, where you can unwind and soak up the sun in a tranquil setting. Our outdoor pool is surrounded by lush landscaping and comfortable loungers, offering the perfect escape for a refreshing swim or a leisurely afternoon by the water. For added convenience, poolside service is available, so you can enjoy a selection of drinks and snacks without having to leave your lounge chair. Whether you're looking to enjoy a relaxing dip, work on your tan, or spend quality time with family and friends, our pool area provides a serene and inviting environment.</p>
+          </div>
+          <button id="next-btn">Next</button>
+        </div>
+    </div>
 
     <section id="content">
         <div id="facilities">
@@ -129,6 +181,13 @@
             </div>
         </div>
     </div>
+
+    <section id="contact_us_container">
+        <div>
+            <h2>WANT TO COMFIRM SOMETHING WITH US?</h2>
+            <a href="contact us.html" class="contact-btn">CONTACT US NOW</a>
+        </div>
+    </section>
 
     <!-- Modal for Viewing Individual Images -->
     <div id="imageModal" class="image-modal">
@@ -233,6 +292,9 @@
             </div>
         </div>
     </div>
+    <footer>
+        <p>&copy; 2024 MyHotel. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>

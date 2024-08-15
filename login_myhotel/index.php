@@ -24,10 +24,12 @@ session_start();
                 <li><a href="room_features.php">Rooms</a></li>
                 <li><a href="#facilities">Facilities</a></li>
                 <li><a href="contact us.html">Contact Us</a></li>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                <li><a href="logout.php">Logout</a></li>
+                if (isset($_SESSION['user_id'])): ?>
+                    <!-- User is logged in, show the logout button -->
+                    <a href="logout.php" class="logout-btn">LOGOUT</a>
                 <?php else: ?>
-                    <li><a href="login.php">Login</a></li>
+                    <!-- User is not logged in, show the login button -->
+                    a href="login.php" class="login-btn">LOGIN</a>
                 <?php endif; ?>
             </ul>
         </nav>

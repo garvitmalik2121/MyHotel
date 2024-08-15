@@ -79,10 +79,11 @@ footer {
     color: #fff; /* Text color */
     text-align: center; /* Center align text */
     padding: 20px; /* Padding around the text */
-    position: relative; /* Ensure it's positioned relatively */
+    position: relative;
     bottom: 0; /* Align footer to the bottom */
-    width: 100%; /* Full width of the container */
+    max-width: 100%; /* Full width of the container */
     font-size: smaller;
+    z-index: 2;
 }
 
 footer p {
